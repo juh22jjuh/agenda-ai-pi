@@ -9,6 +9,7 @@ import type { IRegister } from './types/register.type';
 import type { IEntrepreneur } from './types/entrepreneur.type';
 import type { IContato } from './types/contato.type';
 import type { Ischeduling } from './types/scheduling.type';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -71,33 +72,33 @@ export class Auth {
   }
 
   resgiterContact(contato: IContato): Observable<IContato> {
-    return this.http.post<IContato>('http://localhost:3000/contato/register', contato);
+    return this.http.post<IContato>(`${environment.apiUrl}/contato/register`, contato);
   }
 
   resgisterEntrepreneur(entrepreneur: IEntrepreneur): Observable<IEntrepreneur> {
-    return this.http.post<IEntrepreneur>('http://localhost:3000/entrepreneur/register', entrepreneur);
+    return this.http.post<IEntrepreneur>(`${environment.apiUrl}/entrepreneur/register`, entrepreneur);
   }
 
   // Register a new user
   
   register(user: IRegister): Observable<IRegister> {
-    return this.http.post<IRegister>('http://localhost:3000/user/register', user);
+    return this.http.post<IRegister>(`${environment.apiUrl}/user/register`, user);
   }
 
   requestResetPassword(email: string) {
-    return this.http.post('http://localhost:3000/user/requestpasswordreset', { email });
+    return this.http.post(`${environment.apiUrl}/user/requestpasswordreset`, { email });
   }
 
   resetPassword(id: string, token: string, password: string) {
     return this.http.post(
-      `http://localhost:3000/user/resetpassword?id=${id}&token=${token}`,
+      `${environment.apiUrl}/user/resetpassword?id=${id}&token=${token}`,
       { password }
     );
   }
 
   // Authenticate user
   authenticate(user: ILogin): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/user/login', user).pipe(
+    return this.http.post<any>(`${environment.apiUrl}/user/login`, user).pipe(
       tap((response) => {
           localStorage.setItem('token', JSON.stringify(response?.token));
           localStorage.setItem('user_logged', JSON.stringify(response?.user));
@@ -129,7 +130,7 @@ export class Auth {
   }
 
   getUserById(id: string) {
-    return this.http.get<any>(`http://localhost:3000/user/get/${id}`).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/user/get/${id}`).pipe(
       tap((response) => {
         if (response) {
           localStorage.setItem('user_logged', JSON.stringify(response));

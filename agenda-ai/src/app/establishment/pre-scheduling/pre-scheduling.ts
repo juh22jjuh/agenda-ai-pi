@@ -4,8 +4,9 @@ import { Footer } from '../../shared/footer/footer';
 import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
 import { Auth } from '../../auth/auth';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-pre-scheduling',
@@ -15,7 +16,8 @@ import { Router } from '@angular/router';
     Footer,
     RouterLink,
     RouterLinkActive,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   templateUrl: './pre-scheduling.html'
 })
@@ -56,7 +58,7 @@ export class PreScheduling implements OnInit {
     this.loading = true;
     const { user } = this.auth.getUserData();
     try {
-      this.http.get<any[]>(`http://localhost:3000/servicesEntreprenuer/getAll/${id}`)
+      this.http.get<any[]>(`${environment.apiUrl}/servicesEntreprenuer/getAll/${id}`)
 
         .subscribe({
           next: (result) => {
@@ -84,7 +86,7 @@ export class PreScheduling implements OnInit {
     this.loading = true;
     const { user } = this.auth.getUserData();
     try {
-      this.http.get<any>(`http://localhost:3000/entrepreneur/entrepreneur/${id}`)
+      this.http.get<any>(`${environment.apiUrl}/entrepreneur/entrepreneur/${id}`)
         .subscribe({
           next: (result) => {
             this.empresa = result[0] || [];

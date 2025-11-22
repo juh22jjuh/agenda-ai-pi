@@ -22,12 +22,13 @@ import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { firstValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Footer } from '../../shared/footer/footer';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
+  standalone: true,
   imports: [
     Footer,
     ProgressSpinnerModule,
@@ -49,7 +50,8 @@ import { Footer } from '../../shared/footer/footer';
     FormsModule,
     Checkbox,
     DatePickerModule,
-    FluidModule
+    FluidModule,
+    HttpClientModule
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
@@ -274,7 +276,7 @@ async loadServicesEntreprenuer() {
   const { user } = this.auth.getUserData();
 try {
     console.log("BATEU");
-    this.http.get<any[]>(`http://localhost:3000/servicesEntreprenuer/getAll/${user?.entrepreneur}`)
+    this.http.get<any[]>(`${environment.apiUrl}/servicesEntreprenuer/getAll/${user?.entrepreneur}`)
     .subscribe({
       next: (result) => {
         this.getServicesEntreprenuer = result
@@ -305,7 +307,7 @@ async loadEntreprenuers() {
 
   try {
     console.log("BATEU");
-    this.http.get<any>(`http://localhost:3000/entrepreneur/entrepreneur/${user?.entrepreneur}`)
+    this.http.get<any>(`${environment.apiUrl}/entrepreneur/entrepreneur/${user?.entrepreneur}`)
     .subscribe({
       next: (result) => {
         console.log('Resultado da empresa:', result);

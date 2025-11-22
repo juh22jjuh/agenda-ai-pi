@@ -1,81 +1,125 @@
-
-  .scheduling-container {
-  max-width: 500px;
-  margin: 30px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
+.scheduling-container {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .title {
   text-align: center;
-  font-size: 26px;
-  margin-bottom: 20px;
+  font-size: 2rem;
   color: #333;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  margin-bottom: 2rem;
+  font-weight: 600;
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 1.5rem;
 }
 
-label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #444;
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: 500;
 }
 
-input, textarea, select {
-  padding: 10px;
-  border-radius: 8px;
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem 1rem;
   border: 1px solid #ccc;
-  font-size: 15px;
-  transition: all 0.2s ease;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: #4aa98b;
-  box-shadow: 0 0 4px rgba(74, 169, 139, 0.4);
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
   outline: none;
+  border-color: #648f80;
 }
 
-textarea {
-  height: 90px;
-  resize: none;
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.calendar-day {
+  padding: 0.8rem 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.day-name {
+  font-weight: 600;
+  color: #555;
+}
+
+.available {
+  background-color: #e0f0e9;
+  color: #333;
+}
+
+.available:hover {
+  background-color: #c7ded5;
+}
+
+.selected {
+  background-color: #648f80;
+  color: white;
+}
+
+.unavailable {
+  color: #ccc;
+  cursor: not-allowed;
+  text-decoration: line-through;
 }
 
 .no-times {
-  color: #999;
-  font-size: 14px;
-  margin-top: 5px;
+  margin-top: 0.5rem;
+  color: #888;
 }
 
 .btn-submit {
-  background-color:#648f80;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  background-color: #648f80;
   color: white;
-  font-size: 16px;
-  padding: 12px;
-  border-radius: 10px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
 }
 
 .btn-submit:disabled {
-  background:#557470;
+  background-color: #a9c7bd;
   cursor: not-allowed;
 }
 
 .btn-submit:hover:not(:disabled) {
-  background-color:#557470;
+  background-color: #537a6b;
 }
