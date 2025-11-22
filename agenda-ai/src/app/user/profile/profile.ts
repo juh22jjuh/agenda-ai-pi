@@ -10,7 +10,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { TabsModule } from 'primeng/tabs';
+import { TabViewModule } from 'primeng/tabview';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
@@ -30,7 +30,7 @@ Footer
     ButtonModule,
     InputTextModule,
     PasswordModule,
-    TabsModule,
+    TabViewModule,
     FileUploadModule,
     AvatarModule,
     DividerModule,
@@ -51,6 +51,9 @@ export class Profile implements OnInit {
   token: string | null = null;
   logged = false;
   activeIndex = 0; // controla aba ativa
+  senhaAtual: string = '';
+  novaSenha: string = '';
+  confirmarSenha: string = '';
 
   constructor(private authService: Auth, private http: HttpClient) {}
 
