@@ -60,7 +60,19 @@ export class Profile implements OnInit {
       this.user = { ...this.user, ...user };
       this.logged = !!token;
       this.token = token;
+      this.getScheduling();
     }
+  }
+
+  getScheduling() {
+    this.http.get(`http://localhost:3000/scheduling/user/${this.user._id}`).subscribe(
+      (res: any) => {
+        this.user.schedulings = res;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 
   salvarInfoPessoal() {

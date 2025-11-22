@@ -107,6 +107,25 @@ export const getSchedulingByService = async (req, res) => {
   }
 };
 
+// LISTAR AGENDAMENTOS DE UM USUÁRIO
+export const getSchedulingByUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const list = await scheduling.find({
+      user_id: userId
+    }).populate('services_entrepreneur_id');
+
+    res.json(list);
+
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({ error: 'ID do usuário inválido' });
+    }
+    res.status(500).json({ error: "Erro ao buscar agendamentos" });
+  }
+};
+
 // PEGAR DATAS DISPONÍVEIS
 
 export const getAvailableDates = async (req, res) => {
