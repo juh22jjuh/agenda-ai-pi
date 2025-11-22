@@ -9,7 +9,7 @@
       [ngStyle]="{'background-image': 'url(' + empresa.imagem + ')'}">
     </div>
 
-    <div class="p-6 border-x border-b border-gray-300 rounded-b-2xl bg-white shadow-sm space-y-1">
+    <div class="p-6 border-x border-b border-gray-300 rounded-b-2xl bg-white shadow-sm space-y-1 text-gray-800">
       <p><strong>Nome:</strong> {{ empresa.name }}</p>
       <p><strong>Cidade:</strong> {{ empresa?.cidade }} - {{ empresa.estado }}</p>
       <p><strong>Bairro:</strong> {{ empresa.bairro }}</p>
@@ -29,7 +29,7 @@
 
     <div 
       *ngFor="let service of getServicesEntreprenuer || []"
-      class="p-5 border border-gray-200 rounded-2xl bg-white shadow-sm hover:shadow-md transition-all">
+      class="p-5 border border-gray-200 rounded-2xl bg-white shadow-sm hover:shadow-md transition-all text-gray-800">
 
       <h3 class="text-lg font-semibold text-[#648f80] mb-2">{{ service.nome }}</h3>
       <p><strong>Categoria:</strong> {{ service.categoria }}</p>
