@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { firstValueFrom } from 'rxjs';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { environment } from '../../../environments/environment';
 import { FormsModule } from '@angular/forms';
@@ -38,10 +38,16 @@ deactivationDays: { [userId: string]: number } = {};
     await this.loadUser()
   }
 
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders().set('token', token || '');
+  }
+
   async loadUser() {
     try {
+      const headers = this.getAuthHeaders();
       const data = await firstValueFrom(
-        this.http.get<any[]>(`${environment.apiUrl}/admin/users`)
+        this.http.get<any[]>(`${environment.apiUrl}/admin/users`, { headers })
       );
       this.users = data ?? [];
     } catch (error) {
@@ -64,7 +70,8 @@ deactivationDays: { [userId: string]: number } = {};
         return;
     }
 
-    this.http.put(`${environment.apiUrl}/admin/users/${id}/deactivate`, { deactivationDays: days }).subscribe({
+    const headers = this.getAuthHeaders();
+    this.http.put(`${environment.apiUrl}/admin/users/${id}/deactivate`, { deactivationDays: days }, { headers }).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'success',
@@ -84,7 +91,8 @@ deactivationDays: { [userId: string]: number } = {};
   }
 
   activateUser(id: string) {
-    this.http.put(`${environment.apiUrl}/admin/users/${id}/activate`, {}).subscribe({
+    const headers = this.getAuthHeaders();
+    this.http.put(`${environment.apiUrl}/admin/users/${id}/activate`, {}, { headers }).subscribe({
         next: () => {
             this.messageService.add({
                 severity: 'success',
