@@ -8,6 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { environment } from '../../../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
@@ -18,7 +19,8 @@ import { environment } from '../../../environments/environment';
     CommonModule,
     ButtonModule,
     ProgressSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   templateUrl: './users.html',
   providers: [MessageService]
@@ -27,6 +29,8 @@ export class Users implements OnInit {
   messageService = inject(MessageService)
   users: any[] = [] ;
   loading = true; 
+
+deactivationDays: { [userId: string]: number } = {};
 
   constructor(private cdr: ChangeDetectorRef, private http: HttpClient) { }
 
@@ -37,7 +41,7 @@ export class Users implements OnInit {
   async loadUser() {
     try {
       const data = await firstValueFrom(
-        this.http.get<any[]>(`${environment.apiUrl}/user/all`)
+        this.http.get<any[]>(`${environment.apiUrl}/admin/users`)
       );
       this.users = data ?? [];
     } catch (error) {
@@ -49,13 +53,23 @@ export class Users implements OnInit {
     }
   }
 
-  alterarStatus(id: string, status: boolean) {
-    this.http.patch(`${environment.apiUrl}/api/user/status/${id}`, { isActive: status }).subscribe({
+  deactivateUser(id: string) {
+    const days = this.deactivationDays[id];
+    if (!days || days <= 0) {
+        this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Por favor, insira um número válido de dias para desativação.'
+        });
+        return;
+    }
+
+    this.http.put(`${environment.apiUrl}/admin/users/${id}/deactivate`, { deactivationDays: days }).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Sucesso',
-          detail: status ? 'Usuário ativado!' : 'Usuário inativado!'
+          detail: 'Usuário desativado com sucesso!'
         });
         this.loadUser(); // recarrega a lista
       },
@@ -63,9 +77,29 @@ export class Users implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',
-          detail: 'Não foi possível alterar o status.'
+          detail: 'Não foi possível desativar o usuário.'
         });
       }
+    });
+  }
+
+  activateUser(id: string) {
+    this.http.put(`${environment.apiUrl}/admin/users/${id}/activate`, {}).subscribe({
+        next: () => {
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: 'Usuário ativado com sucesso!'
+            });
+            this.loadUser(); // recarrega a lista
+        },
+        error: () => {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Não foi possível ativar o usuário.'
+            });
+        }
     });
   }
 }

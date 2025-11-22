@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-pre-scheduling',
@@ -31,6 +32,7 @@ export class PreScheduling implements OnInit {
   workingHours: any[] = [];
   userId: string | null = null;
   showForm: boolean = false;
+  isUserActive: boolean = true;
 
 
   constructor(
@@ -51,6 +53,20 @@ export class PreScheduling implements OnInit {
 
     const { user } = this.auth.getUserData();
     this.userId = user?._id;  // GUARDA O ID DO USUÁRIO
+
+    if (user) {
+      this.isUserActive = user.isActive;
+      const deactivatedUntil = user.deactivatedUntil ? new Date(user.deactivatedUntil) : null;
+
+      if (!this.isUserActive && deactivatedUntil && new Date() > deactivatedUntil) {
+        try {
+          await firstValueFrom(this.http.put(`${environment.apiUrl}/admin/users/${this.userId}/activate`, {}));
+          this.isUserActive = true;
+        } catch (error) {
+          console.error('Failed to reactivate user:', error);
+        }
+      }
+    }
 
   }
 

@@ -1,5 +1,6 @@
 import { scheduling } from "../models/Scheduling.js";
 import { servicesEntreprenuer } from "../models/services_entreprenuer.js";
+import { User } from "../models/User.js";
 
 // CRIAR AGENDAMENTO
 
@@ -14,6 +15,14 @@ export const createScheduling = async (req, res) => {
       date,
       time
     } = req.body;
+
+    const user = await User.findById(user_id);
+    if (!user) {
+        return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+    if (!user.isActive) {
+        return res.status(403).json({ error: "Sua conta está temporariamente desativada. Você não pode criar novos agendamentos." });
+    }
 
     const inspirationImage = req.file ? req.file.path : null;
 

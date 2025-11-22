@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
       default: ['user'],
     },
     isActive: { type: Boolean, default: true },
+    deactivatedUntil: { type: Date, default: null },
 })
 
 
