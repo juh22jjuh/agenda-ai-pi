@@ -1,0 +1,50 @@
+<app-navbar-auth></app-navbar-auth>
+
+<div class="page-container">
+  <div class="content-wrapper">
+
+    <!-- Perfil do Usuário -->
+    <p-card class="profile-card">
+      <div class="profile-header">
+        <p-avatar
+          [image]="user.photo || 'https://via.placeholder.com/150'"
+          shape="circle"
+          size="xlarge"
+          styleClass="avatar"
+        ></p-avatar>
+
+        <h2 class="profile-name">{{ user.name }}</h2>
+        <p class="profile-email">{{ user.email }}</p>
+
+        <!-- Botão Alterar Foto à esquerda -->
+        <div class="upload-wrapper">
+          <p-fileUpload
+            mode="basic"
+            name="profileImage"
+            accept="image/*"
+            maxFileSize="1000000"
+            customUpload="true"
+            chooseLabel="Alterar Foto"
+            (uploadHandler)="alterarFoto($event)"
+            styleClass="upload-btn"
+          ></p-fileUpload>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- Agendamentos -->
+    <p-card class="agendamentos-card">
+      <h3 class="agendamentos-title">Meus Agendamentos</h3>
+
+      <ng-template #semAgendamentos>
+        <p class="no-agendamentos">Nenhum agendamento encontrado.</p>
+      </ng-template>
+    </p-card>
+
+  </div>
+</div>
+
+<app-footer></app-footer>
+
+
+

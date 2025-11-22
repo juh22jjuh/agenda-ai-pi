@@ -1,0 +1,81 @@
+
+  .scheduling-container {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+input, textarea, select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #4aa98b;
+  box-shadow: 0 0 4px rgba(74, 169, 139, 0.4);
+  outline: none;
+}
+
+textarea {
+  height: 90px;
+  resize: none;
+}
+
+.no-times {
+  color: #999;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.btn-submit {
+  background-color:#648f80;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-submit:disabled {
+  background:#557470;
+  cursor: not-allowed;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color:#557470;
+}

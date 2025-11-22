@@ -1,0 +1,70 @@
+<nav class="w-full h-20 flex items-center justify-center relative bg-[#648f80]">
+  <!-- Seta de voltar -->
+  <a class="absolute left-4 text-white text-2xl">
+    <i class="pi pi-arrow-left"></i>
+  </a>
+
+  <!-- Logo centralizado -->
+  <div class="text-3xl font-extrabold cursor-pointer text-white tracking-tight">
+    <span class="font-black text-transparent bg-gradient-to-b from-white to-blue-300 bg-clip-text">
+      AgendaAi
+    </span>
+  </div>
+</nav>
+
+
+<div class="scheduling-container bg-[#C7DED5]">
+
+  <h2 class="title">Agendar Serviço</h2>
+
+  <form [formGroup]="schedulingForm" (ngSubmit)="submit()" class="form">
+
+    <!-- Nome -->
+    <div class="form-group">
+      <label>Nome</label>
+      <input type="text" formControlName="customer_name" placeholder="Seu nome" />
+    </div>
+
+    <!-- Idade -->
+    <div class="form-group">
+      <label>Idade</label>
+      <input type="number" formControlName="customer_age" placeholder="Sua idade" />
+    </div>
+
+    <!-- Descrição -->
+    <div class="form-group">
+      <label>Descrição</label>
+      <textarea formControlName="description" placeholder="Descreva o que você precisa"></textarea>
+    </div>
+
+    <!-- Data -->
+    <div class="form-group">
+      <label>Data disponível</label>
+      <input type="date" formControlName="date" />
+    </div>
+
+    <!-- Horários -->
+    <div class="form-group">
+      <label for="time">Horário disponível</label>
+      <select id="time" formControlName="time">
+        <option value="" disabled selected>Selecione um horário</option>
+        <option *ngFor="let t of availableTimes" [value]="t">
+          {{ t }}
+        </option>
+      </select>
+
+      <p *ngIf="availableTimes.length === 0" class="no-times">
+        Escolha uma data para carregar os horários.
+      </p>
+    </div>
+
+    <!-- Botão -->
+    <button type="submit" [disabled]="schedulingForm.valid" class="btn-submit">
+      Confirmar Agendamento
+    </button>
+
+  </form>
+
+</div>
+
+<app-footer></app-footer>

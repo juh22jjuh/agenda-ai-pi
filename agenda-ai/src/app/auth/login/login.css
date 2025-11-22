@@ -1,0 +1,103 @@
+
+    :root {
+        --color-primary: #6E998B;
+        --color-primary-dark: #588073;
+    }
+
+    .input-field {
+        background-color: white;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 15px;
+        color: black;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        width: 100%;
+    }
+
+    .input-field:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(110, 153, 139, 0.4);
+    }
+
+    .link-footer {
+        color: var(--color-primary);
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .link-footer:hover {
+        color: var(--color-primary-dark);
+        text-decoration: underline;
+    }
+
+    .footer-button {
+        background-color: rgb(110, 153, 139);
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-weight: 600;
+        padding: 10px 14px;
+        cursor: pointer;
+        transition: transform 0.15s ease-in-out;
+        width: 100%;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                    0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    }
+
+    .footer-button:hover {
+        background-color: rgb(110, 153, 139);
+        transform: translateY(-1px);
+    }
+
+    .social-button {
+        color: white;
+        border: none;
+        border-radius: 9999px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .social-button:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+
+    ::ng-deep .p-password {
+        width: 100%;
+    }
+
+    ::ng-deep .p-password input {
+        width: 100%;
+        padding-right: 2.5rem;
+    }
+
+    ::ng-deep .p-password .p-password-icon {
+        right: 0.75rem;
+        color: rgb(110, 153, 139);
+        cursor: pointer;
+    }
+
+    ::ng-deep .p-password .p-password-icon:hover {
+        color: rgb(88, 128, 115);
+    }
+
+    .link-footer:hover {
+        color: rgb(88, 128, 115);
+        text-decoration: underline;
+    }
+
+    .footer-button:hover,
+    .footer-button:focus,
+    .footer-button:active {
+        background-color: rgb(110, 153, 139) !important;
+        color: white !important;
+    }

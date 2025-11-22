@@ -1,0 +1,115 @@
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: rgb(110, 153, 139);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #333;
+    transition: all 0.3s ease;
+  }
+
+  /* Placeholder color padronizada */
+  ::placeholder,
+  select:invalid {
+    color: rgb(110, 153, 139);
+    opacity: 0.7;
+  }
+
+  select option[value=""] {
+    color: rgb(110, 153, 139);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: rgb(110, 153, 139);
+    box-shadow: 0 0 0 3px rgba(110, 153, 139, 0.2);
+    outline: none;
+  }
+
+  .btn-submit {
+    background-color: rgb(110, 153, 139);
+    color: white;
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(110, 153, 139, 0.4);
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  .info-icon {
+    width: 45px;
+    height: 45px;
+    background-color: rgb(110, 153, 139);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 15px;
+  }
+
+  .info-content h3 {
+    color: rgb(110, 153, 139);
+    margin-bottom: 4px;
+  }
+
+  .social-links h3 {
+    color: rgb(110, 153, 139);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(110, 153, 139);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .social-icon:hover {
+    transform: translateY(-3px);
+  }

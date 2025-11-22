@@ -1,0 +1,114 @@
+  body {
+    background-color: #f8f9fa;
+    font-family: "Poppins", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .responsabilidade-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    width: 100%;
+    padding: 35px 40px;
+    border: 1px solid #dfe7e4;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .responsabilidade-card:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  }
+
+  .responsabilidade-card h2 {
+    color: rgb(43, 85, 69);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid rgba(153, 197, 182, 0.5);
+    padding-bottom: 10px;
+  }
+
+  .responsabilidade-card h3 {
+    color: rgb(51, 102, 85);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 10px;
+  }
+
+  .responsabilidade-card p,
+  .responsabilidade-card li {
+    color: #444;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .responsabilidade-card ul {
+    margin-left: 22px;
+  }
+
+  .responsabilidade-card strong {
+    color: rgb(43, 85, 69);
+  }
+
+  .responsabilidade-card .data {
+    text-align: right;
+    margin-top: 30px;
+    font-size: 0.85rem;
+    color: #777;
+    border-top: 1px solid #e3ece9;
+    padding-top: 10px;
+  }
+
+  .btns-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+:host ::ng-deep .p-button-secondary {
+  background-color: #fff !important;        /* Fundo branco */
+  color: #5a5a5a !important;                /* Texto cinza escuro */
+  border: 1px solid #d1d5db !important;     /* Borda cinza clara */
+  box-shadow: none !important;             /* Sem sombra */
+  border-radius: 6px !important;           /* Bordas levemente arredondadas */
+  padding: 0.5rem 1.2rem !important;        /* Padding semelhante */
+  font-weight: 500 !important;              /* Peso da fonte intermediário */
+}
+
+:host ::ng-deep .p-button-secondary:hover {
+  background-color: #f3f4f6 !important;     /* Leve destaque no hover */
+  border-color: #cbd5e1 !important;         /* Cor da borda no hover */
+}
+
+  :host ::ng-deep .p-button-danger {
+    background-color: rgb(202, 77, 77) !important;
+    border: none !important;
+  }
+
+  :host ::ng-deep .p-button-danger:hover {
+    background-color: rgb(176, 61, 61) !important;
+  }
+
+  @media (max-width: 768px) {
+    .responsabilidade-card {
+      padding: 25px;
+    }
+
+    .responsabilidade-card h2 {
+      font-size: 1.5rem;
+    }
+
+    .btns-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    p-button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
