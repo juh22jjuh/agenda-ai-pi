@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { listUsers, deleteUser, deactivateUser, activateUser } from "../controllers/admin.controller.js";
 import { authorize } from "../utils/authorize.js";
-import { auth } from "../utils/auth.js";
+import auth from "../utils/auth.js";
 
 export const routerAdmin = Router();
 
