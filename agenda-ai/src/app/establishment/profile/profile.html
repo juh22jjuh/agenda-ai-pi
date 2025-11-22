@@ -56,7 +56,7 @@
       [ngStyle]="{'background-image': 'url(' + empresa.imagem + ')'}">
     </div>
 
-    <div class="p-5 border-x border-b border-gray-300 rounded-b-2xl bg-gray-100 shadow-sm space-y-1">
+    <div class="p-5 border-x border-b border-gray-300 rounded-b-2xl bg-gray-100 shadow-sm space-y-1 text-gray-800">
       <p><strong>Nome:</strong> {{ empresa.name }}</p>
       <p><strong>Cidade:</strong> {{ empresa?.cidade }} - {{ empresa.estado }}</p>
       <p><strong>Bairro:</strong> {{ empresa.bairro }}</p>
@@ -66,11 +66,11 @@
   </div>
 
   <!-- Card de Criar Serviço -->
-  <div class="w-1/2 p-5 border border-gray-300 rounded-2xl bg-gray-100 shadow-md">
+  <div class="w-1/2 p-5 border border-gray-300 rounded-2xl bg-gray-100 shadow-md text-gray-800">
     
     <!-- TEXTO -->
-   <h1> Cadastrar serviços</h1>
-    <p class="text-gray-600 mb-4">
+   <h1 class="text-xl font-bold mb-2"> Cadastrar serviços</h1>
+    <p class="mb-4">
       Aqui você pode cadastrar novos serviços oferecidos pela sua empresa. 
       Defina nome, categoria, horários e dias de funcionamento. 
       faça uma descrição detalhada para atrair mais clientes!, e gerencie seus serviços facilmente.
@@ -97,7 +97,7 @@
         </span>
 
         <!-- Informações do Serviço -->
-        <div class="w-full px-3 space-y-4 border border-zinc-800 p-4 rounded-2xl">
+        <div class="w-full px-3 space-y-4 border border-zinc-800 p-4 rounded-2xl text-gray-800">
           <h1 class="text-lg font-semibold">Informações do Serviço</h1>
 
           <div class="flex flex-col md:flex-row gap-3">
@@ -132,7 +132,7 @@
         </div>
 
         <!-- Horários -->
-        <div class="w-full px-3 mt-5 space-y-2 py-3 border border-zinc-800 p-4 rounded-2xl">
+        <div class="w-full px-3 mt-5 space-y-2 py-3 border border-zinc-800 p-4 rounded-2xl text-gray-800">
           <h1 class="mb-2 font-semibold">Horarios de Funcionamento</h1>
           <div *ngFor="let time of time" class="flex items-center">
             <p-checkbox [inputId]="time.id" name="group" [value]="time" formControlName="time"/>
@@ -141,7 +141,7 @@
         </div>
 
         <!-- Dias -->
-        <div class="w-full px-3 mt-5 space-y-2 py-3 border border-zinc-800 p-4 rounded-2xl">
+        <div class="w-full px-3 mt-5 space-y-2 py-3 border border-zinc-800 p-4 rounded-2xl text-gray-800">
           <h1 class="mb-2 font-semibold">Dias de Funcionamento</h1>
           <div *ngFor="let day of daysOfWeek" class="flex items-center">
             <p-checkbox [inputId]="day.id" name="group" [value]="day" formControlName="dias"/>
@@ -165,7 +165,7 @@
   <div *ngIf="getServicesEntreprenuer; else carregando" class="mt-8 mx-6 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
     <div 
       *ngFor="let service of getServicesEntreprenuer || []"
-      class="p-5 border border-gray-200 rounded-2xl bg-gray-100 shadow-sm hover:shadow-md transition-all"
+      class="p-5 border border-gray-200 rounded-2xl bg-gray-100 shadow-sm hover:shadow-md transition-all text-gray-800"
     >
       <h3 class="text-lg font-semibold text-[#648f80] mb-2">{{ service.nome }}</h3>
       <p><strong>Categoria:</strong> {{ service.categoria }}</p>
@@ -195,7 +195,7 @@
 
 
 <!-- FORMULÁRIO DE EDIÇÃO -->
-  <div *ngIf="mostrarFormularioEdicao" class="mt-6 p-5 border bg-gray-100 shadow rounded-xl">
+  <div *ngIf="mostrarFormularioEdicao" class="mt-6 p-5 border bg-gray-100 shadow rounded-xl text-gray-800">
     <h3 class="text-lg font-semibold text-[#648f80] mb-4">Editar Serviço</h3>
 
     <label class="block mb-1 text-sm">Nome</label>

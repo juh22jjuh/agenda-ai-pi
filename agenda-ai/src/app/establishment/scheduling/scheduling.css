@@ -1,7 +1,9 @@
+/* Container principal - mantém o fundo da página visível */
 .scheduling-container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding: 2rem;
+  /* Removemos o fundo branco para manter o padrão de cores da página */
 }
 
 .title {
@@ -9,6 +11,7 @@
   font-weight: bold;
   margin-bottom: 1.5rem;
   text-align: center;
+  color: #2d5a4f; /* Tom verde escuro para o título, bom contraste */
 }
 
 .form {
@@ -24,7 +27,8 @@
 
 .form-group label {
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: #333333; /* Texto escuro para os rótulos */
 }
 
 .form-group input,
@@ -34,6 +38,8 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  background-color: #ffffff; /* Fundo branco para os campos, para destacar do fundo da página */
+  color: #333333; /* Texto escuro para o conteúdo dos campos */
 }
 
 .btn-submit {
@@ -54,23 +60,26 @@
 
 .no-times {
   font-size: 0.9rem;
-  color: #888;
+  color: #333333; /* Texto escuro */
   margin-top: 0.5rem;
 }
 
-/* Estilos do Calendário */
+/* --- Estilos do Calendário --- */
+
 .calendar {
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 0.5rem; /* Reduzido */
-  font-size: 0.9rem; /* Reduzido */
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  background-color: #ffffff; /* Fundo branco para o calendário para garantir legibilidade */
 }
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem; /* Reduzido */
+  margin-bottom: 0.5rem;
+  color: #333333; /* Texto escuro */
 }
 
 .calendar-weekdays,
@@ -80,23 +89,25 @@
   text-align: center;
 }
 
-.weekday,
-.day {
-  padding: 0.3rem; /* Reduzido */
+.weekday {
+  padding: 0.3rem;
+  color: #333333; /* Texto escuro */
 }
 
 .day {
+  padding: 0.3rem;
   cursor: pointer;
+  color: #333333; /* Texto escuro */
 }
 
 .day.unavailable {
-  color: #ccc;
+  color: #aaa; /* Cinza claro para dias indisponíveis */
   cursor: not-allowed;
   text-decoration: line-through;
 }
 
 .day.selected {
   background-color: #648f80;
-  color: white;
+  color: white !important; /* Garante que o texto fique branco ao ser selecionado */
   border-radius: 50%;
 }
