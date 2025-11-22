@@ -6,77 +6,88 @@
   <!-- Título principal -->
   <h1 class="text-2xl font-bold mb-8">Gerenciamento de Usuários</h1>
 
-  <!-- Se existir usuários, monta a listagem; senão, exibe o estado de carregamento -->
-  <ng-container *ngIf="users.length > 0; else carregando">
+  <!-- Spinner de carregamento -->
+  <div *ngIf="loading" class="flex justify-center items-center py-8">
+    <p-progressSpinner></p-progressSpinner>
+    <p class="ml-4 text-center text-gray-700 text-lg">Carregando usuários...</p>
+  </div>
 
-    <!-- SECTION contendo a lista -->
-    <section class="w-full max-w-6xl">
+  <!-- Se não estiver carregando -->
+  <ng-container *ngIf="!loading">
 
-      <!-- Lista semântica usando UL -->
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Se existir usuários, monta a listagem; senão, exibe mensagem -->
+    <ng-container *ngIf="users.length > 0; else semUsuarios">
 
-        <!-- Cada usuário vira um LI contendo um ARTICLE -->
-        <li *ngFor="let user of users">
+      <!-- SECTION contendo a lista -->
+      <section class="w-full max-w-6xl">
 
-          <!-- ARTICLE: card individual do usuário -->
-          <article
-            class="bg-white shadow-md rounded-xl p-5 border border-gray-200 flex flex-col gap-4">
+        <!-- Lista semântica usando UL -->
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <!-- Cabeçalho do card -->
-            <header>
-              <h2 class="text-lg font-semibold text-gray-800">
-                {{ user?.name }}
-              </h2>
-            </header>
+          <!-- Cada usuário vira um LI contendo um ARTICLE -->
+          <li *ngFor="let user of users">
 
-            <!-- Informações -->
-            <p class="text-gray-800"><strong>Email:</strong> {{ user?.email }}</p>
+            <!-- ARTICLE: card individual do usuário -->
+            <article
+              class="bg-white shadow-md rounded-xl p-5 border border-gray-200 flex flex-col gap-4">
 
-            <!-- Rodapé com ações -->
-            <footer class="flex flex-col gap-3 mt-2">
+              <!-- Cabeçalho do card -->
+              <header>
+                <h2 class="text-lg font-semibold text-gray-800">
+                  {{ user?.name }}
+                </h2>
+              </header>
 
-              <!-- Ações para usuário ATIVO -->
-              <div *ngIf="user.isActive">
-                <div class="flex items-center gap-2">
-                  <input 
-                    type="number" 
-                    [(ngModel)]="deactivationDays[user._id]"
-                    placeholder="Dias de suspensão"
-                    class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#648f80]">
-                  <button
-                    class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors whitespace-nowrap"
-                    (click)="deactivateUser(user._id)">
-                    Desativar
+              <!-- Informações -->
+              <p class="text-gray-800"><strong>Email:</strong> {{ user?.email }}</p>
+
+              <!-- Rodapé com ações -->
+              <footer class="flex flex-col gap-3 mt-2">
+
+                <!-- Ações para usuário ATIVO -->
+                <div *ngIf="user.isActive">
+                  <div class="flex items-center gap-2">
+                    <input 
+                      type="number" 
+                      [(ngModel)]="deactivationDays[user._id]"
+                      placeholder="Dias de suspensão"
+                      class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#648f80]">
+                    <button
+                      class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors whitespace-nowrap"
+                      (click)="deactivateUser(user._id)">
+                      Desativar
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Ações para usuário INATIVO -->
+                <div *ngIf="!user.isActive">
+                   <button
+                    class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors w-full"
+                    (click)="activateUser(user._id)">
+                    Ativar
                   </button>
                 </div>
-              </div>
 
-              <!-- Ações para usuário INATIVO -->
-              <div *ngIf="!user.isActive">
-                 <button
-                  class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors w-full"
-                  (click)="activateUser(user._id)">
-                  Ativar
-                </button>
-              </div>
+              </footer>
 
-            </footer>
+            </article>
+          </li>
 
-          </article>
-        </li>
+        </ul>
 
-      </ul>
+      </section>
 
-    </section>
+    </ng-container>
+
+    <!-- Template para quando não há usuários -->
+    <ng-template #semUsuarios>
+      <section class="py-8">
+        <p class="text-center text-gray-700 text-lg">Nenhum usuário encontrado.</p>
+      </section>
+    </ng-template>
 
   </ng-container>
-
-  <!-- Template mostrado enquanto carrega usuários -->
-  <ng-template #carregando>
-    <section class="py-8">
-      <p class="text-center text-gray-700 text-lg">Carregando contatos...</p>
-    </section>
-  </ng-template>
 
 </main>
 
