@@ -1,4 +1,6 @@
 .scheduling-container {
+  max-width: 600px;
+  margin: 0 auto;
   padding: 2rem;
 }
 
@@ -60,14 +62,15 @@
 .calendar {
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 1rem;
+  padding: 0.5rem; /* Reduzido */
+  font-size: 0.9rem; /* Reduzido */
 }
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem; /* Reduzido */
 }
 
 .calendar-weekdays,
@@ -79,7 +82,7 @@
 
 .weekday,
 .day {
-  padding: 0.5rem;
+  padding: 0.3rem; /* Reduzido */
 }
 
 .day {

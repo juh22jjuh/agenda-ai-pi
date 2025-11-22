@@ -56,7 +56,7 @@
       [ngStyle]="{'background-image': 'url(' + empresa.imagem + ')'}">
     </div>
 
-    <div class="p-5 border-x border-b border-gray-300 rounded-b-2xl bg-white shadow-sm space-y-1">
+    <div class="p-5 border-x border-b border-gray-300 rounded-b-2xl bg-gray-100 shadow-sm space-y-1">
       <p><strong>Nome:</strong> {{ empresa.name }}</p>
       <p><strong>Cidade:</strong> {{ empresa?.cidade }} - {{ empresa.estado }}</p>
       <p><strong>Bairro:</strong> {{ empresa.bairro }}</p>
@@ -66,7 +66,7 @@
   </div>
 
   <!-- Card de Criar Serviço -->
-  <div class="w-1/2 p-5 border border-gray-300 rounded-2xl bg-white shadow-md">
+  <div class="w-1/2 p-5 border border-gray-300 rounded-2xl bg-gray-100 shadow-md">
     
     <!-- TEXTO -->
    <h1> Cadastrar serviços</h1>
@@ -165,7 +165,7 @@
   <div *ngIf="getServicesEntreprenuer; else carregando" class="mt-8 mx-6 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
     <div 
       *ngFor="let service of getServicesEntreprenuer || []"
-      class="p-5 border border-gray-200 rounded-2xl bg-white shadow-sm hover:shadow-md transition-all"
+      class="p-5 border border-gray-200 rounded-2xl bg-gray-100 shadow-sm hover:shadow-md transition-all"
     >
       <h3 class="text-lg font-semibold text-[#648f80] mb-2">{{ service.nome }}</h3>
       <p><strong>Categoria:</strong> {{ service.categoria }}</p>
@@ -195,7 +195,7 @@
 
 
 <!-- FORMULÁRIO DE EDIÇÃO -->
-  <div *ngIf="mostrarFormularioEdicao" class="mt-6 p-5 border bg-white shadow rounded-xl">
+  <div *ngIf="mostrarFormularioEdicao" class="mt-6 p-5 border bg-gray-100 shadow rounded-xl">
     <h3 class="text-lg font-semibold text-[#648f80] mb-4">Editar Serviço</h3>
 
     <label class="block mb-1 text-sm">Nome</label>
