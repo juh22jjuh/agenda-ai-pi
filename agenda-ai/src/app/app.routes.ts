@@ -47,7 +47,6 @@ export const routes: Routes = [
   // Establishment
   { path: 'establishment/profile', component: ProfileEstablishment },
   { path: 'establishment/register', component: RegisterEstablishment },
-  { path: 'establishment/scheduling', component: SchedulingEstablishment }, 
   { path: 'establishment/config', component: Config},
   { path: 'establishment/scheduling/:idService/:idUser', component: SchedulingEstablishment},
   {path: 'establishment/pre-scheduling/:id', component: PreScheduling},
@@ -67,4 +66,3 @@ export const routes: Routes = [
 
    { path: 'editar-servico/:id', component: ProfileEstablishment },
 ];
-

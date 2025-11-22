@@ -41,6 +41,9 @@ export const createScheduling = async (req, res) => {
     res.status(201).json(newScheduling);
 
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({ error: 'ID do serviço inválido' });
+    }
     console.log(error);
     res.status(500).json({ error: "Erro ao criar agendamento" });
   }
@@ -60,6 +63,9 @@ export const getSchedulingByService = async (req, res) => {
     res.json(list);
 
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({ error: 'ID do serviço inválido' });
+    }
     res.status(500).json({ error: "Erro ao buscar agendamentos" });
   }
 };
@@ -104,6 +110,9 @@ export const getAvailableDates = async (req, res) => {
     res.json({ availableDates });
 
   } catch (error) {
+    if (error.name === 'CastError') {
+        return res.status(400).json({ error: 'ID do serviço inválido' });
+    }
     console.log(error);
     res.status(500).json({ error: "Erro ao gerar datas disponíveis" });
   }
@@ -133,6 +142,9 @@ export const getAvailableHours = async (req, res) => {
     res.json({ availableTimes });
 
   } catch (err) {
+    if (err.name === 'CastError') {
+        return res.status(400).json({ error: 'ID do serviço inválido' });
+    }
     console.error(err);
     res.status(500).json({ error: "Erro ao buscar horários" });
   }

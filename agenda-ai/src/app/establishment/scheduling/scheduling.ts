@@ -33,7 +33,7 @@ export class Scheduling implements OnInit {
   weekDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
   ngOnInit(): void {
-    this.serviceId = this.route.snapshot.paramMap.get('id') as string;
+    this.serviceId = this.route.snapshot.paramMap.get('idService') as string;
 
     this.schedulingForm = this.fb.group({
       customer_name: ['', Validators.required],
