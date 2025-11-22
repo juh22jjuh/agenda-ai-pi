@@ -140,6 +140,13 @@ export class Auth {
     );
   }
 
+  updateUser(user: any): void {
+    if (this.isBrowser) {
+      localStorage.setItem('user_logged', JSON.stringify(user));
+      this.userLogged = user;
+    }
+  }
+
   logout(): void {
     this.clearAuthData();
     this.router.navigate(['/login']);
