@@ -5,12 +5,14 @@ import { ServiceSchedulingService } from '../../services/serviceScheduling/servi
 import { CommonModule, formatDate } from '@angular/common';
 import { Footer } from '../../shared/footer/footer';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePickerModule, DatePickerMonthChangeEvent } from 'primeng/datepicker';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FileUploadModule } from 'primeng/fileupload';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-scheduling',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Footer, RouterLink, HttpClientModule, DatePickerModule],
+  imports: [CommonModule, ReactiveFormsModule, Footer, RouterLink, HttpClientModule, DatePickerModule, FileUploadModule, FormsModule],
   templateUrl: './scheduling.html',
   styleUrl: './scheduling.css'
 })
@@ -28,6 +30,7 @@ export class Scheduling implements OnInit {
   
   minDate: Date = new Date();
   disabledDates: Date[] = [];
+  uploadedFiles: any[] = [];
   
   private currentMonth: number = new Date().getMonth();
   private currentYear: number = new Date().getFullYear();
@@ -48,7 +51,11 @@ export class Scheduling implements OnInit {
     this.onDateChanges();
   }
 
-  onMonthChange(event: DatePickerMonthChangeEvent) {
+  onFileSelect(event: any) {
+    this.uploadedFiles = event.files;
+  }
+
+  onMonthChange(event: any) {
     if (event.month !== undefined && event.month !== null && event.year !== undefined && event.year !== null) {
       const month = event.month;
       const year = event.year;
@@ -103,17 +110,20 @@ export class Scheduling implements OnInit {
     
     const dateStr = formatDate(formValue.date, 'yyyy-MM-dd', 'en-US');
 
-    const payload = {
-      services_entrepreneur_id: this.serviceId,
-      user_id: this.userId,
-      name: formValue.customer_name,
-      age: formValue.customer_age,
-      description: formValue.description,
-      date: dateStr,
-      time: formValue.time
-    };
+    const formData = new FormData();
+    formData.append('services_entrepreneur_id', this.serviceId);
+    formData.append('user_id', this.userId);
+    formData.append('name', formValue.customer_name);
+    formData.append('age', formValue.customer_age);
+    formData.append('description', formValue.description);
+    formData.append('date', dateStr);
+    formData.append('time', formValue.time);
 
-    this.schedulingService.createScheduling(payload).subscribe({
+    if (this.uploadedFiles.length > 0) {
+      formData.append('inspirationImage', this.uploadedFiles[0]);
+    }
+
+    this.schedulingService.createScheduling(formData).subscribe({
       next: () => {
         alert("Agendamento realizado com sucesso!");
       },

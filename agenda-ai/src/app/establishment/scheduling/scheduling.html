@@ -18,6 +18,22 @@
       <textarea id="description" pInputTextarea formControlName="description"></textarea>
     </div>
 
+    <div class="form-group">
+        <label for="inspirationImage">Imagem de Inspiração (Opcional)</label>
+        <p-fileUpload 
+            name="inspirationImage"
+            (onSelect)="onFileSelect($event)" 
+            accept="image/*"
+            maxFileSize="1000000"
+        >
+            <ng-template pTemplate="content">
+                <ul *ngIf="uploadedFiles.length">
+                    <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                </ul>
+            </ng-template>
+        </p-fileUpload>
+    </div>
+
     <!-- DatePicker PrimeNG -->
     <div class="form-group">
       <label>Selecione a Data</label>

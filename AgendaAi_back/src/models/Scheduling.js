@@ -37,6 +37,10 @@ const SchedulingSchema = new mongoose.Schema({
     type: String, // ex: "08:00"
     required: true
   },
+
+  inspirationImage: {
+    type: String
+  }
   }, { timestamps: true });
 
 

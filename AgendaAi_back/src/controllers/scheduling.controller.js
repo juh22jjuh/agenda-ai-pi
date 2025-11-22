@@ -15,6 +15,8 @@ export const createScheduling = async (req, res) => {
       time
     } = req.body;
 
+    const inspirationImage = req.file ? req.file.path : null;
+
     const service = await servicesEntreprenuer.findById(services_entrepreneur_id);
     if (!service)
       return res.status(404).json({ error: "Serviço não encontrado" });
@@ -60,7 +62,8 @@ export const createScheduling = async (req, res) => {
       age,
       description,
       date,
-      time
+      time,
+      inspirationImage
     });
 
     res.status(201).json(newScheduling);
