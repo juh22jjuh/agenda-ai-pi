@@ -1,10 +1,7 @@
 <nav class="w-full h-20 flex items-center justify-center relative bg-[#648f80]">
-  <!-- Seta de voltar -->
   <a class="absolute left-4 text-white text-2xl">
     <i class="pi pi-arrow-left"></i>
   </a>
-
-  <!-- Logo centralizado -->
   <div class="text-3xl font-extrabold cursor-pointer text-white tracking-tight">
     <span class="font-black text-transparent bg-gradient-to-b from-white to-blue-300 bg-clip-text">
       AgendaAi
@@ -12,9 +9,7 @@
   </div>
 </nav>
 
-
 <div class="scheduling-container bg-[#C7DED5]">
-
   <h2 class="title">Agendar Serviço</h2>
 
   <form [formGroup]="schedulingForm" (ngSubmit)="submit()" class="form">
@@ -37,10 +32,29 @@
       <textarea formControlName="description" placeholder="Descreva o que você precisa"></textarea>
     </div>
 
-    <!-- Data -->
+    <!-- Calendário -->
     <div class="form-group">
-      <label>Data disponível</label>
-      <input type="date" formControlName="date" />
+      <label>Data</label>
+      <div class="calendar">
+        <div class="calendar-header">
+          <button type="button" (click)="previousMonth()">‹</button>
+          <span>{{ currentMonth }}/{{ currentYear }}</span>
+          <button type="button" (click)="nextMonth()">›</button>
+        </div>
+        <div class="calendar-weekdays">
+          <div *ngFor="let day of weekDays" class="weekday">{{ day }}</div>
+        </div>
+        <div class="calendar-days">
+          <div *ngFor="let day of calendarDays" 
+               class="day"
+               [class.unavailable]="!isAvailable(day)"
+               [class.selected]="isSelected(day)"
+               (click)="selectDate(day)">
+            {{ day }}
+          </div>
+        </div>
+      </div>
+      <input type="hidden" formControlName="date" />
     </div>
 
     <!-- Horários -->
@@ -52,19 +66,17 @@
           {{ t }}
         </option>
       </select>
-
       <p *ngIf="availableTimes.length === 0" class="no-times">
         Escolha uma data para carregar os horários.
       </p>
     </div>
 
     <!-- Botão -->
-    <button type="submit" [disabled]="schedulingForm.valid" class="btn-submit">
+    <button type="submit" [disabled]="!schedulingForm.valid" class="btn-submit">
       Confirmar Agendamento
     </button>
 
   </form>
-
 </div>
 
 <app-footer></app-footer>
