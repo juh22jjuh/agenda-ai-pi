@@ -33,26 +33,33 @@
             <p class="text-gray-800"><strong>Email:</strong> {{ user?.email }}</p>
 
             <!-- Rodapé com ações -->
-            <footer class="flex gap-2 mt-2">
-              <!-- Botão Ativar -->
-              <button
-                class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors flex-1"
-                  *ngIf="!user.isActive"
-                  label="Ativar" 
-                  icon="pi pi-check" 
-                  (click)="alterarStatus(user._id, true)">
-                Ativar
-              </button>
+            <footer class="flex flex-col gap-3 mt-2">
 
-              <!-- Botão Desativar -->
-              <button
-                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors flex-1"
-                  *ngIf="user.isActive"
-                  label="Inativar" 
-                  icon="pi pi-ban" 
-                  (click)="alterarStatus(user._id, false)">
-                Desativar
-              </button>
+              <!-- Ações para usuário ATIVO -->
+              <div *ngIf="user.isActive">
+                <div class="flex items-center gap-2">
+                  <input 
+                    type="number" 
+                    [(ngModel)]="deactivationDays[user._id]"
+                    placeholder="Dias de suspensão"
+                    class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#648f80]">
+                  <button
+                    class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors whitespace-nowrap"
+                    (click)="deactivateUser(user._id)">
+                    Desativar
+                  </button>
+                </div>
+              </div>
+
+              <!-- Ações para usuário INATIVO -->
+              <div *ngIf="!user.isActive">
+                 <button
+                  class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors w-full"
+                  (click)="activateUser(user._id)">
+                  Ativar
+                </button>
+              </div>
+
             </footer>
 
           </article>
