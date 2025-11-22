@@ -19,6 +19,31 @@ export const createScheduling = async (req, res) => {
     if (!service)
       return res.status(404).json({ error: "Serviço não encontrado" });
 
+    // VALIDAÇÃO 1: VERIFICAR SE O DIA DA SEMANA É VÁLIDO
+    const weekMap = {
+      sunday: 0,
+      monday: 1,
+      tuesday: 2,
+      wednesday: 3,
+      thursday: 4,
+      friday: 5,
+      saturday: 6
+    };
+    const allowedDays = service.dias.map(d => weekMap[d.id.toLowerCase()]);
+    const requestedDate = new Date(`${date}T00:00:00`); // Usar T00:00:00 para evitar problemas de fuso horário
+    const requestedWeekday = requestedDate.getDay();
+
+    if (!allowedDays.includes(requestedWeekday)) {
+      return res.status(400).json({ error: "O serviço não está disponível neste dia da semana" });
+    }
+
+    // VALIDAÇÃO 2: VERIFICAR SE O HORÁRIO É VÁLIDO
+    const allowedTimes = service.time.map(t => t.label);
+    if (!allowedTimes.includes(time)) {
+      return res.status(400).json({ error: "O serviço não está disponível neste horário" });
+    }
+
+    // VALIDAÇÃO 3: VERIFICAR CONFLITOS DE AGENDAMENTO
     const conflict = await scheduling.findOne({
       services_entrepreneur_id,
       date,
@@ -91,7 +116,7 @@ export const getAvailableDates = async (req, res) => {
       saturday: 6
     };
 
-    const allowedDays = service.selectedDays.map(
+    const allowedDays = service.dias.map(
       d => weekMap[d.id.toLowerCase()]
     );
 
@@ -135,7 +160,7 @@ export const getAvailableHours = async (req, res) => {
 
     const reservedTimes = reserved.map(r => r.time);
 
-    const availableTimes = service.selectedTime
+    const availableTimes = service.time
       .map(t => t.label)
       .filter(t => !reservedTimes.includes(t));
 

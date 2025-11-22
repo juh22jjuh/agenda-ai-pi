@@ -21,6 +21,7 @@ export class Scheduling implements OnInit {
 
   schedulingForm!: FormGroup;
   serviceId!: string;
+  userId!: string; // Adicionado userId
 
   availableTimes: string[] = [];
   availableDates: string[] = [];
@@ -34,6 +35,7 @@ export class Scheduling implements OnInit {
 
   ngOnInit(): void {
     this.serviceId = this.route.snapshot.paramMap.get('idService') as string;
+    this.userId = this.route.snapshot.paramMap.get('idUser') as string; // Captura o idUser
 
     this.schedulingForm = this.fb.group({
       customer_name: ['', Validators.required],
@@ -128,7 +130,7 @@ export class Scheduling implements OnInit {
 
     const payload = {
       services_entrepreneur_id: this.serviceId, 
-      user_id: "ID_DO_USUARIO_LOGADO", // ATENÇÃO: Substituir pelo ID do usuário logado
+      user_id: this.userId, // Usa o userId capturado da rota
       name: formValue.customer_name,     
       age: formValue.customer_age,       
       description: formValue.description,
