@@ -1,12 +1,11 @@
-/* Container principal - centraliza o formulário */
+/* Estilos Globais do Componente */
 .scheduling-container {
-  max-width: 600px;
+  max-width: 500px;
   margin: 2rem auto;
   padding: 2rem;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  color: #333;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 .title {
@@ -17,7 +16,12 @@
   color: #2d5a4f;
 }
 
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
 .form-group label {
+  display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #4A5568;
@@ -26,15 +30,25 @@
 .form-group input,
 .form-group textarea,
 .form-group select {
+  width: 100%;
   padding: 0.75rem;
   border: 1px solid #CBD5E0;
   border-radius: 4px;
   font-size: 1rem;
   background-color: #F7FAFC;
   color: #2D3748;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #648f80;
 }
 
 .btn-submit {
+  width: 100%;
   padding: 1rem;
   background-color: #648f80;
   color: white;
@@ -46,80 +60,72 @@
   transition: background-color 0.3s;
 }
 
-/* --- ESTILO ELEGANTE DO CALENDÁRIO --- */
-
-.calendar {
-  border: 1px solid #E2E8F0;
-  border-radius: 8px; /* Bordas um pouco mais arredondadas */
-  padding: 1rem; /* Mais espaço interno */
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+.btn-submit:disabled {
+  background-color: #a0b4ac;
+  cursor: not-allowed;
 }
 
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.calendar-header .month-year {
-  font-size: 1.1rem;
-  color: #2d5a4f;
-}
-
-.calendar-header button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: background-color 0.2s;
-}
-
-.calendar-header button:hover {
-  background-color: #F7FAFC;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem; /* Espaço entre os dias */
-  text-align: center;
-}
-
-.weekday {
-  font-weight: 600;
+.no-times {
+  font-size: 0.9rem;
   color: #718096;
-  padding: 0.5rem 0;
+  padding: 0.75rem;
+  background-color: #F7FAFC;
+  border: 1px solid #CBD5E0;
+  border-radius: 4px;
 }
 
-.day {
+/* --- Estilização do p-datepicker --- */
+
+:host ::ng-deep .custom-datepicker .p-datepicker {
+  border: none; /* Remove a borda padrão */
+  width: 100%;
+}
+
+:host ::ng-deep .custom-datepicker .p-datepicker-header {
+  background-color: #F8F9FA;
+  color: #2d5a4f;
+  font-weight: 600;
+  padding: 0.75rem;
+  border-bottom: 1px solid #E2E8F0;
+  border-radius: 8px 8px 0 0;
+}
+
+:host ::ng-deep .custom-datepicker .p-datepicker-title .p-datepicker-month,
+:host ::ng-deep .custom-datepicker .p-datepicker-title .p-datepicker-year {
+  color: #2d5a4f; /* Garante a cor correta */
+}
+
+:host ::ng-deep .custom-datepicker .p-datepicker-calendar {
+  width: 100%;
+}
+
+:host ::ng-deep .custom-datepicker .p-datepicker-calendar th {
+  color: #718096;
+  font-weight: 600;
   padding: 0.5rem;
-  cursor: pointer;
+}
+
+:host ::ng-deep .custom-datepicker .p-datepicker-calendar td > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   transition: background-color 0.2s, color 0.2s;
-  border: 1px solid transparent;
 }
 
-.day.unavailable {
-  color: #A0AEC0;
-  cursor: not-allowed;
-  text-decoration: line-through;
+:host ::ng-deep .custom-datepicker .p-datepicker-calendar td:not(.p-disabled) span:not(.p-highlight):hover {
+  background-color: #EDF2F7; 
 }
 
-.day:not(.unavailable):not(.selected):hover {
-  background-color: #EDF2F7;
-  border-color: #E2E8F0;
-}
-
-.day.selected {
+:host ::ng-deep .custom-datepicker .p-datepicker-calendar td span.p-highlight {
   background-color: #648f80;
-  color: white !important;
-  border-color: #648f80;
+  color: white;
 }
 
-.day.empty {
-  cursor: default;
+:host ::ng-deep .custom-datepicker .p-datepicker-calendar td span.p-datepicker-today {
+  background-color: #f0f5f3;
+  color: #648f80;
+  font-weight: bold;
 }
