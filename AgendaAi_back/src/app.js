@@ -3,7 +3,7 @@ import {router} from "./routes/user.route.js";
 import {routerEnt} from "./routes/entrepreneur.routes.js";
 import dotenv from 'dotenv/config.js'
 import { routerCont } from './routes/contato.router.js';
-import { routerAdmin } from './routes/admin.route.js';
+import { routerAdmin } from './routes/admin.router.js';
 import { routerServicesEntreprenuer } from './routes/services_entreprenuer.js';
 import { routerSche } from './routes/scheduling.router.js';
 import cors from 'cors';
