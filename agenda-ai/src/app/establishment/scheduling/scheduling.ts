@@ -5,7 +5,7 @@ import { ServiceSchedulingService } from '../../services/serviceScheduling/servi
 import { CommonModule, formatDate } from '@angular/common';
 import { Footer } from '../../shared/footer/footer';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePickerModule } from 'primeng/datepicker';
+import { DatePickerModule, DatePickerMonthChangeEvent } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-scheduling',
@@ -48,9 +48,11 @@ export class Scheduling implements OnInit {
     this.onDateChanges();
   }
 
-  onMonthChange(event: { month: number | undefined, year: number }) {
-    if (event.month !== undefined) {
-      this.getAvailableDatesForMonth(event.year, event.month - 1);
+  onMonthChange(event: DatePickerMonthChangeEvent) {
+    if (event.month !== undefined && event.month !== null && event.year !== undefined && event.year !== null) {
+      const month = event.month;
+      const year = event.year;
+      this.getAvailableDatesForMonth(year, month - 1);
     }
   }
 
