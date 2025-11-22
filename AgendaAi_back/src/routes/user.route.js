@@ -1,5 +1,6 @@
 import { Router } from "express"
-import { GetUserById, Login, Register, requestPasswordReset, resetPassword, GetAllUsers, ToggleStatusUser  } from "../controllers/user.controller.js"
+import { GetUserById, Login, Register, requestPasswordReset, resetPassword, GetAllUsers, ToggleStatusUser, UpdateUserPhoto } from "../controllers/user.controller.js"
+import upload from "../config/multer.js";
 
 export const router = Router()
 
@@ -10,3 +11,4 @@ router.post('/requestpasswordreset', requestPasswordReset);
 router.post('/resetpassword', resetPassword);
 router.get('/all', GetAllUsers);
 router.patch('/Status/:id', ToggleStatusUser);
+router.put("/update-photo/:id", upload.single("profileImage"), UpdateUserPhoto);

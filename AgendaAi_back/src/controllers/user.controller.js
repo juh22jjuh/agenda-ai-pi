@@ -200,3 +200,26 @@ export const ToggleStatusUser = async (req, res) => {
     res.status(500).json({ message: "Erro ao alterar status do usuario." });
   }
 };
+
+export const UpdateUserPhoto = async (req, res) => {
+  const { id } = req.params;
+  const { file } = req;
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    if (file) {
+      user.photo = file.path;
+      await user.save();
+      return res.status(200).json({ message: "Foto de perfil atualizada com sucesso", user });
+    } else {
+      return res.status(400).json({ message: "Nenhuma foto enviada" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Problemas no servidor" });
+  }
+};

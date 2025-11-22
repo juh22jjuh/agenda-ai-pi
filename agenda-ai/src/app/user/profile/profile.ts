@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../auth/auth';
+import { HttpClient } from '@angular/common/http';
 
 // PrimeNG
 import { CardModule } from 'primeng/card';
@@ -51,7 +52,7 @@ export class Profile implements OnInit {
   logged = false;
   activeIndex = 0; // controla aba ativa
 
-  constructor(private authService: Auth) {}
+  constructor(private authService: Auth, private http: HttpClient) {}
 
   ngOnInit(): void {
     const { user, token } = this.authService.getUserData();
@@ -75,11 +76,22 @@ export class Profile implements OnInit {
   alterarFoto(event: any) {
     const file = event.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.user.photo = e.target.result; // atualiza foto instantaneamente
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append("profileImage", file);
+
+      const { user } = this.authService.getUserData();
+      if (user && user._id) {
+        this.http.put(`http://localhost:3000/user/update-photo/${user._id}`, formData).subscribe(
+          (res: any) => {
+            console.log('RES', res);
+            this.user.photo = `http://localhost:3000/${res.user.photo}`;
+            this.authService.updateUser({ ...user, photo: this.user.photo });
+          },
+          (err) => {
+            console.error(err);
+          }
+        );
+      }
     }
   }
 }
