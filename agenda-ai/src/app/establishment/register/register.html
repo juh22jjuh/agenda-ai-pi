@@ -1,79 +1,86 @@
 <app-navbar-auth></app-navbar-auth>
 <p-toast></p-toast>
 
-<div class="relative min-h-screen bg-[#C7DED5]  flex flex-col items-center py-6 px-4 sm:px-6 lg:px-8">
-  <!-- Form container -->
-  <div class="w-full max-w-3xl bg-white rounded-xl shadow-2xl p-6 sm:p-8">
-    <p-card header="Cadastro de Estabelecimento" class="p-card-header-sm !bg-white !text-[#648f80]"
-      [style]="{ 'border': 'none'}">
+<div class="register-container">
+  <p-card styleClass="form-card">
+    <ng-template pTemplate="header">
+      Cadastro de Estabelecimento
+    </ng-template>
 
-      <form [formGroup]="entrepreneurRegisterForm" (ngSubmit)="registerEntrepreneur()" class="border-none">
+    <form [formGroup]="entrepreneurRegisterForm" (ngSubmit)="registerEntrepreneur()">
 
-        <!-- Dados do Estabelecimento -->
-        <h3 class="text-xl font-semibold mb-4 text-[#648f80]">Dados do Estabelecimento</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-          <input pInputText placeholder="Nome do Estabelecimento *" formControlName="name"
-            class="w-full !bg-white !text-[#648f80] border border-[#648f80] rounded p-2" /> 
-          <p-inputMask mask="999.999.999-99" formControlName="cpf" placeholder="999.999.999-99"
-            class="w-full !bg-white !text-[#648f80]  border-[#648f80] rounded p-2"
-            [style]="{ 'background-color': '#ffffff', 'color': '#648f80', 'border-radius': '0.375rem', 'border': '1px solid #648f80' }"></p-inputMask>
+      <h3 class="section-title">Dados do Estabelecimento</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label for="name">Nome do Estabelecimento *</label>
+          <input pInputText id="name" formControlName="name" />
         </div>
-
-        <!-- Contato -->
-        <h3 class="text-xl font-semibold mb-4 text-[#648f80]">Contato</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-          <p-inputMask mask="(99) 99999-9999" formControlName="telefone" placeholder="(16)-99324-2138"
-            class="w-full !bg-white !text-[#648f80] border-[#648f80] rounded p-2"
-            [style]="{ 'background-color': '#ffffff', 'color': '#648f80', 'border-radius': '0.375rem', 'border': '1px solid #648f80' }"></p-inputMask>
-            <label class="block font-semibold mt-2">Imagem da empresa:</label>
+        <div class="field">
+          <label for="cpf">CPF *</label>
+          <p-inputMask id="cpf" mask="999.999.999-99" formControlName="cpf"></p-inputMask>
         </div>
+      </div>
 
-        <!-- Endereço -->
-        <h3 class="text-xl font-semibold mb-4 text-[#648f80]">Endereço</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-          <p-inputMask mask="99999-999" formControlName="cep" placeholder="14834-080"
-            (onBlur)="buscarEndereco()"
-            class="w-full !bg-white !text-[#648f80]  border-[#648f80] rounded p-2"
-            [style]="{ 'background-color': '#ffffff', 'color': '#648f80', 'border-radius': '0.375rem', 'border': '1px solid #648f80' }"></p-inputMask>
-          <input pInputText placeholder="Rua *" formControlName="rua"
-            class="w-full !bg-white !text-[#648f80] border border-[#648f80] rounded p-2" />
-          <input pInputText placeholder="Número *" formControlName="numero"
-            class="w-full !bg-white !text-[#648f80] border border-[#648f80] rounded p-2" />
-          <input pInputText placeholder="Complemento" formControlName="comple"
-            class="w-full !bg-white !text-[#648f80] border border-[#648f80] rounded p-2" />
-          <input pInputText placeholder="Bairro *" formControlName="bairro"
-            class="w-full !bg-white !text-[#648f80] border border-[#648f80] rounded p-2" />
-          <input pInputText placeholder="Cidade *" formControlName="cidade"
-            class="w-full !bg-white !text-[#648f80] border border-[#648f80] rounded p-2" />
-          <select formControlName="estado" class="w-full p-2 border border-[#648f80] rounded text-[#648f80]">
-            <option value="" disabled>Selecione o Estado</option>
-            <option *ngFor="let s of states" [value]="s.value">{{ s.name }}</option>
-          </select>
+      <h3 class="section-title">Contato</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label for="telefone">Telefone *</label>
+          <p-inputMask id="telefone" mask="(99) 99999-9999" formControlName="telefone"></p-inputMask>
         </div>
-
-        <!-- Termos -->
-        <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4 gap-2">
-          <p-checkbox formControlName="termos" [binary]="true" class="mr-2"></p-checkbox>
-          <span class="text-[#648f80] text-sm">
-            Concordo com os
-            <a routerLink="/establishment/termos" class="underline">Termos de Uso</a> e
-            <a routerLink="/'establishment/politicas" class="underline">Política de Privacidade</a> *
-          </span>
+        <div class="field">
+          <label for="company-image">Imagem da empresa</label>
+          <!-- Add your file upload component here -->
         </div>
+      </div>
 
-        <!-- Botões -->
-        <div class="flex flex-col sm:flex-row gap-4">
-          <button pButton type="button" label="Limpar" severity="secondary" outlined
-            class="w-full sm:w-auto border-[#648f80] text-[#648f80] hover:bg-[#648f80] hover:text-white"
-            (click)="clearForm()"></button>
-
-          <button pButton type="submit" label="Cadastrar" severity="primary"
-            class="w-full sm:w-auto bg-[#648f80] border-[#648f80] text-white hover:bg-white hover:text-[#648f80]"
-            [disabled]="!entrepreneurRegisterForm.valid"></button>
+      <h3 class="section-title">Endereço</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label for="cep">CEP *</label>
+          <p-inputMask id="cep" mask="99999-999" formControlName="cep" (onBlur)="buscarEndereco()"></p-inputMask>
         </div>
+        <div class="field">
+          <label for="rua">Rua *</label>
+          <input pInputText id="rua" formControlName="rua" />
+        </div>
+        <div class="field">
+          <label for="numero">Número *</label>
+          <input pInputText id="numero" formControlName="numero" />
+        </div>
+        <div class="field">
+          <label for="comple">Complemento</label>
+          <input pInputText id="comple" formControlName="comple" />
+        </div>
+        <div class="field">
+          <label for="bairro">Bairro *</label>
+          <input pInputText id="bairro" formControlName="bairro" />
+        </div>
+        <div class="field">
+          <label for="cidade">Cidade *</label>
+          <input pInputText id="cidade" formControlName="cidade" />
+        </div>
+        <div class="field">
+           <label for="estado">Estado *</label>
+           <p-dropdown id="estado" [options]="states" formControlName="estado" optionLabel="name" optionValue="value" placeholder="Selecione o Estado"></p-dropdown>
+        </div>
+      </div>
 
-      </form>
-    </p-card>
-  </div>
+      <div class="terms-container">
+        <p-checkbox formControlName="termos" [binary]="true"></p-checkbox>
+        <span class="terms-text">
+          Concordo com os
+          <a routerLink="/establishment/termos">Termos de Uso</a> e
+          <a routerLink="/establishment/politicas">Política de Privacidade</a> *
+        </span>
+      </div>
+
+      <div class="button-container">
+        <button pButton type="button" label="Limpar" severity="secondary" (click)="clearForm()"></button>
+        <button pButton type="submit" label="Cadastrar" severity="primary" [disabled]="!entrepreneurRegisterForm.valid"></button>
+      </div>
+
+    </form>
+  </p-card>
 </div>
+
 <app-footer></app-footer>
