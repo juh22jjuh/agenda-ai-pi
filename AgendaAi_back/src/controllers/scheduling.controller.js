@@ -231,6 +231,7 @@ export const cancelScheduling = async (req, res) => {
 export const getSchedulingByEntrepreneur = async (req, res) => {
   try {
     const { entrepreneurId } = req.params;
+    console.log("Buscando agendamentos para o empreendedor:", entrepreneurId);
 
     // 1. Encontrar todos os serviços do empreendedor
     const services = await servicesEntreprenuer.find({ id_entreprenuer: entrepreneurId });
