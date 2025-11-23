@@ -11,7 +11,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { TabsModule } from 'primeng/tabs';
+import { Tabs } from 'primeng/tabs';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
@@ -29,7 +29,7 @@ import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
     ButtonModule,
     InputTextModule,
     PasswordModule,
-    TabsModule,
+    Tabs,
     FileUploadModule,
     AvatarModule,
     DividerModule,
