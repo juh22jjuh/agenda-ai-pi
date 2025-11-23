@@ -18,7 +18,7 @@
     <!-- Profile Card -->
     <p-card styleClass="profile-card">
       <ng-template pTemplate="header">
-        <img [src]="entrepreneur.image || 'assets/placeholder.jpg'" alt="Imagem da empresa" class="profile-image">
+        <img [src]="'http://localhost:3000/' + entrepreneur.image" alt="Imagem da empresa" class="profile-image">
       </ng-template>
       <ng-template pTemplate="title">{{ entrepreneur.name }}</ng-template>
       <ng-template pTemplate="content">
@@ -70,13 +70,14 @@
     <!-- Schedules Section -->
     <div class="section-card">
       <h2 class="section-title">Meus Agendamentos</h2>
-      <p-table [value]="schedules" [tableStyle]="{'min-width': '50rem'}" responsiveLayout="scroll">
+      <p-table [value]="schedules" [tableStyle]="{'min-width': '60rem'}" responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>
             <th>Data</th>
             <th>Hora</th>
             <th>Cliente</th>
             <th>Serviço</th>
+            <th>Inspiração</th>
             <th>Ações</th>
           </tr>
         </ng-template>
@@ -87,12 +88,15 @@
             <td>{{ schedule.user_id?.name || 'Cliente não identificado' }}</td>
             <td>{{ schedule.services_entrepreneur_id?.nome || 'Serviço não identificado' }}</td>
             <td>
+              <img *ngIf="schedule.inspirationImage" [src]="'http://localhost:3000/' + schedule.inspirationImage" alt="Imagem de Inspiração" width="50" class="inspiration-image">
+            </td>
+            <td>
                 <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-danger p-button-sm" (click)="cancelSchedule(schedule)" />
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
-          <tr><td colspan="5">Nenhum agendamento encontrado.</td></tr>
+          <tr><td colspan="6">Nenhum agendamento encontrado.</td></tr>
         </ng-template>
       </p-table>
     </div>

@@ -247,8 +247,6 @@ export const getSchedulingByEntrepreneur = async (req, res) => {
       services_entrepreneur_id: { $in: serviceIds }
     }).populate('user_id').populate('services_entrepreneur_id');
 
-    console.log("Schedules after populate:", JSON.stringify(schedules, null, 2));
-
     res.json(schedules);
 
   } catch (error) {
