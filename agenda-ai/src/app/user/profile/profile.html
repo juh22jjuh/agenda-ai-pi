@@ -13,7 +13,7 @@
               name="profileImage"
               chooseLabel="Mudar foto"
               [auto]="true"
-              (onUpload)="alterarFoto($event)"
+              (onSelect)="alterarFoto($event)"
               class="mt-auto"
             >
             </p-fileUpload>
@@ -30,11 +30,11 @@
                 <div class="p-fluid">
                   <div class="field">
                     <label for="name">Nome</label>
-                    <input pInputText id="name" type="text" [(ngModel)]="user.name" />
+                    <input pInputText id="name" type="text" [(ngModel)]="updatedUser.name" />
                   </div>
                   <div class="field">
                     <label for="surname">Sobrenome</label>
-                    <input pInputText id="surname" type="text" [(ngModel)]="user.surname" />
+                    <input pInputText id="surname" type="text" [(ngModel)]="updatedUser.surname" />
                   </div>
                   <div class="field">
                     <label for="email">Email</label>

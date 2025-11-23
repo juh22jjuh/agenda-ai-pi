@@ -60,7 +60,7 @@ export class Profile implements OnInit {
   }
 
   salvarInfoPessoal() {
-    this.http.put(`http://localhost:3000/api/users/${this.user._id}`, this.updatedUser).subscribe(
+    this.http.put(`http://localhost:3000/api/users/${this.user._id}`, this.user).subscribe(
       (response: any) => {
         this.user = response;
         this.authService.updateUser(response);
@@ -72,12 +72,12 @@ export class Profile implements OnInit {
     );
   }
 
-  onFileSelect(event: any) {
+  alterarFoto(event: any) {
     const file = event.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.profileImageUrl = e.target.result;
+        this.user.photo = e.target.result;
       };
       reader.readAsDataURL(file);
     }
