@@ -1,3 +1,4 @@
+
 <app-navbar-auth></app-navbar-auth>
 <p-toast></p-toast>
 
@@ -7,8 +8,30 @@
       Cadastro de Estabelecimento
     </ng-template>
 
-    <form [formGroup]="entrepreneurRegisterForm" (ngSubmit)="registerEntrepreneur()">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
+      <!-- Seção de Upload de Imagem -->
+      <div class="image-upload-section">
+        <div *ngIf="!imagePreview" class="file-upload-wrapper">
+          <p-fileUpload 
+            name="companyImage"
+            mode="basic" 
+            accept="image/*" 
+            chooseLabel="Imagem da Empresa"
+            (onSelect)="onFileSelect($event)" 
+            [auto]="true" 
+            customUpload="true"
+          ></p-fileUpload>
+          <small>Clique para selecionar a imagem do seu estabelecimento.</small>
+        </div>
+
+        <div *ngIf="imagePreview" class="image-preview-wrapper">
+          <img [src]="imagePreview" alt="Pré-visualização da imagem" class="image-preview">
+          <button pButton type="button" icon="pi pi-times" (click)="clearFile()" class="p-button-danger p-button-rounded p-button-sm remove-image-btn"></button>
+        </div>
+      </div>
+      
+      <!-- Dados do Estabelecimento -->
       <h3 class="section-title">Dados do Estabelecimento</h3>
       <div class="form-grid">
         <div class="field">
@@ -21,29 +44,22 @@
         </div>
       </div>
 
+      <!-- Contato -->
       <h3 class="section-title">Contato</h3>
       <div class="form-grid">
         <div class="field">
           <label for="telefone">Telefone *</label>
           <p-inputMask id="telefone" mask="(99) 99999-9999" formControlName="telefone"></p-inputMask>
         </div>
-        <div class="field">
-          <label for="company-image">Imagem da empresa</label>
-          <p-fileUpload name="companyImage" 
-                        (onSelect)="onFileSelect($event)" 
-                        [showUploadButton]="false" 
-                        [showCancelButton]="false"
-                        accept="image/*" 
-                        chooseLabel="Escolher imagem">
-          </p-fileUpload>
-        </div>
       </div>
 
+      <!-- Endereço -->
       <h3 class="section-title">Endereço</h3>
       <div class="form-grid">
-        <div class="field">
+        <div class="field cep-field">
           <label for="cep">CEP *</label>
-          <p-inputMask id="cep" mask="99999-999" formControlName="cep" (onBlur)="buscarEndereco()"></p-inputMask>
+          <p-inputMask id="cep" mask="99999-999" formControlName="cep" (onBlur)="onCepBlur()"></p-inputMask>
+          <p-progressSpinner *ngIf="isCepLoading" [style]="{width: '25px', height: '25px'}" strokeWidth="8"></p-progressSpinner>
         </div>
         <div class="field">
           <label for="rua">Rua *</label>
@@ -54,8 +70,8 @@
           <input pInputText id="numero" formControlName="numero" />
         </div>
         <div class="field">
-          <label for="comple">Complemento</label>
-          <input pInputText id="comple" formControlName="comple" />
+          <label for="complemento">Complemento</label>
+          <input pInputText id="complemento" formControlName="complemento" />
         </div>
         <div class="field">
           <label for="bairro">Bairro *</label>
@@ -66,28 +82,29 @@
           <input pInputText id="cidade" formControlName="cidade" />
         </div>
         <div class="field">
-           <label for="estado">Estado *</label>
-           <select id="estado" formControlName="estado">
-            <option value="" disabled>Selecione o Estado</option>
+          <label for="estado">Estado *</label>
+          <select id="estado" formControlName="estado" class="p-inputtext">
+            <option value="" disabled>Selecione</option>
             <option *ngFor="let s of states" [value]="s.value">{{ s.name }}</option>
           </select>
         </div>
       </div>
 
+      <!-- Termos e Condições -->
       <div class="terms-container">
-        <p-checkbox formControlName="termos" [binary]="true"></p-checkbox>
-        <span class="terms-text">
+        <p-checkbox formControlName="termos" [binary]="true" inputId="termos"></p-checkbox>
+        <label for="termos" class="terms-text">
           Concordo com os
           <a routerLink="/establishment/termos">Termos de Uso</a> e
           <a routerLink="/establishment/politicas">Política de Privacidade</a> *
-        </span>
+        </label>
       </div>
 
+      <!-- Botões de Ação -->
       <div class="button-container">
-        <button pButton type="button" label="Limpar" severity="secondary" (click)="clearForm()"></button>
-        <button pButton type="submit" label="Cadastrar" severity="primary" [disabled]="!entrepreneurRegisterForm.valid"></button>
+        <button pButton type="button" label="Limpar" severity="secondary" (click)="resetForm()" [disabled]="isSubmitting"></button>
+        <button pButton type="submit" label="{{ isSubmitting ? 'Enviando...' : 'Cadastrar' }}" severity="primary" [disabled]="registerForm.invalid || isSubmitting" [loading]="isSubmitting"></button>
       </div>
-
     </form>
   </p-card>
 </div>
