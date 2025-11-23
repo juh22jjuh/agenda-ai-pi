@@ -4,7 +4,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { IEntrepreneur } from '../auth/types/entrepreneur.type';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +25,18 @@ export class EstablishmentService {
     );
   }
 
+  updateEntrepreneur(id: string, data: FormData): Observable<any> {
+    return this.http.put(`${this.API_URL}/entrepreneur/update/${id}`, data).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteEntrepreneur(userId: string): Observable<any> {
+    return this.http.delete(`${this.API_URL}/entrepreneur/delete/${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   // Busca todos os serviços de um empreendedor
   getServices(entrepreneurId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/servicesEntreprenuer/getall/${entrepreneurId}`).pipe(
@@ -33,19 +44,11 @@ export class EstablishmentService {
     );
   }
 
-  // Busca todos os agendamentos de um empreendedor (usando o novo endpoint)
+  // Busca todos os agendamentos de um empreendedor
   getSchedules(entrepreneurId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/scheduling/entrepreneur/${entrepreneurId}`).pipe(
       catchError(this.handleError)
     );
-  }
-
-  updateService(id: string, dados: any) {
-    return this.http.put(`http://localhost:3000/servicesEntreprenuer/update/${id}`, dados);
-  }
-    
-  deleteService(id: string) {
-    return this.http.delete(`http://localhost:3000/servicesEntreprenuer/delete/${id}`);
   }
 
   private handleError(error: HttpErrorResponse) {
