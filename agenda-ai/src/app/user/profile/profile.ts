@@ -63,7 +63,7 @@ export class Profile implements OnInit {
   }
 
   salvarInfoPessoal() {
-    this.http.put(`http://localhost:3000/api/users/${this.user._id}`, this.user).subscribe(
+    this.http.put(`http://localhost:3000/api/user/${this.user._id}`, this.user).subscribe(
       (response: any) => {
         this.user = response;
         this.authService.updateUser(response);
@@ -78,11 +78,19 @@ export class Profile implements OnInit {
   alterarFoto(event: any) {
     const file = event.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.user.photo = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('profileImage', file);
+
+      this.http.put(`http://localhost:3000/api/user/update-photo/${this.user._id}`, formData).subscribe(
+        (response: any) => {
+          this.user = response;
+          this.authService.updateUser(this.user);
+          this.profileImageUrl = `http://localhost:3000/uploads/${this.user.photo}`;
+        },
+        (error) => {
+          console.error('Erro ao atualizar a foto:', error);
+        }
+      );
     }
   }
 
