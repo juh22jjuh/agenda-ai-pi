@@ -61,7 +61,10 @@
         </div>
         <div class="field">
            <label for="estado">Estado *</label>
-           <p-dropdown id="estado" [options]="states" formControlName="estado" optionLabel="name" optionValue="value" placeholder="Selecione o Estado"></p-dropdown>
+           <select id="estado" formControlName="estado">
+            <option value="" disabled>Selecione o Estado</option>
+            <option *ngFor="let s of states" [value]="s.value">{{ s.name }}</option>
+          </select>
         </div>
       </div>
 
