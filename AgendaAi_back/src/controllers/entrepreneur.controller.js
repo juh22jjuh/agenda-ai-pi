@@ -98,16 +98,12 @@ export const GetEntreprenuerById = async (req, res) => {
   try {
     const { id } = req.params
     const entrepreneur = await Entrepreneur.find({ _id: id}).populate('services_entreprenuer')
-    if (!entrepreneur) res.status(400).json({ message: 'Empresa não encontrada' })
+    if (!entrepreneur) return res.status(400).json({ message: 'Empresa não encontrada' })
     res.status(200).json(entrepreneur)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Internal server error' })
-  // Check if CPF is provided before trying to use .replace
-  if (!cpf) {
-    return res.status(400).json({ message: 'O CPF é obrigatório.' });
   }
-}
 }
 
 export const Delete = async (req, res) => {
@@ -148,26 +144,49 @@ export const AllEntrepreneur = async (req, res) => {
 
 export const UpdateEntreprenuer = async (req, res) => {
   try {
-    const { id } = req.params
-    const { name, telefone, cep, rua, numero, comple, bairro, cidade, estado, image } = req.body;
-    const entreprenuer = await Entrepreneur.findByIdAndUpdate(id, {
-      name: name,
-      telefone: telefone,
-      cep: cep,
-      rua: rua,
-      numero: numero,
-      comple: comple,
-      bairro: bairro,
-      cidade: cidade,
-      estado: estado,
-      image: image
-    })
-    res.status(204).json({ message: 'Empresa modificada com sucesso!'})
+    const { id } = req.params; // The ID of the Entrepreneur document
+
+    const updateFields = {};
+    const allowedFields = ['name', 'telefone', 'cep', 'rua', 'numero', 'comple', 'bairro', 'cidade', 'estado'];
+    
+    allowedFields.forEach(field => {
+      if (req.body[field] !== undefined) {
+        updateFields[field] = req.body[field];
+      }
+    });
+
+    if (req.file) {
+      updateFields.image = normalizePath(req.file.path);
+    }
+
+    // Format fields if they exist to remove non-digit characters
+    if (updateFields.telefone) updateFields.telefone = updateFields.telefone.replace(/\D/g, '');
+    if (updateFields.cep) updateFields.cep = updateFields.cep.replace(/\D/g, '');
+
+    if (Object.keys(updateFields).length === 0) {
+      return res.status(400).json({ message: 'Nenhum campo para atualizar fornecido.' });
+    }
+
+    const updatedEntrepreneur = await Entrepreneur.findByIdAndUpdate(
+      id,
+      { $set: updateFields },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedEntrepreneur) {
+      return res.status(404).json({ message: 'Empreendedor não encontrado.' });
+    }
+
+    res.status(200).json({ message: 'Empresa atualizada com sucesso!', entrepreneur: updatedEntrepreneur });
+
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: "Internal server error" })
+    console.error('Erro ao atualizar empreendedor:', error);
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ message: 'Erro de validação', details: error.message });
+    }
+    res.status(500).json({ error: "Erro interno do servidor." });
   }
-}
+};
 
 export const ToggleStatusEntrepreneur = async (req, res) => {
   try {
