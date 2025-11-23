@@ -40,6 +40,14 @@ export class EstablishmentService {
     );
   }
 
+  updateService(id: string, dados: any) {
+    return this.http.put(`http://localhost:3000/servicesEntreprenuer/update/${id}`, dados);
+  }
+    
+  deleteService(id: string) {
+    return this.http.delete(`http://localhost:3000/servicesEntreprenuer/delete/${id}`);
+  }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(() => error);
   }

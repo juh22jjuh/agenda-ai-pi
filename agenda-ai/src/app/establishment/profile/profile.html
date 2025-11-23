@@ -1,21 +1,26 @@
 
-<app-navbar-esta />
-<div class="profile-container">
-  <p-progressSpinner *ngIf="loading" />
+<!-- PrimeNG Notifications -->
+<p-toast />
+<p-confirmDialog [style]="{width: '50vw'}" />
 
-  <div *ngIf="!loading && errorMessage" class="error-message">
+<app-navbar-esta />
+
+<div class="profile-container">
+  <!-- Loading and Error States -->
+  <p-progressSpinner *ngIf="loading" />
+  <div *ngIf="!loading && errorMessage && !entrepreneur" class="error-message">
     {{ errorMessage }}
   </div>
 
+  <!-- Main Content -->
   <div *ngIf="!loading && entrepreneur" class="profile-content">
-    <!-- CARD DO PERFIL -->
+    
+    <!-- Profile Card -->
     <p-card styleClass="profile-card">
       <ng-template pTemplate="header">
-        <img [src]="entrepreneur.image" alt="Imagem da empresa" class="profile-image">
+        <img [src]="entrepreneur.image || 'assets/placeholder.jpg'" alt="Imagem da empresa" class="profile-image">
       </ng-template>
-      <ng-template pTemplate="title">
-        {{ entrepreneur.name }}
-      </ng-template>
+      <ng-template pTemplate="title">{{ entrepreneur.name }}</ng-template>
       <ng-template pTemplate="content">
         <div class="profile-details">
           <p><strong>Endereço:</strong> {{ entrepreneur.rua }}, {{ entrepreneur.numero }} - {{ entrepreneur.bairro }}, {{ entrepreneur.cidade }} - {{ entrepreneur.estado }}</p>
@@ -25,66 +30,110 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="profile-actions">
-          <p-button label="Gerenciar Serviços" icon="pi pi-cog" (click)="navigateTo('/establishment/config')" />
-          <p-button label="Ver Agendamentos" icon="pi pi-calendar" (click)="navigateTo('/establishment/scheduling')" styleClass="p-button-secondary" />
+          <p-button label="Excluir Empresa" icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteCompany()" />
         </div>
       </ng-template>
     </p-card>
 
-    <!-- SEÇÃO DE SERVIÇOS -->
+    <!-- Services Section -->
     <div class="section-card">
-      <h2 class="section-title">Meus Serviços</h2>
-      <p-table [value]="services">
+      <div class="section-header">
+        <h2 class="section-title">Meus Serviços</h2>
+        <p-button label="Criar Serviço" icon="pi pi-plus" (click)="openNewServiceDialog()" />
+      </div>
+      <p-table [value]="services" [tableStyle]="{'min-width': '50rem'}" responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>
             <th>Nome</th>
-            <th>Descrição</th>
-            <th>Preço</th>
+            <th>Categoria</th>
+            <th>Duração</th>
+            <th>Ações</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-service>
           <tr>
-            <td>{{ service.name }}</td>
-            <td>{{ service.description }}</td>
-            <td>{{ service.price | currency:'BRL' }}</td>
+            <td>{{ service.nome }}</td>
+            <td>{{ service.categoria }}</td>
+            <td>{{ service.duracao }} min</td>
+            <td>
+              <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-info p-button-text" (click)="openEditServiceDialog(service)" />
+              <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text" (click)="deleteService(service)" />
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="3">Nenhum serviço encontrado.</td>
-          </tr>
+          <tr><td colspan="4">Nenhum serviço cadastrado.</td></tr>
         </ng-template>
       </p-table>
     </div>
 
-    <!-- SEÇÃO DE AGENDAMENTOS -->
+    <!-- Schedules Section -->
     <div class="section-card">
       <h2 class="section-title">Meus Agendamentos</h2>
-      <p-table [value]="schedules">
+      <p-table [value]="schedules" [tableStyle]="{'min-width': '50rem'}" responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>
             <th>Data</th>
             <th>Hora</th>
-            <th>Serviço</th>
             <th>Cliente</th>
+            <th>Serviço</th>
+            <th>Ações</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-schedule>
           <tr>
             <td>{{ schedule.date | date:'dd/MM/yyyy' }}</td>
             <td>{{ schedule.time }}</td>
-            <td>{{ schedule.services_entrepreneur_id?.name }}</td>
-            <td>{{ schedule.user_id?.name }}</td>
+            <td>{{ schedule.user_id?.name || 'Cliente não identificado' }}</td>
+            <td>{{ schedule.services_entrepreneur_id?.name || 'Serviço não identificado' }}</td>
+            <td>
+                <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-danger p-button-sm" (click)="cancelSchedule(schedule)" />
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="4">Nenhum agendamento encontrado.</td>
-          </tr>
+          <tr><td colspan="5">Nenhum agendamento encontrado.</td></tr>
         </ng-template>
       </p-table>
     </div>
 
   </div>
 </div>
+
+<!-- Service Creation/Editing Dialog -->
+<p-dialog [header]="editingService ? 'Editar Serviço' : 'Criar Serviço'" [(visible)]="displayServiceDialog" [modal]="true" [style]="{width: '50vw'}" (onHide)="hideServiceDialog()">
+  <form [formGroup]="serviceForm" (ngSubmit)="saveService()">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="nome">Nome do Serviço</label>
+        <input id="nome" type="text" pInputText formControlName="nome">
+      </div>
+      <div class="p-field">
+        <label for="categoria">Categoria</label>
+        <p-selectButton id="categoria" [options]="categories" formControlName="categoria" />
+      </div>
+      <div class="p-field">
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" pInputTextarea formControlName="descricao" rows="3"></textarea>
+      </div>
+       <div class="p-field">
+        <label for="duracao">Duração (minutos)</label>
+        <input id="duracao" type="number" pInputText formControlName="duracao">
+      </div>
+       <div class="p-field">
+        <label>Dias de Atendimento</label>
+        <p-selectButton [options]="daysOfWeek" formControlName="dias" optionLabel="label" optionValue="id" [multiple]="true" />
+      </div>
+       <div class="p-field">
+        <label>Horários Disponíveis</label>
+        <p-selectButton [options]="timeOptions" formControlName="time" optionLabel="label" optionValue="id" [multiple]="true" />
+      </div>
+    </div>
+    <div class="p-dialog-footer">
+      <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-text" (click)="hideServiceDialog()" />
+      <p-button [label]="editingService ? 'Salvar' : 'Criar'" icon="pi pi-check" type="submit" />
+    </div>
+  </form>
+</p-dialog>
+
 <app-footer />

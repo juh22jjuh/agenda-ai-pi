@@ -47,7 +47,6 @@ export const routes: Routes = [
 
   // Establishment
   { path: 'establishment/profile', component: ProfileEstablishment },
-  // O alias 'RegisterEstablishment' continua funcionando pois foi mantido na importação
   { path: 'establishment/register', component: RegisterEstablishment },
   { path: 'establishment/config', component: Config},
   { path: 'establishment/scheduling/:idService/:idUser', component: SchedulingEstablishment},
