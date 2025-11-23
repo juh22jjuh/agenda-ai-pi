@@ -9,7 +9,6 @@ import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
-import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 
@@ -27,7 +26,6 @@ import { Footer } from '../../shared/footer/footer';
     CardModule,
     InputTextModule,
     InputMaskModule,
-    DropdownModule,
     CheckboxModule,
     ButtonModule,
     NavbarAuth,
