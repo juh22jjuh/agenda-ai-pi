@@ -24,63 +24,57 @@
     <div class="col-12 md:col-8 lg:col-9">
       <div class="p-3">
         <p-card>
-          <p-tabs>
-            <p-tab header="Minha Conta">
-              <ng-template pTemplate="content">
-                <div class="p-fluid">
-                  <div class="field">
-                    <label for="name">Nome</label>
-                    <input pInputText id="name" type="text" [(ngModel)]="updatedUser.name" />
-                  </div>
-                  <div class="field">
-                    <label for="surname">Sobrenome</label>
-                    <input pInputText id="surname" type="text" [(ngModel)]="updatedUser.surname" />
-                  </div>
-                  <div class="field">
-                    <label for="email">Email</label>
-                    <input pInputText id="email" type="text" [(ngModel)]="user.email" [disabled]="true" />
-                  </div>
-                  <div class="formgrid grid">
-                    <div class="field col">
-                      <button pButton label="Salvar" (click)="salvarInfoPessoal()"></button>
-                    </div>
-                  </div>
+          <div class="tab-container">
+            <div class="tab-buttons">
+              <button (click)="selectTab('minhaConta')" [class.active]="activeTab === 'minhaConta'">Minha Conta</button>
+              <button (click)="selectTab('seguranca')" [class.active]="activeTab === 'seguranca'">Segurança</button>
+              <button (click)="selectTab('meusAgendamentos')" [class.active]="activeTab === 'meusAgendamentos'">Meus Agendamentos</button>
+            </div>
+
+            <div *ngIf="activeTab === 'minhaConta'" class="p-fluid tab-content">
+              <div class="field">
+                <label for="name">Nome</label>
+                <input pInputText id="name" type="text" [(ngModel)]="updatedUser.name" />
+              </div>
+              <div class="field">
+                <label for="surname">Sobrenome</label>
+                <input pInputText id="surname" type="text" [(ngModel)]="updatedUser.surname" />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input pInputText id="email" type="text" [(ngModel)]="user.email" [disabled]="true" />
+              </div>
+              <div class="formgrid grid">
+                <div class="field col">
+                  <button pButton label="Salvar" (click)="salvarInfoPessoal()"></button>
                 </div>
-              </ng-template>
-            </p-tab>
-            <p-tab header="Segurança">
-              <ng-template pTemplate="content">
-                <div class="p-fluid">
-                  <div class="field">
-                    <label for="currentPassword">Senha Atual</label>
-                    <p-password id="currentPassword" [(ngModel)]="senhaAtual" [toggleMask]="true"></p-password>
-                  </div>
-                  <div class="field">
-                    <label for="newPassword">Nova Senha</label>
-                    <p-password id="newPassword" [(ngModel)]="novaSenha" [toggleMask]="true"></p-password>
-                  </div>
-                  <div class="field">
-                    <label for="confirmPassword">Confirmar Nova Senha</label>
-                    <p-password id="confirmPassword" [(ngModel)]="confirmarSenha" [toggleMask]="true"></p-password>
-                  </div>
-                  <div class="formgrid grid">
-                    <div class="field col">
-                      <button
-                        pButton
-                        label="Alterar Senha"
-                        (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)"
-                      ></button>
-                    </div>
-                  </div>
+              </div>
+            </div>
+
+            <div *ngIf="activeTab === 'seguranca'" class="p-fluid tab-content">
+              <div class="field">
+                <label for="currentPassword">Senha Atual</label>
+                <p-password id="currentPassword" [(ngModel)]="senhaAtual" [toggleMask]="true"></p-password>
+              </div>
+              <div class="field">
+                <label for="newPassword">Nova Senha</label>
+                <p-password id="newPassword" [(ngModel)]="novaSenha" [toggleMask]="true"></p-password>
+              </div>
+              <div class="field">
+                <label for="confirmPassword">Confirmar Nova Senha</label>
+                <p-password id="confirmPassword" [(ngModel)]="confirmarSenha" [toggleMask]="true"></p-password>
+              </div>
+              <div class="formgrid grid">
+                <div class="field col">
+                  <button pButton label="Alterar Senha" (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)"></button>
                 </div>
-              </ng-template>
-            </p-tab>
-            <p-tab header="Meus Agendamentos">
-                <ng-template pTemplate="content">
-                    <app-my-schedules></app-my-schedules>
-                </ng-template>
-            </p-tab>
-          </p-tabs>
+              </div>
+            </div>
+
+            <div *ngIf="activeTab === 'meusAgendamentos'" class="tab-content">
+              <app-my-schedules></app-my-schedules>
+            </div>
+          </div>
         </p-card>
       </div>
     </div>
