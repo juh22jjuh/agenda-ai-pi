@@ -15,24 +15,23 @@ export class Establishment {
   private isBrowser = isPlatformBrowser(this.platformId);
   private user = inject(Auth);
 
-  register(data: IEntrepreneur) {
+  register(data: FormData) { // Changed to accept FormData
     const userData = this.user.getUserData();
-    const userId = userData?.user?._id
+    const userId = userData?.user?._id;
 
     if (!userId) {
       console.error("Usuário não encontrado!");
       return throwError(() => new Error("Usuário não encontrado"));
     }
 
-    localStorage.clear()
-    this.user.getUserById(userId)
+    // No need to clear localStorage or call getUserById here for registration
 
     return this.http.post<IEntrepreneur>(
       `http://localhost:3000/entrepreneur/register/${userId}`,
-      data
+      data // Sending FormData directly
     ).pipe(
       catchError(err => {
-        console.error(err);
+        console.error('Erro ao cadastrar estabelecimento:', err);
         return throwError(() => err);
       })
     );

@@ -29,7 +29,13 @@
         </div>
         <div class="field">
           <label for="company-image">Imagem da empresa</label>
-          <!-- Add your file upload component here -->
+          <p-fileUpload name="companyImage" 
+                        (onSelect)="onFileSelect($event)" 
+                        [showUploadButton]="false" 
+                        [showCancelButton]="false"
+                        accept="image/*" 
+                        chooseLabel="Escolher imagem">
+          </p-fileUpload>
         </div>
       </div>
 
