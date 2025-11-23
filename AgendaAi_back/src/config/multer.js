@@ -1,25 +1,13 @@
 
 import multer from 'multer';
-import path from 'path';
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // Specifies the directory where the images will be saved.
-    // Make sure this directory exists.
-    cb(null, 'public/images'); 
-  },
-  filename: (req, file, cb) => {
-    // Creates a unique filename to prevent overwriting.
-    // Example: 2023-10-27-my-image.png
-    const uniqueSuffix = Date.now() + path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix);
-  }
-});
+// Use memoryStorage to hold the file as a buffer in memory
+const storage = multer.memoryStorage();
 
-const upload = multer({ 
-  storage: storage,
+const upload = multer({
+  storage: storage, // The file will be stored in req.file.buffer
   fileFilter: (req, file, cb) => {
-    // Filters to accept only image files
+    // Filter to accept only image files
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {

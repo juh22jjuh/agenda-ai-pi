@@ -1,21 +1,24 @@
 
-import { User } from '../models/User.js';
+import {User} from '../models/User.js';
 
 export const Register = async (req, res) => {
   const { userId } = req.params;
-  // Thanks to multer, req.body now contains the text fields
   const { name, cpf, telefone, cep, rua, numero, complemento, bairro, cidade, estado } = req.body;
 
-  // Check if CPF is provided before trying to use .replace
   if (!cpf) {
     return res.status(400).json({ message: 'O CPF é obrigatório.' });
   }
   
-  const format_cpf = cpf.replace(/\D/g, ''); // Now this will work
+  const format_cpf = cpf.replace(/\D/g, '');
 
   try {
-    // The image information is in req.file
-    const companyImagePath = req.file ? req.file.path : null;
+    let companyImageBase64 = null;
+
+    // Se um arquivo foi enviado, converte para Base64
+    if (req.file) {
+      // Formato: data:[<mime type>];base64,[<dados>]
+      companyImageBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -34,7 +37,8 @@ export const Register = async (req, res) => {
               cidade,
               estado,
             },
-            companyImage: companyImagePath // Save the image path
+            // Salva a string Base64 no banco
+            companyImage: companyImageBase64 
           },
           isEntrepreneur: true,
         },
@@ -55,5 +59,5 @@ export const Register = async (req, res) => {
 };
 
 export const Login = async (req, res) => {
-    // ... your login logic remains the same ...
+    // ... a sua lógica de login permanece a mesma ...
 };
