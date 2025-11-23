@@ -36,31 +36,46 @@ export class Profile implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const user = localStorage.getItem('user_logged')
-    const userId = user !== null ? JSON.parse(user)?._id : null
-    if (!userId) {
-      this.errorMessage = "ID do usuário não encontrado. Por favor, faça login novamente.";
-      this.loading = false;
-      this.router.navigate(['/auth/login']);
+    const userString = localStorage.getItem('user');
+
+    if (!userString) {
+      this.handleAuthError("Usuário não autenticado. Por favor, faça login novamente.");
       return;
     }
 
-    this.establishmentService.getEntrepreneurData(userId).subscribe({
-      next: (data) => {
-        this.entrepreneur = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        if (err.status === 404 && err.error.exists === false) {
-          this.router.navigate(['/establishment/register']);
-        } else {
-          this.errorMessage = err.message || 'Ocorreu um erro ao buscar os dados do perfil.';
-          this.loading = false;
-        }
-      }
-    });
+    try {
+      const user = JSON.parse(userString);
+      const userId = user?._id;
 
-    console.log(this.entrepreneur)
+      if (!userId) {
+        this.handleAuthError("ID do usuário não encontrado. Por favor, faça login novamente.");
+        return;
+      }
+
+      this.establishmentService.getEntrepreneurData(userId).subscribe({
+        next: (data) => {
+          this.entrepreneur = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          this.loading = false;
+          if (err.status === 404 && err.error?.exists === false) {
+            this.router.navigate(['/establishment/register']);
+          } else {
+            this.errorMessage = err.error?.message || err.message || 'Ocorreu um erro ao buscar os dados do perfil.';
+          }
+        }
+      });
+
+    } catch (error) {
+      this.handleAuthError("Erro ao processar dados do usuário. Faça login novamente.");
+    }
+  }
+
+  private handleAuthError(message: string): void {
+    this.errorMessage = message;
+    this.loading = false;
+    this.router.navigate(['/auth/login']);
   }
 
   navigateTo(path: string): void {
