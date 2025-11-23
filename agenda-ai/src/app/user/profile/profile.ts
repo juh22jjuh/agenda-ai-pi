@@ -21,9 +21,9 @@ import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
   selector: 'app-profile',
   standalone: true,
   imports: [
-    NavbarAuth,
     CommonModule,
     FormsModule,
+    NavbarAuth,
     Footer,
     CardModule,
     ButtonModule,
@@ -36,63 +36,59 @@ import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
     MySchedules
   ],
   templateUrl: './profile.html',
-  styleUrl: './profile.css'
-
+  styleUrls: ['./profile.css']
 })
 export class Profile implements OnInit {
-  user: any = {
-    name: '',
-    surname: '',
-    email: '',
-    photo: '',
-  };
-
-  token: string | null = null;
-  logged = false;
+  user: any;
+  showEditForm = false;
+  updatedUser: any = {};
+  profileImageUrl: string = 'URL_da_IMAGEM_PADRAO';
   senhaAtual: string = '';
   novaSenha: string = '';
   confirmarSenha: string = '';
 
-  constructor(private authService: Auth, private http: HttpClient) {}
+  constructor(private authService: Auth, private http: HttpClient) { }
 
-  ngOnInit(): void {
-    const { user, token } = this.authService.getUserData();
-    if (user) {
-      this.user = { ...this.user, ...user };
-      this.logged = !!token;
-      this.token = token;
-    }
+  ngOnInit() {
+    const { user } = this.authService.getUserData();
+    this.user = user;
+    this.updatedUser = { ...user };
+  }
+
+  toggleEditForm() {
+    this.showEditForm = !this.showEditForm;
   }
 
   salvarInfoPessoal() {
-    console.log('Salvar informações pessoais', this.user);
-    // TODO: implementar PUT na API para atualizar usuário
+    this.http.put(`http://localhost:3000/api/users/${this.user._id}`, this.updatedUser).subscribe(
+      (response: any) => {
+        this.user = response;
+        this.authService.updateUser(response);
+        this.showEditForm = false;
+      },
+      (error) => {
+        console.error('Erro ao atualizar usuário:', error);
+      }
+    );
+  }
+
+  onFileSelect(event: any) {
+    const file = event.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.profileImageUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   alterarSenha(senhaAtual: string, novaSenha: string, confirmarSenha: string) {
-    console.log('Alterar senha', { senhaAtual, novaSenha, confirmarSenha });
-    // TODO: implementar API de alteração de senha
-  }
-
-  alterarFoto(event: any) {
-    const file = event.files?.[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("profileImage", file);
-
-      const { user } = this.authService.getUserData();
-      if (user && user._id) {
-        this.http.put(`http://localhost:3000/user/update-photo/${user._id}`, formData).subscribe(
-          (res: any) => {
-            console.log('RES', res);
-            this.user.photo = `http://localhost:3000/${res.user.photo}`;
-            this.authService.updateUser({ ...user, photo: this.user.photo });
-          },
-          (err) => {
-            console.error(err);
-          }
-        );
-      }
+    if (novaSenha !== confirmarSenha) {
+      console.error('A nova senha e a confirmação não correspondem.');
+      return;
     }
+    // Lógica para chamar o backend para alterar a senha
+    console.log('Enviando pedido para alterar a senha...');
   }
 }
