@@ -35,6 +35,9 @@ app.use("/entrepreneur", routerEnt);
 app.use("/scheduling", routerSche);
 app.use("/contato", routerCont);
 app.use("/servicesEntreprenuer", routerServicesEntreprenuer);
+
+app.use("/api/scheduling", routerSche);
+app.use("/api/servicesEntreprenuer", routerServicesEntreprenuer);
 app.use("/api/entrepreneur", routerEnt);
 app.use("/api/user", router);
 app.use("/admin", routerAdmin);
