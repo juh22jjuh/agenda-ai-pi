@@ -156,7 +156,7 @@ export class RegisterEstablishmentComponent implements OnInit {
     return formData;
   }
 
-  private resetForm(): void {
+  resetForm(): void {
     this.registerForm.reset();
     this.clearFile();
     this.registerForm.get('termos')?.setValue(false); // Reset checkbox state
