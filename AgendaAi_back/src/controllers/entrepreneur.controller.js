@@ -4,11 +4,16 @@ import {Entrepreneur} from '../models/Entrepreneur.js'; // Importe o modelo Entr
 
 export const Register = async (req, res) => {
   const { userId } = req.params;
-  const { name, cpf, telefone, cep, rua, numero, complemento, bairro, cidade, estado } = req.body;
+  const { name, cpf, telefone, cep, rua, numero, comple, bairro, cidade, estado } = req.body;
 
-  // 1. Validação básica de entrada
-  if (!cpf || !userId) {
-    return res.status(400).json({ message: 'CPF e ID do usuário são obrigatórios.' });
+  // 1. Validação de entrada aprimorada para incluir os campos requeridos
+  if (!name || !cpf || !telefone || !cep || !rua || !numero || !bairro || !cidade || !estado || !userId) {
+    return res.status(400).json({ message: 'Todos os campos obrigatórios, incluindo o ID do usuário, devem ser fornecidos.' });
+  }
+
+  // Validação da imagem que agora é obrigatória
+  if (!req.file) {
+    return res.status(400).json({ message: 'A imagem da empresa é obrigatória.' });
   }
 
   const format_cpf = cpf.replace(/\D/g, '');
@@ -17,10 +22,7 @@ export const Register = async (req, res) => {
 
   try {
     // 2. Criar e salvar o novo documento Entrepreneur
-    let companyImageBase64 = null;
-    if (req.file) {
-      companyImageBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
-    }
+    const companyImageBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
 
     const newEntrepreneur = new Entrepreneur({
       name,
@@ -29,12 +31,13 @@ export const Register = async (req, res) => {
       cep: format_cep,
       rua,
       numero,
-      comple: complemento, // Mapeia 'complemento' para 'comple'
+      comple, // Mapeado diretamente
       bairro,
       cidade,
       estado,
-      image: companyImageBase64, // Mapeia 'companyImage' para 'image'
-      user: userId
+      image: companyImageBase64,
+      user: userId,
+      services_entreprenuer: [] // Inicializa como um array vazio
     });
 
     const savedEntrepreneur = await newEntrepreneur.save();
@@ -44,7 +47,6 @@ export const Register = async (req, res) => {
       userId,
       {
         $set: {
-          // Agora salvamos a referência (ObjectId), não o objeto inteiro
           entrepreneur: savedEntrepreneur._id, 
           isEntrepreneur: true,
         },
@@ -53,7 +55,6 @@ export const Register = async (req, res) => {
     );
 
     if (!updatedUser) {
-      // Se o usuário não for encontrado, seria bom deletar o empreendedor recém-criado (lógica de rollback)
       await Entrepreneur.findByIdAndDelete(savedEntrepreneur._id);
       return res.status(404).json({ message: 'Usuário não encontrado.' });
     }
@@ -62,7 +63,6 @@ export const Register = async (req, res) => {
 
   } catch (error) { 
     console.error('Erro no registro do empreendedor:', error);
-    // Diferencia erros de validação (do Mongoose) de outros erros
     if (error.name === 'ValidationError') {
       return res.status(400).json({ message: 'Erro de validação', details: error.message });
     }
@@ -70,16 +70,11 @@ export const Register = async (req, res) => {
   }
 };
 
-export const Login = async (req, res) => {
-    // ... sua lógica de login permanece a mesma ...
-};
-
-// --- NOVA FUNÇÃO ADICIONADA ---
+// --- FUNÇÃO DE BUSCA (permanece a mesma) ---
 export const getEntrepreneurByUserId = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Procura na coleção Entrepreneur por um documento cujo campo 'user' corresponda ao userId
     const entrepreneur = await Entrepreneur.findOne({ user: userId });
 
     if (!entrepreneur) {
@@ -91,5 +86,129 @@ export const getEntrepreneurByUserId = async (req, res) => {
   } catch (error) {
     console.error("Erro ao buscar dados do empreendedor:", error);
     res.status(500).json({ message: 'Erro interno do servidor.', error: error.message });
+  }
+};
+
+export const GetEntreprenuerById = async (req, res) => {
+  try {
+    const { id } = req.params
+    const entrepreneur = await Entrepreneur.find({ _id: id}).populate('services_entreprenuer')
+    if (!entrepreneur) res.status(400).json({ message: 'Empresa não encontrada' })
+    res.status(200).json(entrepreneur)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal server error' })
+  // Check if CPF is provided before trying to use .replace
+  if (!cpf) {
+    return res.status(400).json({ message: 'O CPF é obrigatório.' });
+  }
+}
+}
+
+export const Delete = async (req, res) => {
+  const { id } = req.params
+  console.log({
+    id: id
+  })
+  try {
+    // Exclui o documento do empreendedor
+    await Entrepreneur.deleteOne({ user: id })
+
+    // Remove a referência no User
+    await User.findByIdAndUpdate(id, {
+      $unset: { entrepreneur: id }
+    })
+
+    res.status(200).json({
+      message: 'Empresa excluída com sucesso'
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Internal server error" })
+  }
+}
+
+export const AllEntrepreneur = async (req, res) => {
+  try {
+    const entreprenuers = await Entrepreneur.find()
+
+    res.status(200).json({
+      empresas: entreprenuers
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({error: 'Internal server error'})
+  }
+}
+
+export const UpdateEntreprenuer = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { name, telefone, cep, rua, numero, comple, bairro, cidade, estado, image } = req.body;
+    const entreprenuer = await Entrepreneur.findByIdAndUpdate(id, {
+      name: name,
+      telefone: telefone,
+      cep: cep,
+      rua: rua,
+      numero: numero,
+      comple: comple,
+      bairro: bairro,
+      cidade: cidade,
+      estado: estado,
+      image: image
+    })
+    res.status(204).json({ message: 'Empresa modificada com sucesso!'})
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Internal server error" })
+  }
+}
+
+export const ToggleStatusEntrepreneur = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isActive } = req.body;
+
+    const entrepreneur = await Entrepreneur.findByIdAndUpdate(
+      id,
+      { isActive },
+      { new: true }
+    );
+
+    if (!entrepreneur) {
+      return res.status(404).json({ message: "Empreendedor não encontrado" });
+    }
+
+    res.status(200).json({
+      message: `Empreendedor ${isActive ? "ativado" : "inativado"} com sucesso!`,
+      entrepreneur,
+    });
+  } catch (error) {
+    console.error("Erro ao alterar status:", error);
+    res.status(500).json({ message: "Erro ao alterar status do empreendedor." });
+  }
+};
+
+export const SearchEntrepreneurByName = async (req, res) => {
+  try {
+    const { name } = req.query;
+
+    if (!name || name.trim() === "") {
+      return res.status(400).json({ message: "Informe o nome da empresa para buscar." });
+    }
+
+    // Busca por nome parcial, sem diferenciar maiúsculas/minúsculas
+    const results = await Entrepreneur.find({
+      name: { $regex: name, $options: "i" },
+    });
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Nenhuma empresa encontrada." });
+    }
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error("Erro ao buscar empresa:", error);
+    res.status(500).json({ message: "Erro interno ao buscar empresa." });
   }
 };

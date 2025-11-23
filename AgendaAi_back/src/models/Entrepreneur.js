@@ -1,5 +1,4 @@
-
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const entrepreneurSchema = new mongoose.Schema({
     name: {
@@ -29,7 +28,7 @@ const entrepreneurSchema = new mongoose.Schema({
     },
     comple: {
         type: String,
-        required: false, // Complemento não é obrigatório
+        required: false
     },
     bairro: {
         type: String,
@@ -45,14 +44,8 @@ const entrepreneurSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        required: false, // Imagem não é obrigatória
+        required: true,
     },
-    // --- CAMPO ADICIONADO ---
-    services_entreprenuer: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "servicesEntreprenuer"
-    }],
-    // ----------------------
     created_at: {
         type: Date,
         default: Date.now,
@@ -60,14 +53,20 @@ const entrepreneurSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['pending', 'authorized', 'denegad'],
-        default: 'pending',
+        default: 'pending'
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true
-    }
+    },
+    services_entreprenuer: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "servicesEntreprenuer"
+        }
+    ],
+    isActive: { type: Boolean, default: true },
 });
 
 export const Entrepreneur = mongoose.model('Entrepreneur', entrepreneurSchema);
-
