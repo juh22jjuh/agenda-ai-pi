@@ -231,10 +231,9 @@ export const cancelScheduling = async (req, res) => {
 export const getSchedulingByEntrepreneur = async (req, res) => {
   try {
     const { entrepreneurId } = req.params;
-    console.log("Buscando agendamentos para o empreendedor:", entrepreneurId);
 
     // 1. Encontrar todos os serviços do empreendedor
-    const services = await servicesEntreprenuer.find({ id_entreprenuer: entrepreneurId });
+    const services = await servicesEntreprenuer.find({ entrepreneur: entrepreneurId });
 
     if (!services || services.length === 0) {
       return res.json([]); // Retorna array vazio se não houver serviços
