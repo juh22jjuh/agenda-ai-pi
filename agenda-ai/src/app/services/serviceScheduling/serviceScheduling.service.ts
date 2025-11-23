@@ -27,4 +27,12 @@ export class ServiceSchedulingService {
   getSchedulingByService(serviceId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/service/${serviceId}`);
   }
+
+  getSchedulingByUser(userId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user/${userId}`);
+  }
+
+  cancelScheduling(schedulingId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/cancel/${schedulingId}`);
+  }
 }

@@ -4,7 +4,8 @@ import {
   getSchedulingByService,
   getAvailableDates,
   getAvailableHours,
-  getSchedulingByUser
+  getSchedulingByUser,
+  cancelScheduling
 } from "../controllers/scheduling.controller.js";
 import upload from "../config/multer.js";
 
@@ -15,3 +16,4 @@ routerSche.get("/service/:serviceId", getSchedulingByService);
 routerSche.get("/user/:userId", getSchedulingByUser);
 routerSche.get("/dates/:id", getAvailableDates);
 routerSche.get("/hours/:serviceId/:date", getAvailableHours);
+routerSche.delete("/cancel/:schedulingId", cancelScheduling);

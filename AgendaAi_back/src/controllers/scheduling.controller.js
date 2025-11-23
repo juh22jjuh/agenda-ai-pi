@@ -205,3 +205,25 @@ export const getAvailableHours = async (req, res) => {
     res.status(500).json({ error: "Erro ao buscar horários" });
   }
 };
+
+// CANCELAR AGENDAMENTO
+export const cancelScheduling = async (req, res) => {
+  try {
+    const { schedulingId } = req.params;
+
+    const deletedScheduling = await scheduling.findByIdAndDelete(schedulingId);
+
+    if (!deletedScheduling) {
+      return res.status(404).json({ error: "Agendamento não encontrado" });
+    }
+
+    res.json({ message: "Agendamento cancelado com sucesso" });
+
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({ error: 'ID do agendamento inválido' });
+    }
+    console.log(error);
+    res.status(500).json({ error: "Erro ao cancelar agendamento" });
+  }
+};

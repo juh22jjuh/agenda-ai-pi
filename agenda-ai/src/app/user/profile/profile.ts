@@ -10,13 +10,11 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { TabViewModule } from 'primeng/tabview';
+import { TabsModule } from 'primeng/tabs';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
 import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
-Footer
-
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +28,7 @@ Footer
     ButtonModule,
     InputTextModule,
     PasswordModule,
-    TabViewModule,
+    TabsModule,
     FileUploadModule,
     AvatarModule,
     DividerModule,
@@ -45,7 +43,6 @@ export class Profile implements OnInit {
     surname: '',
     email: '',
     photo: '',
-    schedulings: [],
   };
 
   token: string | null = null;
@@ -63,19 +60,7 @@ export class Profile implements OnInit {
       this.user = { ...this.user, ...user };
       this.logged = !!token;
       this.token = token;
-      this.getScheduling();
     }
-  }
-
-  getScheduling() {
-    this.http.get(`http://localhost:3000/scheduling/user/${this.user._id}`).subscribe(
-      (res: any) => {
-        this.user.schedulings = res;
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
   }
 
   salvarInfoPessoal() {

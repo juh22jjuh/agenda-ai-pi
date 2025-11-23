@@ -24,80 +24,63 @@
     <div class="col-12 md:col-8 lg:col-9">
       <div class="p-3">
         <p-card>
-          <p-tabView [(activeIndex)]="activeIndex">
-            <p-tabPanel header="Minha Conta">
-              <div class="p-fluid">
-                <div class="field">
-                  <label for="name">Nome</label>
-                  <input pInputText id="name" type="text" [(ngModel)]="user.name" />
-                </div>
-                <div class="field">
-                  <label for="surname">Sobrenome</label>
-                  <input pInputText id="surname" type="text" [(ngModel)]="user.surname" />
-                </div>
-                <div class="field">
-                  <label for="email">Email</label>
-                  <input pInputText id="email" type="text" [(ngModel)]="user.email" [disabled]="true" />
-                </div>
-                <div class="formgrid grid">
-                  <div class="field col">
-                    <button pButton label="Salvar" (click)="salvarInfoPessoal()"></button>
+          <p-tabs [(activeIndex)]="activeIndex">
+            <p-tab header="Minha Conta">
+              <ng-template pTemplate="content">
+                <div class="p-fluid">
+                  <div class="field">
+                    <label for="name">Nome</label>
+                    <input pInputText id="name" type="text" [(ngModel)]="user.name" />
+                  </div>
+                  <div class="field">
+                    <label for="surname">Sobrenome</label>
+                    <input pInputText id="surname" type="text" [(ngModel)]="user.surname" />
+                  </div>
+                  <div class="field">
+                    <label for="email">Email</label>
+                    <input pInputText id="email" type="text" [(ngModel)]="user.email" [disabled]="true" />
+                  </div>
+                  <div class="formgrid grid">
+                    <div class="field col">
+                      <button pButton label="Salvar" (click)="salvarInfoPessoal()"></button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </p-tabPanel>
-            <p-tabPanel header="Segurança">
-              <div class="p-fluid">
-                <div class="field">
-                  <label for="currentPassword">Senha Atual</label>
-                  <p-password id="currentPassword" [(ngModel)]="senhaAtual" [toggleMask]="true"></p-password>
-                </div>
-                <div class="field">
-                  <label for="newPassword">Nova Senha</label>
-                  <p-password id="newPassword" [(ngModel)]="novaSenha" [toggleMask]="true"></p-password>
-                </div>
-                <div class="field">
-                  <label for="confirmPassword">Confirmar Nova Senha</label>
-                  <p-password id="confirmPassword" [(ngModel)]="confirmarSenha" [toggleMask]="true"></p-password>
-                </div>
-                <div class="formgrid grid">
-                  <div class="field col">
-                    <button
-                      pButton
-                      label="Alterar Senha"
-                      (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)"
-                    ></button>
+              </ng-template>
+            </p-tab>
+            <p-tab header="Segurança">
+              <ng-template pTemplate="content">
+                <div class="p-fluid">
+                  <div class="field">
+                    <label for="currentPassword">Senha Atual</label>
+                    <p-password id="currentPassword" [(ngModel)]="senhaAtual" [toggleMask]="true"></p-password>
+                  </div>
+                  <div class="field">
+                    <label for="newPassword">Nova Senha</label>
+                    <p-password id="newPassword" [(ngModel)]="novaSenha" [toggleMask]="true"></p-password>
+                  </div>
+                  <div class="field">
+                    <label for="confirmPassword">Confirmar Nova Senha</label>
+                    <p-password id="confirmPassword" [(ngModel)]="confirmarSenha" [toggleMask]="true"></p-password>
+                  </div>
+                  <div class="formgrid grid">
+                    <div class="field col">
+                      <button
+                        pButton
+                        label="Alterar Senha"
+                        (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)"
+                      ></button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </p-tabPanel>
-            <p-tabPanel header="Meus Agendamentos">
-              <div class="grid">
-                <div *ngIf="user.schedulings.length > 0; else noSchedulings" class="col-12">
-                  <div *ngFor="let scheduling of user.schedulings" class="p-3">
-                    <p-card [style]="{ 'margin-bottom': '1rem' }">
-                      <div class="flex justify-content-between">
-                        <div>
-                          <div class="font-bold">{{ scheduling.service?.name }}</div>
-                          <div>{{ scheduling.professional?.name }}</div>
-                          <div>{{ scheduling.date | date: 'dd/MM/yyyy' }} às {{ scheduling.time }}</div>
-                        </div>
-                        <div>
-                          <button pButton type="button" label="Cancelar" class="p-button-danger"></button>
-                        </div>
-                      </div>
-                    </p-card>
-                  </div>
-                </div>
-                <ng-template #noSchedulings>
-                  <div class="col-12 text-center">
-                    <p>Você ainda não possui nenhum agendamento.</p>
-                    <button pButton type="button" label="Agende seu primeiro serviço"></button>
-                  </div>
+              </ng-template>
+            </p-tab>
+            <p-tab header="Meus Agendamentos">
+                <ng-template pTemplate="content">
+                    <app-my-schedules></app-my-schedules>
                 </ng-template>
-              </div>
-            </p-tabPanel>
-          </p-tabView>
+            </p-tab>
+          </p-tabs>
         </p-card>
       </div>
     </div>
