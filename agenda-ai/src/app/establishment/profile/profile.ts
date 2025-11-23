@@ -158,7 +158,12 @@ export class Profile implements OnInit {
 
   openEditServiceDialog(service: any): void {
     this.editingService = service;
-    this.serviceForm.patchValue(service);
+    const serviceData = {
+        ...service,
+        dias: service.dias.map((d: any) => d.id),
+        time: service.time.map((t: any) => t.id),
+    };
+    this.serviceForm.patchValue(serviceData);
     this.displayServiceDialog = true;
   }
   
@@ -173,7 +178,20 @@ export class Profile implements OnInit {
       return;
     }
 
-    const formData = this.serviceForm.value;
+    const formValue = this.serviceForm.value;
+
+    const formData = {
+      ...formValue,
+      dias: formValue.dias.map((id: string) => {
+        const day = this.daysOfWeek.find(d => d.id === id);
+        return day ? { id: day.id, label: day.label } : null;
+      }).filter(Boolean),
+      time: formValue.time.map((id: string) => {
+        const timeOption = this.timeOptions.find(t => t.id === id);
+        return timeOption ? { id: timeOption.id, label: timeOption.label } : null;
+      }).filter(Boolean)
+    };
+
     const operation$ = this.editingService
       ? this.serviceEntreprenuer.updateService(this.editingService._id, formData)
       : this.serviceEntreprenuer.register(this.entrepreneur._id, formData);
