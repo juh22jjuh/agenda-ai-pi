@@ -6,7 +6,6 @@ import upload from '../config/multer.js'; // Import the multer configuration
 import { authorize } from "../utils/authorize.js"
 export const routerEnt = Router();
 
-// Rota para registro de empreendedor
 routerEnt.post('/register/:userId', upload.single('companyImage'), Register);
 routerEnt.delete("/delete/:id", Delete, authorize('entrepreneur'))
 routerEnt.get("/entreprenuers", AllEntrepreneur)

@@ -4,11 +4,16 @@ import {Entrepreneur} from '../models/Entrepreneur.js'; // Importe o modelo Entr
 
 export const Register = async (req, res) => {
   const { userId } = req.params;
-  const { name, cpf, telefone, cep, rua, numero, complemento, bairro, cidade, estado } = req.body;
+  const { name, cpf, telefone, cep, rua, numero, comple, bairro, cidade, estado } = req.body;
 
-  // 1. Validação básica de entrada
-  if (!cpf || !userId) {
-    return res.status(400).json({ message: 'CPF e ID do usuário são obrigatórios.' });
+  // 1. Validação de entrada aprimorada para incluir os campos requeridos
+  if (!name || !cpf || !telefone || !cep || !rua || !numero || !bairro || !cidade || !estado || !userId) {
+    return res.status(400).json({ message: 'Todos os campos obrigatórios, incluindo o ID do usuário, devem ser fornecidos.' });
+  }
+
+  // Validação da imagem que agora é obrigatória
+  if (!req.file) {
+    return res.status(400).json({ message: 'A imagem da empresa é obrigatória.' });
   }
 
   const format_cpf = cpf.replace(/\D/g, '');
@@ -17,10 +22,7 @@ export const Register = async (req, res) => {
 
   try {
     // 2. Criar e salvar o novo documento Entrepreneur
-    let companyImageBase64 = null;
-    if (req.file) {
-      companyImageBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
-    }
+    const companyImageBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
 
     const newEntrepreneur = new Entrepreneur({
       name,
@@ -29,12 +31,13 @@ export const Register = async (req, res) => {
       cep: format_cep,
       rua,
       numero,
-      comple: complemento, // Mapeia 'complemento' para 'comple'
+      comple, // Mapeado diretamente
       bairro,
       cidade,
       estado,
-      image: companyImageBase64, // Mapeia 'companyImage' para 'image'
-      user: userId
+      image: companyImageBase64,
+      user: userId,
+      services_entreprenuer: [] // Inicializa como um array vazio
     });
 
     const savedEntrepreneur = await newEntrepreneur.save();
@@ -44,7 +47,6 @@ export const Register = async (req, res) => {
       userId,
       {
         $set: {
-          // Agora salvamos a referência (ObjectId), não o objeto inteiro
           entrepreneur: savedEntrepreneur._id, 
           isEntrepreneur: true,
         },
@@ -53,7 +55,6 @@ export const Register = async (req, res) => {
     );
 
     if (!updatedUser) {
-      // Se o usuário não for encontrado, seria bom deletar o empreendedor recém-criado (lógica de rollback)
       await Entrepreneur.findByIdAndDelete(savedEntrepreneur._id);
       return res.status(404).json({ message: 'Usuário não encontrado.' });
     }
@@ -62,7 +63,6 @@ export const Register = async (req, res) => {
 
   } catch (error) { 
     console.error('Erro no registro do empreendedor:', error);
-    // Diferencia erros de validação (do Mongoose) de outros erros
     if (error.name === 'ValidationError') {
       return res.status(400).json({ message: 'Erro de validação', details: error.message });
     }
@@ -70,12 +70,11 @@ export const Register = async (req, res) => {
   }
 };
 
-// --- NOVA FUNÇÃO ADICIONADA ---
+// --- FUNÇÃO DE BUSCA (permanece a mesma) ---
 export const getEntrepreneurByUserId = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Procura na coleção Entrepreneur por um documento cujo campo 'user' corresponda ao userId
     const entrepreneur = await Entrepreneur.findOne({ user: userId });
 
     if (!entrepreneur) {
