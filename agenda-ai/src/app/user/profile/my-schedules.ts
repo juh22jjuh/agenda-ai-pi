@@ -56,10 +56,10 @@ export class MySchedules implements OnInit {
   loadSchedulings() {
     if (this.user && this.user._id) {
       this.schedulingService.getSchedulingByUser(this.user._id).subscribe(
-        (res: any) => {
-          this.schedulings = res;
+        (res: any[]) => {
+          this.schedulings = res.filter((scheduling: any) => scheduling.user_id === this.user._id);
         },
-        (err) => {
+        (err: any) => {
           console.error(err);
         }
       );
@@ -71,7 +71,7 @@ export class MySchedules implements OnInit {
       () => {
         this.loadSchedulings();
       },
-      (err) => {
+      (err: any) => {
         console.error(err);
       }
     );
