@@ -1,5 +1,5 @@
 
-import User from '../models/User.js';
+import { User } from '../models/User.js';
 
 export const Register = async (req, res) => {
   const { userId } = req.params;
