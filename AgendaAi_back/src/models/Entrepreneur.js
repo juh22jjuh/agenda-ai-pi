@@ -1,4 +1,5 @@
-import mongoose, { Mongoose } from "mongoose";
+
+import mongoose from 'mongoose';
 
 const entrepreneurSchema = new mongoose.Schema({
     name: {
@@ -7,66 +8,66 @@ const entrepreneurSchema = new mongoose.Schema({
     },
     cpf: {
         type: String,
-        require: true,
+        required: true,
     },
     telefone: {
         type: Number,
-        require: true,
+        required: true,
     },
     cep: {
         type: Number,
-        require: true,
-        maxLenght: 8
+        required: true,
+        maxLength: 8
     },
     rua: {
         type: String,
-        require: true,
+        required: true,
     },
     numero: {
         type: String,
-        require: true,
+        required: true,
     },
     comple: {
         type: String,
-        require: true
+        required: false, // Complemento não é obrigatório
     },
     bairro: {
         type: String,
-        require: true,
+        required: true,
     },
     cidade: {
         type: String,
-        require: true,
+        required: true,
     },
     estado: {
         type: String,
-        require: true,
+        required: true,
     },
     image: {
         type: String,
-        require: true,
+        required: false, // Imagem não é obrigatória
     },
+    // --- CAMPO ADICIONADO ---
+    services_entreprenuer: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "servicesEntreprenuer"
+    }],
+    // ----------------------
     created_at: {
         type: Date,
         default: Date.now,
     },
     status: {
         type: String,
-        enum: ['pending', 'authorized', 'denegad']
+        enum: ['pending', 'authorized', 'denegad'],
+        default: 'pending',
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
         required: true
-    },
-    services_entreprenuer: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "servicesEntreprenuer",
-            required: true
-        }
-    ],
-    isActive: { type: Boolean, default: true },
-})
+    }
+});
 
-export const Entrepreneur = mongoose.model('Entrepreneur', entrepreneurSchema)
+export const Entrepreneur = mongoose.model('Entrepreneur', entrepreneurSchema);
+
