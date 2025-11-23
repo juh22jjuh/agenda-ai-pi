@@ -2,6 +2,12 @@
 import {User} from '../models/User.js';
 import {Entrepreneur} from '../models/Entrepreneur.js'; // Importe o modelo Entrepreneur
 
+// Função para normalizar o caminho do arquivo
+const normalizePath = (path) => {
+  if (!path) return null;
+  return path.replace(/\\/g, '/');
+};
+
 export const Register = async (req, res) => {
   const { userId } = req.params;
   const { name, cpf, telefone, cep, rua, numero, comple, bairro, cidade, estado } = req.body;
@@ -21,8 +27,7 @@ export const Register = async (req, res) => {
   const format_cep = cep.replace(/\D/g, '');
 
   try {
-    // 2. Criar e salvar o novo documento Entrepreneur
-    const companyImageBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+    const imagePath = req.file ? normalizePath(req.file.path) : null;
 
     const newEntrepreneur = new Entrepreneur({
       name,
@@ -35,7 +40,7 @@ export const Register = async (req, res) => {
       bairro,
       cidade,
       estado,
-      image: companyImageBase64,
+      image: imagePath,
       user: userId,
       services_entreprenuer: [] // Inicializa como um array vazio
     });

@@ -2,6 +2,12 @@ import { scheduling } from "../models/Scheduling.js";
 import { servicesEntreprenuer } from "../models/services_entreprenuer.js";
 import { User } from "../models/User.js";
 
+// Função para normalizar o caminho do arquivo
+const normalizePath = (path) => {
+  if (!path) return null;
+  return path.replace(/\\/g, '/');
+};
+
 // CRIAR AGENDAMENTO
 
 export const createScheduling = async (req, res) => {
@@ -24,7 +30,7 @@ export const createScheduling = async (req, res) => {
         return res.status(403).json({ error: "Sua conta está temporariamente desativada. Você não pode criar novos agendamentos." });
     }
 
-    const inspirationImage = req.file ? req.file.path : null;
+    const inspirationImage = req.file ? normalizePath(req.file.path) : null;
 
     const service = await servicesEntreprenuer.findById(services_entrepreneur_id);
     if (!service)
