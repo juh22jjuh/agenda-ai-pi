@@ -26,12 +26,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NavbarEsta } from '../../shared/navbar-esta/navbar-esta';
 import { Footer } from '../../shared/footer/footer';
 import { ServiceSchedulingService } from '../../services/serviceScheduling/serviceScheduling.service';
+import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
+
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
     CommonModule,
+    NavbarAuth,
     ReactiveFormsModule,
     CardModule,
     ButtonModule,

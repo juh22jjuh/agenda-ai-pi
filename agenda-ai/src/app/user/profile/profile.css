@@ -1,136 +1,95 @@
-/* General body and surface styles */
-body, .surface-ground {
-  background-color: #f8f9fa; /* Light gray background for a softer look */
-  font-family: 'Roboto', sans-serif; /* Modern, readable font */
-}
-
-/* Card styling with depth and rounded corners */
-p-card .p-card-content {
-  padding: 0 !important; /* Resetting default padding to use our own */
-}
-
-p-card {
-  border-radius: 12px !important; /* Softer, more modern rounded corners */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; /* Subtle shadow for depth */
-  transition: all 0.3s ease-in-out;
-}
-
-p-card:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
-  transform: translateY(-2px);
-}
-
-/* Profile sidebar card */
-.profile-sidebar .p-card-body {
+/* Container geral */
+.container-profile {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 1rem;
 }
 
-/* Avatar styles */
-p-avatar.p-avatar-xlarge {
-  width: 100px;
-  height: 100px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* MENU LATERAL */
+.menu-lateral {
+  width: 260px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  text-align: center;
+  height: fit-content;
 }
 
-/* FileUpload button styling */
-p-fileupload .p-button {
-  background-color: #5A67D8 !important; /* A modern purple */
-  border-color: #5A67D8 !important;
-  border-radius: 8px !important;
-  transition: background-color 0.2s;
-}
-
-p-fileupload .p-button:hover {
-  background-color: #4C58B8 !important;
-}
-
-/* Tab navigation container */
-.tab-container {
-  width: 100%;
-}
-
-.tab-buttons {
-  display: flex;
-  border-bottom: 2px solid #e0e0e0; /* Lighter border */
-  margin-bottom: 1.5rem; /* More space */
-  padding: 0 1.5rem;
-}
-
-.tab-buttons button {
-  padding: 1rem 1.5rem;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #6c757d; /* Muted text color */
-  margin-right: 1rem;
-  border-bottom: 3px solid transparent;
-  transition: all 0.3s ease;
-  position: relative; /* For the underline effect */
-}
-
-.tab-buttons button::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background-color: #5A67D8;
-  transform: scaleX(0);
-  transition: transform 0.3s ease-in-out;
-}
-
-.tab-buttons button.active {
-  color: #5A67D8; /* Highlight color for active tab */
+.menu-lateral h3 {
+  margin-top: 1rem;
   font-weight: 600;
 }
 
-.tab-buttons button.active::after {
-  transform: scaleX(1); /* Animate the underline in */
+.menu-lateral ul {
+  margin-top: 2rem;
+  padding: 0;
+  list-style: none;
 }
 
-/* Tab content styling */
-.tab-content {
-  padding: 1.5rem;
-  border: none; /* Removed the border as the card provides separation */
-}
-
-/* Input and button styling in forms */
-.p-fluid .field {
-  margin-bottom: 1.5rem;
-}
-
-.p-fluid .field label {
+.menu-lateral li {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
   font-weight: 500;
-  color: #495057;
-  margin-bottom: 0.5rem;
+  color: #444;
 }
 
-.p-inputtext, p-password .p-password-input {
+.menu-lateral li:hover {
+  background: #e4e6ff;
+}
+
+.menu-lateral li.active {
+  background: #5A67D8;
+  color: white;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.conteudo-principal {
+  flex: 1;
+}
+
+p-card {
+  width: 100%;
+  display: block;
+}
+
+.p-card {
+  border-radius: 12px !important;
+}
+
+/* Inputs Prime */
+.p-inputtext,
+.p-password-input {
+  width: 100%;
   border-radius: 8px !important;
-  border: 1px solid #ced4da;
-  transition: box-shadow 0.2s;
 }
 
-.p-inputtext:focus, .p-password-input:focus {
-  box-shadow: 0 0 0 2px rgba(90, 103, 216, 0.3) !important; /* Focus ring */
-  border-color: #5A67D8 !important;
-}
-
-/* Primary button style */
+/* Botões */
 .p-button {
-  background-color: #5A67D8 !important;
-  border-color: #5A67D8 !important;
   border-radius: 8px !important;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  margin-top: 1rem;
 }
 
-.p-button:hover {
-  background-color: #4C58B8 !important;
+/* Responsividade */
+@media (max-width: 900px) {
+  .container-profile {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu-lateral {
+    width: 100%;
+  }
+
+  .conteudo-principal {
+    width: 100%;
+  }
 }

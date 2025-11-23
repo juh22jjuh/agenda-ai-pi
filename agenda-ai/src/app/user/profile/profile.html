@@ -1,38 +1,46 @@
-<p-toast />
-<p-confirmDialog [style]="{width: '50vw'}" />
-
 <app-navbar-auth></app-navbar-auth>
-
+<main class="flex flex-col items-center min-h-[91vh] bg-[#C7DED5] px-3 py-8">
 <div class="container-profile">
+
+  <!-- Menu Lateral -->
   <div class="menu-lateral">
     <p-avatar
       [image]="profileImageUrl"
       size="xlarge"
       shape="circle"
     ></p-avatar>
+
     <h3>{{ user?.name }}</h3>
     <p>{{ user?.email }}</p>
+
     <p-divider></p-divider>
+
     <ul>
       <li (click)="selectTab('minhaConta')" [class.active]="activeTab === 'minhaConta'">
         <i class="pi pi-user"></i> Minha Conta
       </li>
+
       <li (click)="selectTab('meusAgendamentos')" [class.active]="activeTab === 'meusAgendamentos'">
         <i class="pi pi-calendar"></i> Meus Agendamentos
       </li>
+
       <li (click)="selectTab('alterarSenha')" [class.active]="activeTab === 'alterarSenha'">
         <i class="pi pi-lock"></i> Alterar Senha
       </li>
     </ul>
   </div>
 
+  <!-- Conteúdo -->
   <div class="conteudo-principal">
+
+    <!-- MINHA CONTA -->
     <div *ngIf="activeTab === 'minhaConta'">
       <p-card header="Minha Conta">
         <div *ngIf="!showEditForm">
           <p><strong>Nome:</strong> {{ user?.name }}</p>
           <p><strong>Email:</strong> {{ user?.email }}</p>
           <p><strong>Telefone:</strong> {{ user?.phone }}</p>
+
           <button pButton type="button" label="Alterar Informações Pessoais" (click)="toggleEditForm()"></button>
         </div>
 
@@ -41,10 +49,12 @@
             <label for="name">Nome</label>
             <input id="name" type="text" pInputText [(ngModel)]="user.name" name="name">
           </div>
+
           <div class="p-field">
             <label for="email">Email</label>
             <input id="email" type="text" pInputText [(ngModel)]="user.email" name="email">
           </div>
+
           <div class="p-field">
             <label for="phone">Telefone</label>
             <input id="phone" type="text" pInputText [(ngModel)]="user.phone" name="phone">
@@ -52,37 +62,55 @@
 
           <div class="p-field">
             <label for="profileImage">Foto de Perfil</label>
-            <p-fileUpload name="profileImage" (onSelect)="alterarFoto($event)" [showUploadButton]="false" chooseLabel="Escolher" cancelLabel="Cancelar" [auto]="true"></p-fileUpload>
+            <p-fileUpload
+              name="profileImage"
+              (onSelect)="alterarFoto($event)"
+              [showUploadButton]="false"
+              chooseLabel="Escolher"
+              cancelLabel="Cancelar"
+              [auto]="true">
+            </p-fileUpload>
           </div>
 
           <button pButton type="button" label="Salvar" (click)="salvarInfoPessoal()"></button>
-          <button pButton type="button" label="Cancelar" (click)="toggleEditForm()" class="p-button-secondary"></button>
+          <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="toggleEditForm()"></button>
         </form>
       </p-card>
     </div>
 
+    <!-- MEUS AGENDAMENTOS -->
     <div *ngIf="activeTab === 'meusAgendamentos'">
-        <app-my-schedules />
+      <app-my-schedules></app-my-schedules>
     </div>
 
+    <!-- ALTERAR SENHA -->
     <div *ngIf="activeTab === 'alterarSenha'">
       <p-card header="Alterar Senha">
         <div class="p-field">
           <label for="senhaAtual">Senha Atual</label>
           <p-password id="senhaAtual" [(ngModel)]="senhaAtual"></p-password>
         </div>
+
         <div class="p-field">
           <label for="novaSenha">Nova Senha</label>
           <p-password id="novaSenha" [(ngModel)]="novaSenha"></p-password>
         </div>
+
         <div class="p-field">
           <label for="confirmarSenha">Confirmar Nova Senha</label>
           <p-password id="confirmarSenha" [(ngModel)]="confirmarSenha"></p-password>
         </div>
-        <button pButton type="button" label="Alterar Senha" (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)"></button>
+
+        <button
+          pButton
+          type="button"
+          label="Alterar Senha"
+          (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)">
+        </button>
       </p-card>
     </div>
+
   </div>
 </div>
-
+</main>
 <app-footer></app-footer>

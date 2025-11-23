@@ -28,7 +28,7 @@ export class EstablishmentService {
 
   // Busca todos os serviços de um empreendedor
   getServices(entrepreneurId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.API_URL}/services_entreprenuer/getall/${entrepreneurId}`).pipe(
+    return this.http.get<any[]>(`${this.API_URL}/servicesEntreprenuer/getall/${entrepreneurId}`).pipe(
       catchError(this.handleError)
     );
   }
