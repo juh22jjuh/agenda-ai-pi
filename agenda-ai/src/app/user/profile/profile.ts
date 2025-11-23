@@ -41,7 +41,7 @@ export class Profile implements OnInit {
   activeTab: string = 'minhaConta';
   showEditForm = false;
   updatedUser: any = {};
-  profileImageUrl: string = 'URL_da_IMAGEM_PADRAO';
+  profileImageUrl: string = 'assets/imagem3.jpg'; // Imagem padrão
   senhaAtual: string = '';
   novaSenha: string = '';
   confirmarSenha: string = '';
@@ -52,6 +52,9 @@ export class Profile implements OnInit {
     const { user } = this.authService.getUserData();
     this.user = user;
     this.updatedUser = { ...user };
+    if (this.user && this.user.photo) {
+      this.profileImageUrl = `http://localhost:3000/uploads/${this.user.photo}`;
+    }
   }
 
   selectTab(tab: string) {
