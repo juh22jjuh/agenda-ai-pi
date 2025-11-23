@@ -36,8 +36,8 @@ export class Profile implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const userId = localStorage.getItem('userId');
-
+    const user = localStorage.getItem('user_logged')
+    const userId = user !== null ? JSON.parse(user)?._id : null
     if (!userId) {
       this.errorMessage = "ID do usuário não encontrado. Por favor, faça login novamente.";
       this.loading = false;
@@ -52,7 +52,6 @@ export class Profile implements OnInit {
       },
       error: (err) => {
         if (err.status === 404 && err.error.exists === false) {
-          // Se o perfil não existe, redireciona para a página de registro
           this.router.navigate(['/establishment/register']);
         } else {
           this.errorMessage = err.message || 'Ocorreu um erro ao buscar os dados do perfil.';
@@ -60,6 +59,8 @@ export class Profile implements OnInit {
         }
       }
     });
+
+    console.log(this.entrepreneur)
   }
 
   navigateTo(path: string): void {
