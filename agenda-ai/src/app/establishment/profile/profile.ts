@@ -145,6 +145,7 @@ export class Profile implements OnInit {
       tap(({ services, schedules }) => {
         this.services = services;
         this.schedules = schedules;
+        console.log('Agendamentos recebidos:', schedules);
       })
     );
   }
