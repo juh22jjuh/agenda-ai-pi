@@ -19,15 +19,15 @@ import { TagModule } from 'primeng/tag';
       <div *ngIf="schedulings.length > 0; else noSchedulings">
         <div *ngFor="let scheduling of schedulings" class="schedule-card">
           <p-card>
-            <ng-template pTemplate="title">{{ scheduling.services_entrepreneur_id.name }}</ng-template>
+            <ng-template pTemplate="title">{{ scheduling.services_entrepreneur_id?.nome || 'Serviço Indisponível' }}</ng-template>
             <ng-template pTemplate="subtitle">{{ scheduling.date }} - {{ scheduling.time }}</ng-template>
-            <div class="p-card-content">
+            <ng-template pTemplate="content">
               <p>Status: <p-tag [value]="scheduling.status" [severity]="getSeverity(scheduling.status)"></p-tag></p>
               <p>Descrição: {{ scheduling.description }}</p>
-            </div>
-            <div class="p-card-footer">
+            </ng-template>
+            <ng-template pTemplate="footer">
               <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-danger" (click)="cancelScheduling(scheduling._id)" [disabled]="scheduling.status === 'Cancelado'"></p-button>
-            </div>
+            </ng-template>
           </p-card>
         </div>
       </div>
@@ -77,12 +77,12 @@ export class MySchedules implements OnInit {
     );
   }
 
-  getSeverity(status: string): string {
+  getSeverity(status: string): 'success' | 'warn' | 'danger' | 'info' {
     switch (status) {
       case 'Confirmado':
         return 'success';
       case 'Pendente':
-        return 'warning';
+        return 'warn';
       case 'Cancelado':
         return 'danger';
       default:

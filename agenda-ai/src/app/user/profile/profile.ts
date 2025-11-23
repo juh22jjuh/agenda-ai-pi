@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../auth/auth';
 import { HttpClient } from '@angular/common/http';
+import { MySchedules } from './my-schedules';
 
 // PrimeNG
 import { CardModule } from 'primeng/card';
@@ -32,6 +33,7 @@ import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
     FileUploadModule,
     AvatarModule,
     DividerModule,
+    MySchedules
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
@@ -47,7 +49,6 @@ export class Profile implements OnInit {
 
   token: string | null = null;
   logged = false;
-  activeIndex = 0; // controla aba ativa
   senhaAtual: string = '';
   novaSenha: string = '';
   confirmarSenha: string = '';
