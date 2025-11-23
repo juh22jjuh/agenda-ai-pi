@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { EstablishmentService } from '../establishment.service';
@@ -32,11 +32,12 @@ export class Profile implements OnInit {
 
   constructor(
     private establishmentService: EstablishmentService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef // Injetando o ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    const userString = localStorage.getItem('user');
+    const userString = localStorage.getItem('user_logged'); // 1. Chave corrigida
 
     if (!userString) {
       this.handleAuthError("Usuário não autenticado. Por favor, faça login novamente.");
@@ -56,6 +57,7 @@ export class Profile implements OnInit {
         next: (data) => {
           this.entrepreneur = data;
           this.loading = false;
+          this.cdr.detectChanges(); // 2. Forçando a atualização da view
         },
         error: (err) => {
           this.loading = false;
@@ -64,6 +66,7 @@ export class Profile implements OnInit {
           } else {
             this.errorMessage = err.error?.message || err.message || 'Ocorreu um erro ao buscar os dados do perfil.';
           }
+          this.cdr.detectChanges(); // 2. Forçando a atualização da view
         }
       });
 
@@ -76,6 +79,7 @@ export class Profile implements OnInit {
     this.errorMessage = message;
     this.loading = false;
     this.router.navigate(['/auth/login']);
+    this.cdr.detectChanges(); // 2. Forçando a atualização da view
   }
 
   navigateTo(path: string): void {
