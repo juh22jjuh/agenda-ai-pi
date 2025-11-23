@@ -1,77 +1,82 @@
-/* Container do formulário */
-/* Reduzindo o tamanho do formulário e centralizando */
-.mt-6.p-5.border.bg-white.shadow.rounded-xl {
-  max-width: 450px;   /* diminui o tamanho */
-  margin: 24px auto;  /* centraliza */
-}
-/* Título */
-h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #4b7267 !important;
-  margin-bottom: 16px;
+
+.profile-container {
+  padding: 2rem;
+  background-color: #f4f7f6;
 }
 
-/* Labels */
-label {
-  font-weight: 500;
-  color: #4a4a4a;
-  margin-bottom: 4px;
-  display: block;
+.profile-content {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-/* Inputs e textarea */
-input[type="text"],
-input[type="number"],
-textarea {
-  border: 1px solid #cbd5d1 !important;
-  padding: 10px 12px !important;
+.profile-card {
   width: 100%;
-  border-radius: 10px !important;
-  margin-bottom: 14px;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-  background: #f8faf9;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
 }
 
-input:focus,
-textarea:focus {
-  outline: none;
-  border-color: #648f80 !important;
-  background: #ffffff;
-  box-shadow: 0 0 0 2px rgba(100, 143, 128, 0.2);
+.profile-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
 }
 
-/* Botões */
-button {
-  padding: 10px 18px !important;
-  border-radius: 10px !important;
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: background 0.2s ease, transform 0.1s ease;
+.profile-details {
+  line-height: 1.6;
+  color: #555;
 }
 
-button:hover {
-  transform: translateY(-2px);
+.profile-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0 0;
+  gap: 1rem; /* Espaçamento entre os botões */
 }
 
-button.bg-green-600 {
-  background: #4caf87 !important;
+.section-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
 }
 
-button.bg-green-600:hover {
-  background: #3a8c6e !important;
+.section-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #eee;
 }
 
-button.bg-red-600 {
-  background: #d85151 !important;
+.error-message {
+  color: #d32f2f;
+  font-size: 1.2rem;
+  text-align: center;
+  background-color: #ffebee;
+  padding: 1rem;
+  border-radius: 8px;
 }
 
-button.bg-red-600:hover {
-  background: #b73e3e !important;
+/* Estilos da Tabela */
+:host ::ng-deep .p-table {
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* Área dos botões */
-.flex.gap-3.mt-4 {
-  margin-top: 18px;
+:host ::ng-deep .p-datatable-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+:host ::ng-deep .p-datatable-thead > tr > th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #fdfdfd;
 }

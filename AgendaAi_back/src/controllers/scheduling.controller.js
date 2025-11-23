@@ -227,3 +227,33 @@ export const cancelScheduling = async (req, res) => {
     res.status(500).json({ error: "Erro ao cancelar agendamento" });
   }
 };
+
+export const getSchedulingByEntrepreneur = async (req, res) => {
+  try {
+    const { entrepreneurId } = req.params;
+
+    // 1. Encontrar todos os serviços do empreendedor
+    const services = await servicesEntreprenuer.find({ id_entreprenuer: entrepreneurId });
+
+    if (!services || services.length === 0) {
+      return res.json([]); // Retorna array vazio se não houver serviços
+    }
+
+    // 2. Extrair os IDs dos serviços
+    const serviceIds = services.map(service => service._id);
+
+    // 3. Buscar todos os agendamentos associados a esses serviços
+    const schedules = await scheduling.find({
+      services_entrepreneur_id: { $in: serviceIds }
+    }).populate('user_id').populate('services_entrepreneur_id');
+
+    res.json(schedules);
+
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({ error: 'ID do empreendedor inválido' });
+    }
+    console.log(error);
+    res.status(500).json({ error: "Erro ao buscar agendamentos da empresa" });
+  }
+};
