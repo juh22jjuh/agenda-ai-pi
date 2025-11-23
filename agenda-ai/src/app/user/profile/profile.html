@@ -1,83 +1,85 @@
-<app-navbar-auth></app-navbar-auth>
-<div class="surface-ground">
-  <div class="grid grid-nogutter">
-    <div class="col-12 md:col-4 lg:col-3">
-      <div class="p-3">
-        <p-card styleClass="h-full profile-sidebar">
-          <div class="flex flex-column align-items-center h-full">
-            <p-avatar [image]="profileImageUrl" size="xlarge" shape="circle"></p-avatar>
-            <p class="font-bold text-lg mt-3">{{ user.name + ' ' + user.surname }}</p>
-            <p class="text-sm text-gray-500">{{ user.email }}</p>
-            <p-fileUpload
-              mode="basic"
-              name="profileImage"
-              chooseLabel="Mudar foto"
-              [auto]="true"
-              (onSelect)="alterarFoto($event)"
-              class="mt-auto"
-            >
-            </p-fileUpload>
+<app-navbar-auth />
+
+<div class="container-profile">
+  <div class="menu-lateral">
+    <p-avatar
+      [image]="profileImageUrl"
+      size="xlarge"
+      shape="circle"
+    ></p-avatar>
+    <h3>{{ user?.name }}</h3>
+    <p>{{ user?.email }}</p>
+    <p-divider></p-divider>
+    <ul>
+      <li (click)="selectTab('minhaConta')" [class.active]="activeTab === 'minhaConta'">
+        <i class="pi pi-user"></i> Minha Conta
+      </li>
+      <li (click)="selectTab('meusAgendamentos')" [class.active]="activeTab === 'meusAgendamentos'">
+        <i class="pi pi-calendar"></i> Meus Agendamentos
+      </li>
+      <li (click)="selectTab('alterarSenha')" [class.active]="activeTab === 'alterarSenha'">
+        <i class="pi pi-lock"></i> Alterar Senha
+      </li>
+    </ul>
+  </div>
+
+  <div class="conteudo-principal">
+    <div *ngIf="activeTab === 'minhaConta'">
+      <p-card header="Minha Conta">
+        <div *ngIf="!showEditForm">
+          <p><strong>Nome:</strong> {{ user?.name }}</p>
+          <p><strong>Email:</strong> {{ user?.email }}</p>
+          <p><strong>Telefone:</strong> {{ user?.phone }}</p>
+          <button pButton type="button" label="Alterar Informações Pessoais" (click)="toggleEditForm()"></button>
+        </div>
+
+        <form *ngIf="showEditForm">
+          <div class="p-field">
+            <label for="name">Nome</label>
+            <input id="name" type="text" pInputText [(ngModel)]="user.name" name="name">
           </div>
-        </p-card>
-      </div>
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input id="email" type="text" pInputText [(ngModel)]="user.email" name="email">
+          </div>
+          <div class="p-field">
+            <label for="phone">Telefone</label>
+            <input id="phone" type="text" pInputText [(ngModel)]="user.phone" name="phone">
+          </div>
+
+          <div class="p-field">
+            <label for="profileImage">Foto de Perfil</label>
+            <p-fileUpload name="profileImage" (onSelect)="alterarFoto($event)" [showUploadButton]="false" chooseLabel="Escolher" cancelLabel="Cancelar" [auto]="true"></p-fileUpload>
+          </div>
+
+          <button pButton type="button" label="Salvar" (click)="salvarInfoPessoal()"></button>
+          <button pButton type="button" label="Cancelar" (click)="toggleEditForm()" class="p-button-secondary"></button>
+        </form>
+      </p-card>
     </div>
-    <div class="col-12 md:col-8 lg:col-9">
-      <div class="p-3">
-        <p-card>
-          <div class="tab-container">
-            <div class="tab-buttons">
-              <button (click)="selectTab('minhaConta')" [class.active]="activeTab === 'minhaConta'">Minha Conta</button>
-              <button (click)="selectTab('seguranca')" [class.active]="activeTab === 'seguranca'">Segurança</button>
-              <button (click)="selectTab('meusAgendamentos')" [class.active]="activeTab === 'meusAgendamentos'">Meus Agendamentos</button>
-            </div>
 
-            <div *ngIf="activeTab === 'minhaConta'" class="p-fluid tab-content">
-              <div class="field">
-                <label for="name">Nome</label>
-                <input pInputText id="name" type="text" [(ngModel)]="updatedUser.name" />
-              </div>
-              <div class="field">
-                <label for="surname">Sobrenome</label>
-                <input pInputText id="surname" type="text" [(ngModel)]="updatedUser.surname" />
-              </div>
-              <div class="field">
-                <label for="email">Email</label>
-                <input pInputText id="email" type="text" [(ngModel)]="user.email" [disabled]="true" />
-              </div>
-              <div class="formgrid grid">
-                <div class="field col">
-                  <button pButton label="Salvar" (click)="salvarInfoPessoal()"></button>
-                </div>
-              </div>
-            </div>
+    <div *ngIf="activeTab === 'meusAgendamentos'">
+        <app-my-schedules />
+    </div>
 
-            <div *ngIf="activeTab === 'seguranca'" class="p-fluid tab-content">
-              <div class="field">
-                <label for="currentPassword">Senha Atual</label>
-                <p-password id="currentPassword" [(ngModel)]="senhaAtual" [toggleMask]="true"></p-password>
-              </div>
-              <div class="field">
-                <label for="newPassword">Nova Senha</label>
-                <p-password id="newPassword" [(ngModel)]="novaSenha" [toggleMask]="true"></p-password>
-              </div>
-              <div class="field">
-                <label for="confirmPassword">Confirmar Nova Senha</label>
-                <p-password id="confirmPassword" [(ngModel)]="confirmarSenha" [toggleMask]="true"></p-password>
-              </div>
-              <div class="formgrid grid">
-                <div class="field col">
-                  <button pButton label="Alterar Senha" (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)"></button>
-                </div>
-              </div>
-            </div>
-
-            <div *ngIf="activeTab === 'meusAgendamentos'" class="tab-content">
-              <app-my-schedules></app-my-schedules>
-            </div>
-          </div>
-        </p-card>
-      </div>
+    <div *ngIf="activeTab === 'alterarSenha'">
+      <p-card header="Alterar Senha">
+        <div class="p-field">
+          <label for="senhaAtual">Senha Atual</label>
+          <p-password id="senhaAtual" [(ngModel)]="senhaAtual"></p-password>
+        </div>
+        <div class="p-field">
+          <label for="novaSenha">Nova Senha</label>
+          <p-password id="novaSenha" [(ngModel)]="novaSenha"></p-password>
+        </div>
+        <div class="p-field">
+          <label for="confirmarSenha">Confirmar Nova Senha</label>
+          <p-password id="confirmarSenha" [(ngModel)]="confirmarSenha"></p-password>
+        </div>
+        <button pButton type="button" label="Alterar Senha" (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)"></button>
+      </p-card>
     </div>
   </div>
 </div>
+
 <app-footer></app-footer>

@@ -1,13 +1,22 @@
-
 import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Use memoryStorage to hold the file as a buffer in memory
-const storage = multer.memoryStorage();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../uploads'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
 
 const upload = multer({
-  storage: storage, // The file will be stored in req.file.buffer
+  storage: storage,
   fileFilter: (req, file, cb) => {
-    // Filter to accept only image files
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {

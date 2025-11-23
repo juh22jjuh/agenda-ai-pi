@@ -212,7 +212,7 @@ export const UpdateUserPhoto = async (req, res) => {
     }
 
     if (file) {
-      user.photo = file.path;
+      user.photo = file.filename; // Salva apenas o nome do arquivo
       await user.save();
       return res.status(200).json({ message: "Foto de perfil atualizada com sucesso", user });
     } else {
