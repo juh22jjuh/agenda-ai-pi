@@ -85,7 +85,7 @@
             <td>{{ schedule.date | date:'dd/MM/yyyy' }}</td>
             <td>{{ schedule.time }}</td>
             <td>{{ schedule.user_id?.name || 'Cliente não identificado' }}</td>
-            <td>{{ schedule.services_entrepreneur_id?.name || 'Serviço não identificado' }}</td>
+            <td>{{ schedule.services_entrepreneur_id?.nome || 'Serviço não identificado' }}</td>
             <td>
                 <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-danger p-button-sm" (click)="cancelSchedule(schedule)" />
             </td>
