@@ -121,7 +121,10 @@ export class Profile implements OnInit {
     return forkJoin({
         services: this.establishmentService.getServices(entrepreneurId),
         schedules: this.establishmentService.getSchedules(entrepreneurId)
-    }).pipe(tap(({ services, schedules }) => { this.services = services; this.schedules = schedules; }));
+    }).pipe(
+        tap(({ services, schedules }) => { this.services = services; this.schedules = schedules; }),
+        catchError(err => this.handleDataError(err))
+    );
   }
 
   openEditProfileDialog(): void {
@@ -262,7 +265,7 @@ export class Profile implements OnInit {
     this.messageService.add({ severity: 'error', summary: 'Erro', detail: message });
     this.loading = false;
     this.cdr.detectChanges();
-    return throwError(() => error); // Re-throw the original error object
+    return throwError(() => error);
   }
 
   private handleAuthError(message: string): void {
