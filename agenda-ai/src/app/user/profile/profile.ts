@@ -83,9 +83,7 @@ export class Profile implements OnInit {
 
       this.http.put(`http://localhost:3000/api/user/update-photo/${this.user._id}`, formData).subscribe(
         (response: any) => {
-          this.user = response;
-          this.authService.updateUser(this.user);
-          this.profileImageUrl = `http://localhost:3000/uploads/${this.user.photo}`;
+          window.location.reload();
         },
         (error) => {
           console.error('Erro ao atualizar a foto:', error);
