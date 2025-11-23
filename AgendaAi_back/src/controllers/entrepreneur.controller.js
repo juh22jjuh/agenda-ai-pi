@@ -73,3 +73,23 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
     // ... sua lógica de login permanece a mesma ...
 };
+
+// --- NOVA FUNÇÃO ADICIONADA ---
+export const getEntrepreneurByUserId = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Procura na coleção Entrepreneur por um documento cujo campo 'user' corresponda ao userId
+    const entrepreneur = await Entrepreneur.findOne({ user: userId });
+
+    if (!entrepreneur) {
+      return res.status(404).json({ message: 'Nenhum perfil de empreendedor encontrado para este usuário.' });
+    }
+
+    res.status(200).json(entrepreneur);
+
+  } catch (error) {
+    console.error("Erro ao buscar dados do empreendedor:", error);
+    res.status(500).json({ message: 'Erro interno do servidor.', error: error.message });
+  }
+};

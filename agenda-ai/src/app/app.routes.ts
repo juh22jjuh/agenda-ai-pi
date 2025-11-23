@@ -1,3 +1,4 @@
+
 import { Routes } from '@angular/router';
 import { HomeUser } from './home/home-user/home-user';
 import { Login } from './auth/login/login';
@@ -7,9 +8,10 @@ import { Profile } from './user/profile/profile';
 import { Contact } from './contact/contact';
 import { Team } from './team/team';
 import { About } from './about/about';
-import { Profile as ProfileEstablishment } from './establishment/profile/profile'
-import { RegisterEstablishmentComponent as RegisterEstablishment } from './establishment/register/register'
-import {Scheduling as SchedulingEstablishment} from './establishment/scheduling/scheduling'
+import { Profile as ProfileEstablishment } from './establishment/profile/profile';
+// Correção: Importando o nome correto da classe
+import { EstablishmentRegisterComponent as RegisterEstablishment } from './establishment/register/register';
+import { Scheduling as SchedulingEstablishment } from './establishment/scheduling/scheduling';
 import { Complaints } from './admin/complaints/complaints';
 import { Companies } from './admin/companies/companies';
 import { Users } from './admin/users/users';
@@ -23,7 +25,6 @@ import { Secao } from './home/secao/secao';
 import { DuvidaAgen } from './home/duvida-agen/duvida-agen';
 import { DuvidaEmpre } from './home/duvida-empre/duvida-empre';
 import { NavbarEsta } from './shared/navbar-esta/navbar-esta';
-
 
 export const routes: Routes = [
   // Home
@@ -46,13 +47,14 @@ export const routes: Routes = [
 
   // Establishment
   { path: 'establishment/profile', component: ProfileEstablishment },
+  // O alias 'RegisterEstablishment' continua funcionando pois foi mantido na importação
   { path: 'establishment/register', component: RegisterEstablishment },
   { path: 'establishment/config', component: Config},
   { path: 'establishment/scheduling/:idService/:idUser', component: SchedulingEstablishment},
-  {path: 'establishment/pre-scheduling/:id', component: PreScheduling},
-  {path: 'establishment/termos', component: Termos},
-  {path: 'establishment/politicas', component: Politicas},
-  {path: 'establishment/navbarEsta', component: NavbarEsta},
+  { path: 'establishment/pre-scheduling/:id', component: PreScheduling},
+  { path: 'establishment/termos', component: Termos},
+  { path: 'establishment/politicas', component: Politicas},
+  { path: 'establishment/navbarEsta', component: NavbarEsta},
 
   // Admin
   { path: 'admin/navbar-adm', component: NavbarAdm},

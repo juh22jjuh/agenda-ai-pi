@@ -1,67 +1,74 @@
 
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 
-// Services
-import { ViacepService, ViaCEPResponse } from '../viacep.service';
-import { EstablishmentService } from '../establishment.service';
-
-// PrimeNG Modules
-import { ToastModule } from 'primeng/toast';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputMaskModule } from 'primeng/inputmask';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ButtonModule } from 'primeng/button';
-import { FileUploadModule, FileSelectEvent } from 'primeng/fileupload';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
-// Shared Components
+// Componentes compartilhados
 import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 import { Footer } from '../../shared/footer/footer';
 
+// Serviços
+import { EstablishmentService } from '../establishment.service';
+import { ViacepService, ViaCEPResponse } from '../viacep.service';
+
+// Módulos PrimeNG
+import { ToastModule } from 'primeng/toast';
+import { CardModule } from 'primeng/card';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CheckboxModule } from 'primeng/checkbox';
+
 @Component({
-  selector: 'app-register-establishment',
+  selector: 'app-register',
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule, ToastModule, CardModule, InputTextModule,
-    InputMaskModule, CheckboxModule, ButtonModule, FileUploadModule, ProgressSpinnerModule,
-    NavbarAuth, Footer
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    // Componentes
+    NavbarAuth,
+    Footer,
+    // Módulos PrimeNG
+    ToastModule,
+    CardModule,
+    FileUploadModule,
+    InputTextModule,
+    InputMaskModule,
+    ButtonModule,
+    ProgressSpinnerModule,
+    CheckboxModule
   ],
-  providers: [MessageService], // Provide MessageService locally
   templateUrl: './register.html',
-  styleUrls: ['./register.css']
+  styleUrls: ['./register.css'],
+  providers: [MessageService] // Fornecer o MessageService
 })
-export class RegisterEstablishmentComponent implements OnInit {
-  // Service Injections
-  private fb = inject(FormBuilder);
-  private viacepService = inject(ViacepService);
-  private establishmentService = inject(EstablishmentService);
-  private messageService = inject(MessageService);
+export class EstablishmentRegisterComponent implements OnInit {
 
-  // Properties
-  registerForm!: FormGroup;
-  states: { name: string, value: string }[] = [];
-  selectedFile: File | null = null;
-  imagePreview: string | null = null;
-  
-  // UI State Flags
-  isCepLoading = false;
+  registerForm: FormGroup; // Corrigido para registerForm
+  states: any[] = [];
+  selectedImage: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
   isSubmitting = false;
+  isCepLoading = false;
 
-  ngOnInit(): void {
-    this.buildForm();
-    this.loadStates();
-  }
-
-  private buildForm(): void {
+  constructor(
+    private fb: FormBuilder,
+    private viacepService: ViacepService,
+    private establishmentService: EstablishmentService,
+    private messageService: MessageService,
+    private router: Router
+  ) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
-      cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
-      telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\) \d{5}-\d{4}$/)]],
-      cep: ['', [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      companyImage: [null],
+      cpf: ['', [Validators.required]],
+      telefone: ['', Validators.required],
+      cep: ['', Validators.required],
       rua: ['', Validators.required],
       numero: ['', Validators.required],
       complemento: [''],
@@ -72,39 +79,28 @@ export class RegisterEstablishmentComponent implements OnInit {
     });
   }
 
-  onCepBlur(): void {
-    const cepControl = this.registerForm.get('cep');
-    if (cepControl && cepControl.valid) {
-      const cep = cepControl.value.replace(/\D/g, ''); // Remove non-digit characters
-      this.isCepLoading = true;
-      
-      this.viacepService.search(cep).subscribe(data => {
-        this.isCepLoading = false;
-        if (data && !data.erro) {
-          this.patchAddressData(data);
-          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Endereço encontrado!' });
-        } else {
-          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'CEP não encontrado ou inválido.' });
-        }
-      });
-    }
+  ngOnInit(): void {
+    this.loadStates();
   }
 
-  private patchAddressData(data: ViaCEPResponse): void {
-    this.registerForm.patchValue({
-      rua: data.logradouro,
-      bairro: data.bairro,
-      cidade: data.localidade,
-      estado: data.uf
-    });
+  loadStates(): void {
+    this.states = [
+      { label: 'Acre', value: 'AC' }, { label: 'Alagoas', value: 'AL' }, { label: 'Amapá', value: 'AP' },
+      { label: 'Amazonas', value: 'AM' }, { label: 'Bahia', value: 'BA' }, { label: 'Ceará', value: 'CE' },
+      { label: 'Distrito Federal', value: 'DF' }, { label: 'Espírito Santo', value: 'ES' }, { label: 'Goiás', value: 'GO' },
+      { label: 'Maranhão', value: 'MA' }, { label: 'Mato Grosso', value: 'MT' }, { label: 'Mato Grosso do Sul', value: 'MS' },
+      { label: 'Minas Gerais', value: 'MG' }, { label: 'Pará', value: 'PA' }, { label: 'Paraíba', value: 'PB' },
+      { label: 'Paraná', value: 'PR' }, { label: 'Pernambuco', value: 'PE' }, { label: 'Piauí', value: 'PI' },
+      { label: 'Rio de Janeiro', value: 'RJ' }, { label: 'Rio Grande do Norte', value: 'RN' }, { label: 'Rio Grande do Sul', value: 'RS' },
+      { label: 'Rondônia', value: 'RO' }, { label: 'Roraima', value: 'RR' }, { label: 'Santa Catarina', value: 'SC' },
+      { label: 'São Paulo', value: 'SP' }, { label: 'Sergipe', value: 'SE' }, { label: 'Tocantins', value: 'TO' }
+    ];
   }
 
-  onFileSelect(event: FileSelectEvent): void {
+  onFileSelect(event: any): void {
     const file = event.files[0];
     if (file) {
-      this.selectedFile = file;
-      
-      // Generate a preview
+      this.selectedImage = file;
       const reader = new FileReader();
       reader.onload = (e: any) => this.imagePreview = e.target.result;
       reader.readAsDataURL(file);
@@ -112,85 +108,70 @@ export class RegisterEstablishmentComponent implements OnInit {
   }
 
   clearFile(): void {
-    this.selectedFile = null;
+    this.selectedImage = null;
     this.imagePreview = null;
+    this.registerForm.get('companyImage')?.setValue(null);
+  }
+
+  onCepBlur(): void {
+    const cep = this.registerForm.get('cep')?.value;
+    if (cep && cep.length >= 8) {
+      this.isCepLoading = true;
+      this.viacepService.search(cep.replace(/\D/g, '')).subscribe((data: ViaCEPResponse | null) => {
+        this.isCepLoading = false;
+        if (data && !data.erro) {
+          this.registerForm.patchValue({
+            rua: data.logradouro,
+            bairro: data.bairro,
+            cidade: data.localidade,
+            estado: data.uf
+          });
+        } else {
+          this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'CEP não encontrado.' });
+        }
+      });
+    }
+  }
+  
+  resetForm(): void {
+      this.registerForm.reset();
+      this.clearFile();
   }
 
   onSubmit(): void {
     if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched(); // Trigger validation messages
       this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Preencha todos os campos obrigatórios.' });
       return;
     }
 
     this.isSubmitting = true;
-    const formData = this.buildFormData();
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'ID do usuário não encontrado. Faça o login novamente.' });
+      this.isSubmitting = false;
+      return;
+    }
 
-    this.establishmentService.register(formData).subscribe({
-      next: () => {
-        this.isSubmitting = false;
-        this.messageService.add({ severity: 'success', summary: 'Sucesso!', detail: 'Estabelecimento cadastrado com sucesso!' });
-        this.resetForm();
+    const formData = new FormData();
+    Object.keys(this.registerForm.value).forEach(key => {
+      if (key !== 'companyImage') {
+        formData.append(key, this.registerForm.value[key]);
+      }
+    });
+
+    if (this.selectedImage) {
+      formData.append('companyImage', this.selectedImage, this.selectedImage.name);
+    }
+
+    this.establishmentService.registerEntrepreneur(userId, formData).subscribe({
+      next: (response) => {
+        this.messageService.add({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa registrada com sucesso! Redirecionando...' });
+        setTimeout(() => this.router.navigate(['/establishment/profile']), 2000);
       },
       error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: err.message || 'Não foi possível registrar a empresa.' });
         this.isSubmitting = false;
-        this.messageService.add({ severity: 'error', summary: 'Erro no Cadastro', detail: err.message });
       }
     });
-  }
-
-  private buildFormData(): FormData {
-    const formData = new FormData();
-    Object.keys(this.registerForm.controls).forEach(key => {
-      // Clean masked values before sending
-      let value = this.registerForm.get(key)?.value;
-      if (['cpf', 'telefone', 'cep'].includes(key)) {
-        value = String(value).replace(/\D/g, '');
-      }
-      formData.append(key, value);
-    });
-
-    if (this.selectedFile) {
-      formData.append('companyImage', this.selectedFile, this.selectedFile.name);
-    }
-    return formData;
-  }
-
-  resetForm(): void {
-    this.registerForm.reset();
-    this.clearFile();
-    this.registerForm.get('termos')?.setValue(false); // Reset checkbox state
-  }
-
-  private loadStates(): void {
-    this.states = [
-      { name: 'Acre', value: 'AC' },
-      { name: 'Alagoas', value: 'AL' },
-      { name: 'Amapá', value: 'AP' },
-      { name: 'Amazonas', value: 'AM' },
-      { name: 'Bahia', value: 'BA' },
-      { name: 'Ceará', value: 'CE' },
-      { name: 'Distrito Federal', value: 'DF' },
-      { name: 'Espírito Santo', value: 'ES' },
-      { name: 'Goiás', value: 'GO' },
-      { name: 'Maranhão', value: 'MA' },
-      { name: 'Mato Grosso', value: 'MT' },
-      { name: 'Mato Grosso do Sul', value: 'MS' },
-      { name: 'Minas Gerais', value: 'MG' },
-      { name: 'Pará', value: 'PA' },
-      { name: 'Paraíba', value: 'PB' },
-      { name: 'Paraná', value: 'PR' },
-      { name: 'Pernambuco', value: 'PE' },
-      { name: 'Piauí', value: 'PI' },
-      { name: 'Rio de Janeiro', value: 'RJ' },
-      { name: 'Rio Grande do Norte', value: 'RN' },
-      { name: 'Rio Grande do Sul', value: 'RS' },
-      { name: 'Rondônia', value: 'RO' },
-      { name: 'Roraima', value: 'RR' },
-      { name: 'Santa Catarina', value: 'SC' },
-      { name: 'São Paulo', value: 'SP' },
-      { name: 'Sergipe', value: 'SE' },
-      { name: 'Tocantins', value: 'TO' }
-    ];
   }
 }

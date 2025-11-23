@@ -1,14 +1,17 @@
 
 import { Router } from 'express';
-import { Register, Login } from '../controllers/entrepreneur.controller.js';
+// Adiciona a nova função ao import
+import { Register, Login, getEntrepreneurByUserId } from '../controllers/entrepreneur.controller.js';
 import upload from '../config/multer.js'; // Import the multer configuration
 
 export const routerEnt = Router();
 
-// Use the 'upload' middleware on the registration route.
-// 'upload.single("companyImage")' tells multer to expect a single file in a field named "companyImage".
-// This name MUST match the name used in the frontend FormData.
+// Rota para registro de empreendedor
 routerEnt.post('/register/:userId', upload.single('companyImage'), Register);
 
+// Rota para login
 routerEnt.post('/login', Login);
 
+// --- NOVA ROTA ADICIONADA ---
+// Rota para buscar dados do empreendedor pelo ID do usuário
+routerEnt.get('/user/:userId', getEntrepreneurByUserId);
