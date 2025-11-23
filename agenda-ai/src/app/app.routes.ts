@@ -8,7 +8,7 @@ import { Contact } from './contact/contact';
 import { Team } from './team/team';
 import { About } from './about/about';
 import { Profile as ProfileEstablishment } from './establishment/profile/profile'
-import { Register as RegisterEstablishment } from './establishment/register/register'
+import { RegisterEstablishmentComponent as RegisterEstablishment } from './establishment/register/register'
 import {Scheduling as SchedulingEstablishment} from './establishment/scheduling/scheduling'
 import { Complaints } from './admin/complaints/complaints';
 import { Companies } from './admin/companies/companies';

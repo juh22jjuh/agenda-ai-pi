@@ -1,12 +1,40 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+
+// PrimeNG Modules
+import { ToastModule } from 'primeng/toast';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
+import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
+
+// Shared Components
+import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
+import { Footer } from '../../shared/footer/footer';
 
 @Component({
   selector: 'app-register-establishment',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ToastModule,
+    CardModule,
+    InputTextModule,
+    InputMaskModule,
+    DropdownModule,
+    CheckboxModule,
+    ButtonModule,
+    NavbarAuth,
+    Footer
+  ],
   templateUrl: './register.html',
-  styleUrls: ['./register.css'] // Added this line
+  styleUrls: ['./register.css']
 })
 export class RegisterEstablishmentComponent {
   entrepreneurRegisterForm: FormGroup;
