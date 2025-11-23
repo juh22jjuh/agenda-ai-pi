@@ -78,7 +78,7 @@ export const getEntrepreneurByUserId = async (req, res) => {
     const entrepreneur = await Entrepreneur.findOne({ user: userId });
 
     if (!entrepreneur) {
-      return res.status(404).json({ message: 'Nenhum perfil de empreendedor encontrado para este usuário.' });
+      return res.status(404).json({ exists: false, message: 'Nenhum perfil de empreendedor encontrado para este usuário.' });
     }
 
     res.status(200).json(entrepreneur);

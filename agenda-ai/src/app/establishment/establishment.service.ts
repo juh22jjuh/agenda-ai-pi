@@ -28,19 +28,7 @@ export class EstablishmentService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.error('Ocorreu um erro na API!', error);
-    let userMessage = 'Não foi possível realizar a operação. Tente novamente mais tarde.';
-
-    if (error.error instanceof ErrorEvent) {
-      userMessage = 'Ocorreu um erro de rede. Verifique sua conexão.';
-    } else if (error.status === 404) {
-      userMessage = 'O recurso solicitado não foi encontrado.';
-    } else if (error.status === 500) {
-      userMessage = 'Ocorreu um erro interno no servidor.';
-    } else if (error.error && error.error.message) {
-        userMessage = error.error.message;
-    }
-    
-    return throwError(() => new Error(userMessage));
+    // Deixando o componente lidar com o erro
+    return throwError(() => error);
   }
 }

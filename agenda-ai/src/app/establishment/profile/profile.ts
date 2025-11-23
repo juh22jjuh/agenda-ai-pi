@@ -51,11 +51,11 @@ export class Profile implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.errorMessage = err.message || 'Ocorreu um erro ao buscar os dados do perfil.';
-        if (err.status === 404) {
+        if (err.status === 404 && err.error.exists === false) {
           // Se o perfil não existe, redireciona para a página de registro
           this.router.navigate(['/establishment/register']);
         } else {
+          this.errorMessage = err.message || 'Ocorreu um erro ao buscar os dados do perfil.';
           this.loading = false;
         }
       }
