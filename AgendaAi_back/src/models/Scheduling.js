@@ -1,47 +1,42 @@
 import mongoose from "mongoose";
 
-const SchedulingSchema = new mongoose.Schema({
-
+const schedulingSchema = new mongoose.Schema({
   services_entrepreneur_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "servicesEntreprenuer",
-    required: true
+    ref: "servicesEntreprenuer", // Adicionando a referência que faltava
+    required: true,
   },
-
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: true,
   },
-
   name: {
     type: String,
-    required: true
+    required: true,
   },
-
   age: {
-    type: Number,
-    required: true
+    type: String,
+    required: true,
   },
-
   description: {
-    type: String
+    type: String,
   },
-
   date: {
-    type: String, // ex: 2025-12-05
-    required: true
+    type: String,
+    required: true,
   },
-
   time: {
-    type: String, // ex: "08:00"
-    required: true
+    type: String,
+    required: true,
   },
-
   inspirationImage: {
-    type: String
-  }
-  }, { timestamps: true });
+    type: String,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-
- export const scheduling = mongoose.model('scheduling', SchedulingSchema)
+export const scheduling = mongoose.model("scheduling", schedulingSchema);
