@@ -31,7 +31,7 @@ export class Auth {
     if (userData && tokenData) {
       try {
         this.userLogged = JSON.parse(userData);
-        this.token = JSON.parse(tokenData);
+        this.token = tokenData;
         this.isAuthenticated = true;
       } catch (e) {
         console.error('Erro ao carregar dados do localStorage:', e);
@@ -100,12 +100,16 @@ export class Auth {
   authenticate(user: ILogin): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/user/login`, user).pipe(
       tap((response) => {
-          localStorage.setItem('token', JSON.stringify(response?.token));
-          localStorage.setItem('user_logged', JSON.stringify(response?.user));
+          // Correção: Salvar o token como string pura, sem JSON.stringify
+          if (response?.token) {
+            localStorage.setItem('token', response.token);
+          }
+          if (response?.user) {
+            localStorage.setItem('user_logged', JSON.stringify(response.user));
+          }
           this.userLogged = response;
           this.token = response.token;
           this.isAuthenticated = true;
-          //this.router.navigate(['/cardtelas']);
       }),
       catchError((err) => {
         console.error('Erro durante autenticação:', err);

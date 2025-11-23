@@ -40,14 +40,15 @@ deactivationDays: { [userId: string]: number } = {};
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
-    return new HttpHeaders().set('token', token || '');
+    // Correção: O backend espera um cabeçalho 'token' com o valor 'Bearer <jwt>'
+    return new HttpHeaders().set('token', `Bearer ${token || ''}`);
   }
 
   async loadUser() {
     try {
       const headers = this.getAuthHeaders();
       const data = await firstValueFrom(
-        this.http.get<any[]>(`${environment.apiUrl}/admin/users`, { headers })
+        this.http.get<any[]>(`${environment.apiUrl}/admin/user`, { headers })
       );
       this.users = data ?? [];
     } catch (error) {

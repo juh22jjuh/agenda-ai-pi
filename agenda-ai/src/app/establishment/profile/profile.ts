@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { EstablishmentService } from '../establishment.service';
-import { forkJoin, of, throwError } from 'rxjs';
+import { forkJoin, throwError, of } from 'rxjs';
 import { switchMap, catchError, tap } from 'rxjs/operators';
 import { ServicesEntreprenuerService } from '../../services/servicesEntreprenuer/servicesEntreprenuer.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -28,35 +28,14 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { NavbarEsta } from '../../shared/navbar-esta/navbar-esta';
 import { Footer } from '../../shared/footer/footer';
 import { ServiceSchedulingService } from '../../services/serviceScheduling/serviceScheduling.service';
-import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
-
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
-<<<<<<< HEAD
-    CommonModule,
-    NavbarAuth,
-    ReactiveFormsModule,
-    CardModule,
-    ButtonModule,
-    ProgressSpinnerModule,
-    TableModule,
-    DialogModule,
-    InputTextModule,
-    TextareaModule,
-    SelectButtonModule,
-    CheckboxModule,
-    ToastModule,
-    ConfirmDialogModule,
-    NavbarEsta,
-    Footer,
-=======
     CommonModule, ReactiveFormsModule, CardModule, ButtonModule, ProgressSpinnerModule, TableModule, DialogModule,
-    InputTextModule, TextareaModule, SelectButtonModule, CheckboxModule, ToastModule, ConfirmDialogModule, 
+    InputTextModule, TextareaModule, SelectButtonModule, CheckboxModule, ToastModule, ConfirmDialogModule,
     FileUploadModule, NavbarEsta, Footer,
->>>>>>> 9ef2dc05cf433fbc7c013eddd726d5f6b1520cdb
   ],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css'],
@@ -108,9 +87,9 @@ export class Profile implements OnInit {
 
   initializeEditProfileForm(): void {
     this.editProfileForm = this.fb.group({
-        name: ['', Validators.required], telefone: ['', Validators.required], cep: ['', Validators.required],
-        rua: ['', Validators.required], numero: ['', Validators.required], comple: [''],
-        bairro: ['', Validators.required], cidade: ['', Validators.required], estado: ['', Validators.required]
+      name: ['', Validators.required], telefone: ['', Validators.required], cep: ['', Validators.required],
+      rua: ['', Validators.required], numero: ['', Validators.required], comple: [''],
+      bairro: ['', Validators.required], cidade: ['', Validators.required], estado: ['', Validators.required]
     });
   }
 
@@ -118,31 +97,47 @@ export class Profile implements OnInit {
     const userString = localStorage.getItem('user_logged');
     if (!userString) { this.handleAuthError("Usuário não autenticado."); return; }
     try {
-        const userId = JSON.parse(userString)?._id;
-        if (!userId) { this.handleAuthError("ID do usuário não encontrado."); return; }
+      const userId = JSON.parse(userString)?._id;
+      if (!userId) { this.handleAuthError("ID do usuário não encontrado."); return; }
 
-        this.loading = true;
-        this.establishmentService.getEntrepreneurData(userId).pipe(
-            tap(data => {
-                this.entrepreneur = data;
-                if (!data?._id) throw new Error("ID do empreendedor não encontrado.");
-            }),
-            switchMap(data => this.fetchAllData(data._id)),
-            catchError(err => this.handleDataError(err))
-        ).subscribe({
-            next: () => { this.loading = false; this.cdr.detectChanges(); },
-            error: () => { this.loading = false; this.cdr.detectChanges(); }
-        });
+      this.loading = true;
+      this.establishmentService.getEntrepreneurByUserId(userId).pipe(
+        tap(data => {
+          this.entrepreneur = data;
+          console.log(this.entrepreneur)
+          console.log('id empresa', data?._id)
+          if (!data?._id) throw new Error("ID do empreendedor não encontrado.");
+        }),
+        switchMap(data => this.fetchAllData(data._id)),
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 404) {
+            this.router.navigate(['/establishment/register']);
+            return of(undefined);
+          }
+          return this.handleDataError(err);
+        })
+      ).subscribe({
+        next: (result) => {
+          if (result) {
+            this.loading = false;
+            this.cdr.detectChanges();
+          }
+        },
+        error: () => { this.loading = false; this.cdr.detectChanges(); }
+      });
     } catch (error) {
-        this.handleAuthError("Erro ao processar dados do usuário.");
+      this.handleAuthError("Erro ao processar dados do usuário.");
     }
   }
 
   fetchAllData(entrepreneurId: string) {
     return forkJoin({
-        services: this.establishmentService.getServices(entrepreneurId),
-        schedules: this.establishmentService.getSchedules(entrepreneurId)
-    }).pipe(tap(({ services, schedules }) => { this.services = services; this.schedules = schedules; }));
+      services: this.establishmentService.getServices(entrepreneurId),
+      schedules: this.establishmentService.getSchedules(entrepreneurId)
+    }).pipe(
+      tap(({ services, schedules }) => { this.services = services; this.schedules = schedules; }),
+      catchError(err => this.handleDataError(err))
+    );
   }
 
   openEditProfileDialog(): void {
@@ -159,25 +154,38 @@ export class Profile implements OnInit {
     if (event.files && event.files.length > 0) this.selectedProfileImage = event.files[0];
   }
 
-  saveProfile(): void {
+ saveProfile(): void {
     if (!this.editProfileForm.valid) {
       this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Por favor, preencha todos os campos obrigatórios.' });
       return;
     }
+
     const formData = new FormData();
-    Object.keys(this.editProfileForm.controls).forEach(key => formData.append(key, this.editProfileForm.get(key)!.value));
-    if (this.selectedProfileImage) formData.append('image', this.selectedProfileImage, this.selectedProfileImage.name);
+
+    // Adiciona os dados do formulário ao FormData
+    Object.keys(this.editProfileForm.controls).forEach(key => {
+      formData.append(key, this.editProfileForm.get(key)!.value);
+    });
+
+    // CORREÇÃO: Usa o nome de campo 'image', consistente com o backend.
+    if (this.selectedProfileImage) {
+      formData.append('image', this.selectedProfileImage, this.selectedProfileImage.name);
+    }
 
     this.establishmentService.updateEntrepreneur(this.entrepreneur._id, formData).pipe(
-      catchError(err => this.handleDataError(err))
+      catchError(err => {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível atualizar o perfil.' });
+        return of(null);
+      })
     ).subscribe({
       next: (response: any) => {
-        this.entrepreneur = response.entrepreneur;
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Perfil atualizado com sucesso!' });
-        this.hideEditProfileDialog();
-        this.cdr.detectChanges();
-      },
-      error: () => {}
+        if (response && response.entrepreneur) {
+          this.entrepreneur = response.entrepreneur;
+          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Perfil atualizado com sucesso!' });
+          this.hideEditProfileDialog();
+          this.cdr.detectChanges(); // Força a detecção de mudanças
+        }
+      }
     });
   }
 
@@ -195,8 +203,8 @@ export class Profile implements OnInit {
   }
 
   hideServiceDialog(): void {
-      this.displayServiceDialog = false;
-      this.editingService = null;
+    this.displayServiceDialog = false;
+    this.editingService = null;
   }
 
   saveService(): void {
@@ -206,9 +214,9 @@ export class Profile implements OnInit {
     }
     const formValue = this.serviceForm.value;
     const serviceData = {
-        ...formValue,
-        dias: formValue.dias.map((id: string) => this.daysOfWeek.find(d => d.id === id)).filter(Boolean),
-        time: formValue.time.map((id: string) => this.timeOptions.find(t => t.id === id)).filter(Boolean)
+      ...formValue,
+      dias: formValue.dias.map((id: string) => this.daysOfWeek.find(d => d.id === id)).filter(Boolean),
+      time: formValue.time.map((id: string) => this.timeOptions.find(t => t.id === id)).filter(Boolean)
     };
 
     const operation$ = this.editingService
@@ -220,9 +228,9 @@ export class Profile implements OnInit {
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: `${summary} com sucesso!` });
         this.hideServiceDialog();
-        this.fetchAllData(this.entrepreneur._id).subscribe();
+        this.fetchAllData(this.entrepreneur._id).subscribe({ error: () => { } });
       },
-      error: () => {}
+      error: () => { }
     });
   }
 
@@ -234,9 +242,9 @@ export class Profile implements OnInit {
         this.serviceEntreprenuer.deleteService(service._id).pipe(catchError(err => this.handleDataError(err))).subscribe({
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Serviço excluído!' });
-            this.fetchAllData(this.entrepreneur._id).subscribe();
+            this.fetchAllData(this.entrepreneur._id).subscribe({ error: () => { } });
           },
-          error: () => {}
+          error: () => { }
         });
       }
     });
@@ -250,9 +258,9 @@ export class Profile implements OnInit {
         this.serviceScheduling.cancelScheduling(schedule._id).pipe(catchError(err => this.handleDataError(err))).subscribe({
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Agendamento cancelado.' });
-            this.fetchAllData(this.entrepreneur._id).subscribe();
+            this.fetchAllData(this.entrepreneur._id).subscribe({ error: () => { } });
           },
-          error: () => {}
+          error: () => { }
         });
       }
     });
@@ -260,20 +268,20 @@ export class Profile implements OnInit {
 
   deleteCompany(): void {
     this.confirmationService.confirm({
-        message: 'Atenção! Esta ação é irreversível e excluirá sua empresa. Deseja continuar?', header: 'Excluir Empresa',
-        icon: 'pi pi-exclamation-triangle', acceptButtonStyleClass: 'p-button-danger',
-        accept: () => {
-            this.establishmentService.deleteEntrepreneur(this.entrepreneur.user).pipe(
-                catchError(err => this.handleDataError(err))
-            ).subscribe({
-                next: () => {
-                    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Empresa excluída.' });
-                    localStorage.removeItem('user_logged');
-                    this.router.navigate(['/auth/login']);
-                },
-                error: () => {}
-            });
-        }
+      message: 'Atenção! Esta ação é irreversível e excluirá sua empresa. Deseja continuar?', header: 'Excluir Empresa',
+      icon: 'pi pi-exclamation-triangle', acceptButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        this.establishmentService.deleteEntrepreneur(this.entrepreneur._id).pipe(
+          catchError(err => this.handleDataError(err))
+        ).subscribe({
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Empresa excluída.' });
+            localStorage.removeItem('user_logged');
+            this.router.navigate(['/auth/login']);
+          },
+          error: () => { }
+        });
+      }
     });
   }
 
@@ -283,7 +291,7 @@ export class Profile implements OnInit {
     this.messageService.add({ severity: 'error', summary: 'Erro', detail: message });
     this.loading = false;
     this.cdr.detectChanges();
-    return throwError(() => error); // Re-throw the original error object
+    return throwError(() => error);
   }
 
   private handleAuthError(message: string): void {

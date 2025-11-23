@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -145,9 +144,21 @@ export class EstablishmentRegisterComponent implements OnInit {
     }
 
     this.isSubmitting = true;
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'ID do usuário não encontrado. Faça o login novamente.' });
+
+    const userString = localStorage.getItem('user_logged');
+    if (!userString) {
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Sessão do usuário não encontrada. Faça o login novamente.' });
+      this.isSubmitting = false;
+      return;
+    }
+
+    let user, userId;
+    try {
+      user = JSON.parse(userString);
+      userId = user?._id;
+      if (!userId) throw new Error("ID do usuário inválido no objeto de usuário.");
+    } catch (e) {
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Dados de usuário corrompidos. Faça o login novamente.' });
       this.isSubmitting = false;
       return;
     }
@@ -158,6 +169,8 @@ export class EstablishmentRegisterComponent implements OnInit {
         formData.append(key, this.registerForm.value[key]);
       }
     });
+    
+    formData.append('user', userId);
 
     if (this.selectedImage) {
       formData.append('companyImage', this.selectedImage, this.selectedImage.name);
@@ -165,11 +178,18 @@ export class EstablishmentRegisterComponent implements OnInit {
 
     this.establishmentService.registerEntrepreneur(userId, formData).subscribe({
       next: (response) => {
+        const entrepreneur = response.entrepreneur || response;
+        if (entrepreneur && entrepreneur._id) {
+          user.entrepreneurId = entrepreneur._id;
+          localStorage.setItem('user_logged', JSON.stringify(user));
+        }
+
         this.messageService.add({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa registrada com sucesso! Redirecionando...' });
         setTimeout(() => this.router.navigate(['/establishment/profile']), 2000);
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: err.message || 'Não foi possível registrar a empresa.' });
+        const errorMessage = err.error?.message || err.message || 'Não foi possível registrar a empresa.';
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: errorMessage });
         this.isSubmitting = false;
       }
     });

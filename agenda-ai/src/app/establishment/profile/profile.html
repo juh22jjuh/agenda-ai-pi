@@ -1,122 +1,207 @@
-
-<!-- PrimeNG Notifications -->
 <p-toast />
 <p-confirmDialog [style]="{width: '50vw'}" />
 
-<app-navbar-auth></app-navbar-auth>
+<app-navbar-esta />
 
-<div class="profile-container">
+<div class="profile-container p-4">
   <!-- Loading and Error States -->
-  <p-progressSpinner *ngIf="loading" />
-  <div *ngIf="!loading && errorMessage && !entrepreneur" class="error-message">
-    {{ errorMessage }}
+  <div *ngIf="loading" class="flex justify-content-center align-items-center h-20rem">
+    <p-progressSpinner />
+  </div>
+  <div *ngIf="!loading && errorMessage && !entrepreneur" class="error-message text-center p-4">
+    <p-card [header]="'Erro'">
+      {{ errorMessage }}
+    </p-card>
   </div>
 
   <!-- Main Content -->
-  <div *ngIf="!loading && entrepreneur" class="profile-content">
+  <div *ngIf="!loading && entrepreneur" class="profile-content grid gap-4">
     
     <!-- Profile Card -->
-    <p-card styleClass="profile-card">
+    <p-card styleClass="profile-card col-12">
       <ng-template pTemplate="header">
-        <img [src]="'http://localhost:3000/' + entrepreneur.image" alt="Imagem da empresa" class="profile-image">
+        <img [src]="'http://localhost:3000/' + entrepreneur.image" alt="Imagem da empresa" class="profile-image w-full h-15rem object-cover">
       </ng-template>
       <ng-template pTemplate="title">{{ entrepreneur.name }}</ng-template>
       <ng-template pTemplate="content">
-        <div class="profile-details">
+        <div class="profile-details text-gray-700">
           <p><strong>Endereço:</strong> {{ entrepreneur.rua }}, {{ entrepreneur.numero }} - {{ entrepreneur.bairro }}, {{ entrepreneur.cidade }} - {{ entrepreneur.estado }}</p>
           <p><strong>CEP:</strong> {{ entrepreneur.cep }}</p>
           <p><strong>Telefone:</strong> {{ entrepreneur.telefone }}</p>
         </div>
       </ng-template>
       <ng-template pTemplate="footer">
-        <div class="profile-actions">
+        <div class="profile-actions flex gap-2 mt-2">
           <p-button label="Editar Perfil" icon="pi pi-pencil" (click)="openEditProfileDialog()" />
           <p-button label="Excluir Empresa" icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteCompany()" />
         </div>
       </ng-template>
     </p-card>
 
-    <!-- Services Section (existing code) -->
-    <div class="section-card">
-        <!-- ... service table ... -->
+    <!-- Services Section -->
+    <div class="section-card col-12 md:col-6">
+        <p-card>
+            <ng-template pTemplate="title">
+                <div class="flex justify-content-between align-items-center">
+                    <span>Meus Serviços</span>
+                    <p-button label="Novo Serviço" icon="pi pi-plus" (click)="openNewServiceDialog()" />
+                </div>
+            </ng-template>
+            <p-table [value]="services" [tableStyle]="{'min-width': '50rem'}" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr><th>Nome</th><th>Categoria</th><th>Duração</th><th>Ações</th></tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-service>
+                    <tr>
+                        <td>{{ service.nome }}</td>
+                        <td>{{ service.categoria }}</td>
+                        <td>{{ service.duracao }} min</td>
+                        <td>
+                            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="openEditServiceDialog(service)" />
+                            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger" (click)="deleteService(service)" />
+                        </td>
+                    </tr>
+                </ng-template>
+                 <ng-template pTemplate="emptymessage">
+                    <tr><td colspan="4" class="text-center">Nenhum serviço cadastrado.</td></tr>
+                </ng-template>
+            </p-table>
+        </p-card>
     </div>
 
-    <!-- Schedules Section (existing code) -->
-    <div class="section-card">
-        <!-- ... schedule table ... -->
+    <!-- Schedules Section -->
+    <div class="section-card col-12 md:col-6">
+        <p-card>
+            <ng-template pTemplate="title">Meus Agendamentos</ng-template>
+            <p-table [value]="schedules" [tableStyle]="{'min-width': '50rem'}" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr><th>Cliente</th><th>Serviço</th><th>Data</th><th>Hora</th><th>Ações</th></tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-schedule>
+                    <tr>
+                        <td>{{ schedule.user_id?.name }}</td>
+                        <td>{{ schedule.service_id?.nome }}</td>
+                        <td>{{ schedule.date | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ schedule.time }}</td>
+                        <td>
+                            <p-button label="Cancelar" icon="pi pi-calendar-times" styleClass="p-button-danger p-button-sm" (click)="cancelSchedule(schedule)" />
+                        </td>
+                    </tr>
+                </ng-template>
+                 <ng-template pTemplate="emptymessage">
+                    <tr><td colspan="5" class="text-center">Nenhum agendamento encontrado.</td></tr>
+                </ng-template>
+            </p-table>
+        </p-card>
     </div>
 
   </div>
 </div>
 
 <!-- Edit Profile Dialog -->
-<p-dialog header="Editar Perfil" [(visible)]="displayEditProfileDialog" [modal]="true" [style]="{width: '50vw'}" (onHide)="hideEditProfileDialog()">
+<p-dialog header="Editar Perfil" [(visible)]="displayEditProfileDialog" [modal]="true" [style]="{width: '60vw', 'max-width': '700px'}" (onHide)="hideEditProfileDialog()">
   <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
-    <div class="p-fluid">
-      <div class="p-field">
+
+    <!-- 1. Este é o nosso contêiner Flexbox. As classes são definidas no seu CSS. -->
+    <div class="form-flex-container">
+
+      <div class="form-field full-width">
         <label for="name">Nome da Empresa</label>
         <input id="name" type="text" pInputText formControlName="name">
       </div>
-      <div class="p-field">
+
+      <div class="form-field half-width">
         <label for="telefone">Telefone</label>
         <input id="telefone" type="text" pInputText formControlName="telefone">
       </div>
-      <div class="p-field">
+
+      <div class="form-field half-width">
         <label for="cep">CEP</label>
         <input id="cep" type="text" pInputText formControlName="cep">
       </div>
-      <div class="p-field">
+
+      <div class="form-field full-width">
         <label for="rua">Rua</label>
         <input id="rua" type="text" pInputText formControlName="rua">
       </div>
-      <div class="p-grid">
-          <div class="p-col-8">
-              <div class="p-field">
-                <label for="bairro">Bairro</label>
-                <input id="bairro" type="text" pInputText formControlName="bairro">
-              </div>
-          </div>
-          <div class="p-col-4">
-              <div class="p-field">
-                <label for="numero">Número</label>
-                <input id="numero" type="text" pInputText formControlName="numero">
-              </div>
-          </div>
+
+      <div class="form-field three-quarter-width">
+          <label for="bairro">Bairro</label>
+          <input id="bairro" type="text" pInputText formControlName="bairro">
       </div>
-      <div class="p-field">
-        <label for="comple">Complemento</label>
-        <input id="comple" type="text" pInputText formControlName="comple">
+
+      <div class="form-field one-quarter-width">
+          <label for="numero">Número</label>
+          <input id="numero" type="text" pInputText formControlName="numero">
       </div>
-      <div class="p-grid">
-          <div class="p-col-8">
-              <div class="p-field">
-                  <label for="cidade">Cidade</label>
-                  <input id="cidade" type="text" pInputText formControlName="cidade">
-              </div>
-          </div>
-          <div class="p-col-4">
-              <div class="p-field">
-                  <label for="estado">Estado</label>
-                  <input id="estado" type="text" pInputText formControlName="estado">
-              </div>
-          </div>
+
+      <div class="form-field full-width">
+        <label for="complemento">Complemento</label>
+        <input id="complemento" type="text" pInputText formControlName="comple">
       </div>
-      <div class="p-field">
-        <label for="image">Imagem de Perfil</label>
-        <p-fileUpload name="image" (onSelect)="onProfileImageSelect($event)" [showUploadButton]="false" accept="image/*" chooseLabel="Escolher Imagem"></p-fileUpload>
+
+      <div class="form-field three-quarter-width">
+          <label for="cidade">Cidade</label>
+          <input id="cidade" type="text" pInputText formControlName="cidade">
+      </div>
+
+      <div class="form-field one-quarter-width">
+          <label for="estado">Estado</label>
+          <input id="estado" type="text" pInputText formControlName="estado">
+      </div>
+
+      <div class="form-field full-width">
+        <label>Imagem de Perfil</label>
+        <p-fileUpload mode="basic" name="image" (onSelect)="onProfileImageSelect($event)" accept="image/*" chooseLabel="Escolher Nova Imagem" />
+        <small class="p-text-muted">Selecione uma imagem apenas se desejar alterá-la.</small>
       </div>
     </div>
-    <div class="p-dialog-footer">
+
+    <div class="dialog-footer flex justify-content-end gap-2 mt-4">
       <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-text" (click)="hideEditProfileDialog()" />
-      <p-button label="Salvar" icon="pi pi-check" type="submit" />
+      <p-button label="Salvar" icon="pi pi-check" type="submit" [disabled]="!editProfileForm.valid" />
     </div>
   </form>
 </p-dialog>
 
 
-<!-- Service Creation/Editing Dialog (existing code) -->
+<!-- Service Creation/Editing Dialog -->
 <p-dialog [header]="editingService ? 'Editar Serviço' : 'Criar Serviço'" [(visible)]="displayServiceDialog" [modal]="true" [style]="{width: '50vw'}" (onHide)="hideServiceDialog()">
-    <!-- ... service form ... -->
+  <form [formGroup]="serviceForm" (ngSubmit)="saveService()">
+    <div class="p-fluid grid gap-3">
+      <div class="field col-12">
+        <label for="nome">Nome do Serviço</label>
+        <input id="nome" type="text" pInputText formControlName="nome">
+      </div>
+      <div class="field col-12">
+        <label for="categoria">Categoria</label>
+        <select id="categoria" formControlName="categoria" class="p-inputtext p-component p-element w-full">
+          <option value="" disabled selected>Selecione uma categoria</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
+       <div class="field col-12">
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" pInputTextarea formControlName="descricao" rows="3"></textarea>
+      </div>
+       <div class="field col-12">
+        <label for="duracao">Duração (minutos)</label>
+        <input id="duracao" type="number" pInputText formControlName="duracao">
+      </div>
+      <div class="field col-12">
+        <label>Dias de Atendimento</label>
+        <p-selectButton [options]="daysOfWeek" formControlName="dias" optionLabel="label" optionValue="id" [multiple]="true"></p-selectButton>
+      </div>
+      <div class="field col-12">
+        <label>Horários de Atendimento</label>
+        <p-selectButton [options]="timeOptions" formControlName="time" optionLabel="label" optionValue="id" [multiple]="true"></p-selectButton>
+      </div>
+    </div>
+    <div class="dialog-footer flex justify-content-end gap-2 mt-4">
+      <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-text" (click)="hideServiceDialog()" />
+      <p-button label="Salvar" icon="pi pi-check" type="submit" />
+    </div>
+  </form>
 </p-dialog>
 
 <app-footer />

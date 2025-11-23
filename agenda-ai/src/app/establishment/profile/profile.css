@@ -1,82 +1,130 @@
-
+/* General Container Styles */
 .profile-container {
   padding: 2rem;
-  background-color: #C7DED5;
+  background-color: #f8f9fa; /* Light gray background */
 }
 
-.profile-content {
-  max-width: 900px;
-  margin: 0 auto;
+/* Card Styles */
+.p-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.profile-card {
-  width: 100%;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 2rem;
-}
-
-.profile-image {
-  width: 100%;
-  height: 250px;
+.profile-card .p-card-header img {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   object-fit: cover;
+  height: 250px;
+  width: 100%;
 }
 
-.profile-details {
-  line-height: 1.6;
-  color: #555;
+.profile-card .p-card-title {
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
-.profile-actions {
-  display: flex;
-  justify-content: flex-end;
-  padding: 1rem 0 0;
-  gap: 1rem; /* Espaçamento entre os botões */
+.profile-details p {
+  margin: 0.5rem 0;
+  color: #6c757d; /* Muted text color */
 }
 
-.section-card {
-  background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  margin-bottom: 2rem;
+.profile-actions .p-button {
+  margin-right: 1rem;
 }
 
-.section-title {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #eee;
+/* Section Card Styles */
+.section-card .p-card-title {
+  font-size: 1.25rem;
+  border-bottom: 1px solid #dee2e6; /* Add a bottom border */
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
-.error-message {
-  color: #d32f2f;
-  font-size: 1.2rem;
-  text-align: center;
-  background-color: #ffebee;
-  padding: 1rem;
-  border-radius: 8px;
+/* Table Styles */
+.p-table {
+  border: none;
 }
 
-/* Estilos da Tabela */
-:host ::ng-deep .p-table {
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-:host ::ng-deep .p-datatable-header {
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
-}
-
-:host ::ng-deep .p-datatable-thead > tr > th {
-  background-color: #f8f9fa;
-  color: #495057;
+.p-table .p-datatable-thead > tr > th {
+  background-color: #f1f3f5;
   font-weight: 600;
 }
 
-:host ::ng-deep .p-datatable-tbody > tr:nth-child(even) {
-  background-color: #fdfdfd;
+.p-table .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Dialog Styles */
+.p-dialog .p-dialog-header {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #f1f3f5;
+}
+
+.dialog-footer {
+  padding-top: 1.5rem;
+  border-top: 1px solid #dee2e6;
+  margin-top: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem;
+  }
+
+  .profile-card .p-card-header img {
+    height: 200px; /* Adjust image height for smaller screens */
+  }
+}
+
+
+.form-flex-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+  gap: 1rem;       /* Cria um espaçamento consistente entre todos os campos */
+}
+
+/* 2. Estilo Padrão para Cada Campo */
+/* Garante que o campo possa crescer e preencher o espaço. */
+.form-field {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column; /* Coloca o <label> acima do <input> */
+  gap: 0.5rem;          /* Espaço entre o label e o input */
+}
+
+/* 3. Classes de Largura */
+/* Define a largura base dos campos na grade. */
+
+.form-field.full-width {
+  flex-basis: 100%;
+}
+
+.form-field.half-width {
+  flex-basis: calc(50% - 0.5rem); /* 50% do contêiner, menos metade do espaçamento (gap) */
+}
+
+.form-field.three-quarter-width {
+    flex-basis: calc(75% - 0.5rem);
+}
+
+.form-field.one-quarter-width {
+    flex-basis: calc(25% - 0.5rem);
+}
+
+
+/* 4. Comportamento Responsivo */
+/* Em telas pequenas (mobile), faz com que todos os campos ocupem a largura total. */
+@media (max-width: 768px) {
+  .form-field.half-width,
+  .form-field.three-quarter-width,
+  .form-field.one-quarter-width {
+    flex-basis: 100%;
+  }
+}
+
+/* Para garantir que o input dentro do p-fluid ocupe o espaço */
+.form-field .p-inputtext {
+    width: 100%;
 }

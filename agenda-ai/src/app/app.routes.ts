@@ -54,6 +54,7 @@ export const routes: Routes = [
   { path: 'establishment/termos', component: Termos},
   { path: 'establishment/politicas', component: Politicas},
   { path: 'establishment/navbarEsta', component: NavbarEsta},
+  { path: 'editar-servico/:id', component: ProfileEstablishment },
 
   // Admin
   { path: 'admin/navbar-adm', component: NavbarAdm},
@@ -65,5 +66,5 @@ export const routes: Routes = [
   { path: '**', redirectTo: '', pathMatch: 'full' },
 
 
-   { path: 'editar-servico/:id', component: ProfileEstablishment },
+   
 ];
