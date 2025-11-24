@@ -69,10 +69,8 @@ export class Login {
             }
           },
           error: (err) => {
-            console.error('Erro no login:', err);
-
             // Captura mensagem vinda do backend, se existir
-            const errorMsg = err?.error?.message || 'Usuário ou senha inválidos.';
+            const errorMsg = err?.error?.error || 'Usuário ou senha inválidos.';
 
             this.messageService.add({
               severity: 'error',

@@ -23,6 +23,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 
 // App Components
 import { NavbarEsta } from '../../shared/navbar-esta/navbar-esta';
@@ -35,7 +36,7 @@ import { ServiceSchedulingService } from '../../services/serviceScheduling/servi
   imports: [
     CommonModule, ReactiveFormsModule, CardModule, ButtonModule, ProgressSpinnerModule, TableModule, DialogModule,
     InputTextModule, TextareaModule, SelectButtonModule, CheckboxModule, ToastModule, ConfirmDialogModule,
-    FileUploadModule, NavbarEsta, Footer,
+    FileUploadModule, NavbarEsta, Footer, NavbarAuth
   ],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css'],
@@ -150,44 +151,47 @@ export class Profile implements OnInit {
     this.displayEditProfileDialog = false;
   }
 
-  onProfileImageSelect(event: any): void {
-    if (event.files && event.files.length > 0) this.selectedProfileImage = event.files[0];
+  saveProfile(): void {
+  if (!this.editProfileForm.valid) {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Atenção',
+      detail: 'Por favor, preencha todos os campos obrigatórios.'
+    });
+    return;
   }
 
- saveProfile(): void {
-    if (!this.editProfileForm.valid) {
-      this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Por favor, preencha todos os campos obrigatórios.' });
-      return;
-    }
+  const payload = this.editProfileForm.value; // agora é JSON puro
 
-    const formData = new FormData();
-
-    // Adiciona os dados do formulário ao FormData
-    Object.keys(this.editProfileForm.controls).forEach(key => {
-      formData.append(key, this.editProfileForm.get(key)!.value);
-    });
-
-    // CORREÇÃO: Usa o nome de campo 'image', consistente com o backend.
-    if (this.selectedProfileImage) {
-      formData.append('image', this.selectedProfileImage, this.selectedProfileImage.name);
-    }
-
-    this.establishmentService.updateEntrepreneur(this.entrepreneur._id, formData).pipe(
-      catchError(err => {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível atualizar o perfil.' });
+  this.establishmentService
+    .updateEntrepreneur(this.entrepreneur._id, payload)
+    .pipe(
+      catchError((err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível atualizar o perfil.'
+        });
         return of(null);
       })
-    ).subscribe({
+    )
+    .subscribe({
       next: (response: any) => {
         if (response && response.entrepreneur) {
           this.entrepreneur = response.entrepreneur;
-          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Perfil atualizado com sucesso!' });
+
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Perfil atualizado com sucesso!'
+          });
+
           this.hideEditProfileDialog();
-          this.cdr.detectChanges(); // Força a detecção de mudanças
+          this.cdr.detectChanges();
         }
       }
     });
-  }
+}
 
   openNewServiceDialog(): void {
     this.editingService = null;
@@ -270,16 +274,19 @@ export class Profile implements OnInit {
     this.confirmationService.confirm({
       message: 'Atenção! Esta ação é irreversível e excluirá sua empresa. Deseja continuar?', header: 'Excluir Empresa',
       icon: 'pi pi-exclamation-triangle', acceptButtonStyleClass: 'p-button-danger',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
       accept: () => {
         this.establishmentService.deleteEntrepreneur(this.entrepreneur._id).pipe(
           catchError(err => this.handleDataError(err))
         ).subscribe({
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Empresa excluída.' });
-            localStorage.removeItem('user_logged');
-            this.router.navigate(['/auth/login']);
+            window.location.reload()
           },
-          error: () => { }
+          error: () => {
+            
+           }
         });
       }
     });

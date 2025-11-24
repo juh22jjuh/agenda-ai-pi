@@ -1,205 +1,251 @@
 <p-toast />
-<p-confirmDialog [style]="{width: '50vw'}" />
+<p-confirmDialog />
 
-<app-navbar-esta />
+<app-navbar-auth></app-navbar-auth>
 
-<div class="profile-container p-4">
-  <!-- Loading and Error States -->
-  <div *ngIf="loading" class="flex justify-content-center align-items-center h-20rem">
-    <p-progressSpinner />
-  </div>
-  <div *ngIf="!loading && errorMessage && !entrepreneur" class="error-message text-center p-4">
-    <p-card [header]="'Erro'">
-      {{ errorMessage }}
-    </p-card>
-  </div>
+<!-- PAGE WRAPPER -->
+<div class="min-h-screen text-[15px]" style="background-color: #C7DED5;">
+  <div class="max-w-6xl mx-auto px-4 py-8">
 
-  <!-- Main Content -->
-  <div *ngIf="!loading && entrepreneur" class="profile-content grid gap-4">
-    
-    <!-- Profile Card -->
-    <p-card styleClass="profile-card col-12">
-      <ng-template pTemplate="header">
-        <img [src]="'http://localhost:3000/' + entrepreneur.image" alt="Imagem da empresa" class="profile-image w-full h-15rem object-cover">
-      </ng-template>
-      <ng-template pTemplate="title">{{ entrepreneur.name }}</ng-template>
-      <ng-template pTemplate="content">
-        <div class="profile-details text-gray-700">
-          <p><strong>Endereço:</strong> {{ entrepreneur.rua }}, {{ entrepreneur.numero }} - {{ entrepreneur.bairro }}, {{ entrepreneur.cidade }} - {{ entrepreneur.estado }}</p>
-          <p><strong>CEP:</strong> {{ entrepreneur.cep }}</p>
-          <p><strong>Telefone:</strong> {{ entrepreneur.telefone }}</p>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="footer">
-        <div class="profile-actions flex gap-2 mt-2">
-          <p-button label="Editar Perfil" icon="pi pi-pencil" (click)="openEditProfileDialog()" />
-          <p-button label="Excluir Empresa" icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteCompany()" />
-        </div>
-      </ng-template>
-    </p-card>
-
-    <!-- Services Section -->
-    <div class="section-card col-12 md:col-6">
-        <p-card>
-            <ng-template pTemplate="title">
-                <div class="flex justify-content-between align-items-center">
-                    <span>Meus Serviços</span>
-                    <p-button label="Novo Serviço" icon="pi pi-plus" (click)="openNewServiceDialog()" />
-                </div>
-            </ng-template>
-            <p-table [value]="services" [tableStyle]="{'min-width': '50rem'}" responsiveLayout="scroll">
-                <ng-template pTemplate="header">
-                    <tr><th>Nome</th><th>Categoria</th><th>Duração</th><th>Ações</th></tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-service>
-                    <tr>
-                        <td>{{ service.nome }}</td>
-                        <td>{{ service.categoria }}</td>
-                        <td>{{ service.duracao }} min</td>
-                        <td>
-                            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="openEditServiceDialog(service)" />
-                            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger" (click)="deleteService(service)" />
-                        </td>
-                    </tr>
-                </ng-template>
-                 <ng-template pTemplate="emptymessage">
-                    <tr><td colspan="4" class="text-center">Nenhum serviço cadastrado.</td></tr>
-                </ng-template>
-            </p-table>
-        </p-card>
+    <!-- Loading -->
+    <div *ngIf="loading" class="flex justify-center items-center h-80">
+      <p-progressSpinner />
     </div>
 
-    <!-- Schedules Section -->
-    <div class="section-card col-12 md:col-6">
-        <p-card>
-            <ng-template pTemplate="title">Meus Agendamentos</ng-template>
-            <p-table [value]="schedules" [tableStyle]="{'min-width': '50rem'}" responsiveLayout="scroll">
-                <ng-template pTemplate="header">
-                    <tr><th>Cliente</th><th>Serviço</th><th>Data</th><th>Hora</th><th>Ações</th></tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-schedule>
-                    <tr>
-                        <td>{{ schedule.user_id?.name }}</td>
-                        <td>{{ schedule.service_id?.nome }}</td>
-                        <td>{{ schedule.date | date:'dd/MM/yyyy' }}</td>
-                        <td>{{ schedule.time }}</td>
-                        <td>
-                            <p-button label="Cancelar" icon="pi pi-calendar-times" styleClass="p-button-danger p-button-sm" (click)="cancelSchedule(schedule)" />
-                        </td>
-                    </tr>
-                </ng-template>
-                 <ng-template pTemplate="emptymessage">
-                    <tr><td colspan="5" class="text-center">Nenhum agendamento encontrado.</td></tr>
-                </ng-template>
-            </p-table>
+    <!-- Error -->
+    <div *ngIf="!loading && errorMessage && !entrepreneur" class="text-center p-4">
+      <p-card [header]="'Erro'" styleClass="shadow-none">
+        <div class="text-red-700 font-medium">{{ errorMessage }}</div>
+      </p-card>
+    </div>
+
+    <!-- CONTENT -->
+    <div *ngIf="!loading && entrepreneur" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- PROFILE CARD (left column on large screens) -->
+      <div class="lg:col-span-1">
+        <p-card styleClass="bg-white border border-gray-300 shadow-md rounded-xl overflow-hidden">
+          <ng-template pTemplate="header">
+          </ng-template>
+
+          <ng-template pTemplate="title">
+            <h2 class="text-2xl font-semibold text-gray-800 leading-tight">{{ entrepreneur.name }}</h2>
+          </ng-template>
+
+          <ng-template pTemplate="content">
+            <div class="mt-3 text-gray-700 space-y-2">
+
+              <p class="text-sm"><span class="font-semibold">Endereço:</span>
+                {{ entrepreneur.rua }}, {{ entrepreneur.numero }}  {{ entrepreneur.bairro }}<br/>
+                {{ entrepreneur.cidade }} - {{ entrepreneur.estado }}
+              </p>
+              <p class="text-sm"><span class="font-semibold">CEP:</span> {{ entrepreneur.cep }}</p>
+              <p class="text-sm"><span class="font-semibold">Telefone:</span> {{ entrepreneur.telefone }}</p>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="footer">
+            <div class="mt-4 flex gap-3">
+              <p-button label="Editar Perfil" icon="pi pi-pencil" (click)="openEditProfileDialog()"
+                styleClass="p-button-rounded p-button-outlined"
+              />
+              <p-button label="Excluir Empresa" icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteCompany()" />
+            </div>
+          </ng-template>
         </p-card>
+      </div>
+
+      <!-- MAIN AREA (services + schedules) -->
+      <div class="lg:col-span-2 space-y-6">
+
+        <!-- Services Card -->
+        <p-card styleClass="bg-white border border-gray-300 shadow rounded-xl">
+          <ng-template pTemplate="title">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-gray-800">Meus Serviços</h3>
+              <p-button label="Novo Serviço" icon="pi pi-plus" (click)="openNewServiceDialog()" styleClass="p-button-sm" />
+            </div>
+          </ng-template>
+
+          <div class="mt-3">
+            <p-table [value]="services" [tableStyle]="{'min-width': '40rem'}" responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                <tr class="bg-gray-50">
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Nome</th>
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Categoria</th>
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Duração</th>
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Ações</th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-service>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-3 px-4">{{ service.nome }}</td>
+                  <td class="py-3 px-4">{{ service.categoria }}</td>
+                  <td class="py-3 px-4">{{ service.duracao }} min</td>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center gap-2">
+                      <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="openEditServiceDialog(service)" />
+                      <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger" (click)="deleteService(service)" />
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="emptymessage">
+                <tr><td colspan="4" class="text-center py-6 text-gray-600">Nenhum serviço cadastrado.</td></tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </p-card>
+
+        <!-- Schedules Card -->
+        <p-card styleClass="bg-white border border-gray-300 shadow rounded-xl">
+          <ng-template pTemplate="title">
+            <h3 class="text-xl font-semibold text-gray-800">Meus Agendamentos</h3>
+          </ng-template>
+
+          <div class="mt-3">
+            <p-table [value]="schedules" [tableStyle]="{'min-width': '40rem'}" responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                <tr class="bg-gray-50">
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Cliente</th>
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Serviço</th>
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Data</th>
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Hora</th>
+                  <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Ações</th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-schedule>
+                <tr class="hover:bg-gray-50">
+                  <td class="py-3 px-4">{{ schedule.name }}</td>
+                  <td class="py-3 px-4">{{ schedule.service_id?.nome }}</td>  
+                  <td class="py-3 px-4">{{ schedule.date | date:'dd/MM/yyyy' }}</td>
+                  <td class="py-3 px-4">{{ schedule.time }}</td>
+                  <td class="py-3 px-4">
+                    <p-button label="Cancelar" icon="pi pi-calendar-times" styleClass="p-button-danger p-button-sm" (click)="cancelSchedule(schedule)" />
+                  </td>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="emptymessage">
+                <tr><td colspan="5" class="text-center py-6 text-gray-600">Nenhum agendamento encontrado.</td></tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </p-card>
+
+      </div>
     </div>
 
   </div>
 </div>
 
-<!-- Edit Profile Dialog -->
-<p-dialog header="Editar Perfil" [(visible)]="displayEditProfileDialog" [modal]="true" [style]="{width: '60vw', 'max-width': '700px'}" (onHide)="hideEditProfileDialog()">
+<!-- Edit Profile Dialog (styled) -->
+<p-dialog header="Editar Perfil" [(visible)]="displayEditProfileDialog" [modal]="true"
+  [style]="{width: '52vw', 'max-width': '680px'}" (onHide)="hideEditProfileDialog()">
+
   <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
+    <div class="px-6 py-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-700">
 
-    <!-- 1. Este é o nosso contêiner Flexbox. As classes são definidas no seu CSS. -->
-    <div class="form-flex-container">
-
-      <div class="form-field full-width">
-        <label for="name">Nome da Empresa</label>
-        <input id="name" type="text" pInputText formControlName="name">
+      <div class="md:col-span-3">
+        <label for="name" class="block text-sm font-semibold text-gray-800 mb-1">Nome da Empresa</label>
+        <input id="name" type="text" pInputText formControlName="name" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field half-width">
-        <label for="telefone">Telefone</label>
-        <input id="telefone" type="text" pInputText formControlName="telefone">
+      <div>
+        <label for="telefone" class="block text-sm font-semibold text-gray-800 mb-1">Telefone</label>
+        <input id="telefone" type="text" pInputText formControlName="telefone" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field half-width">
-        <label for="cep">CEP</label>
-        <input id="cep" type="text" pInputText formControlName="cep">
+      <div>
+        <label for="cep" class="block text-sm font-semibold text-gray-800 mb-1">CEP</label>
+        <input id="cep" type="text" pInputText formControlName="cep" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field full-width">
-        <label for="rua">Rua</label>
-        <input id="rua" type="text" pInputText formControlName="rua">
+      <div class="md:col-span-3">
+        <label for="rua" class="block text-sm font-semibold text-gray-800 mb-1">Rua</label>
+        <input id="rua" type="text" pInputText formControlName="rua" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field three-quarter-width">
-          <label for="bairro">Bairro</label>
-          <input id="bairro" type="text" pInputText formControlName="bairro">
+      <div class="md:col-span-2">
+        <label for="bairro" class="block text-sm font-semibold text-gray-800 mb-1">Bairro</label>
+        <input id="bairro" type="text" pInputText formControlName="bairro" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field one-quarter-width">
-          <label for="numero">Número</label>
-          <input id="numero" type="text" pInputText formControlName="numero">
+      <div>
+        <label for="numero" class="block text-sm font-semibold text-gray-800 mb-1">Número</label>
+        <input id="numero" type="text" pInputText formControlName="numero" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field full-width">
-        <label for="complemento">Complemento</label>
-        <input id="complemento" type="text" pInputText formControlName="comple">
+      <div class="md:col-span-3">
+        <label for="comple" class="block text-sm font-semibold text-gray-800 mb-1">Complemento</label>
+        <input id="comple" type="text" pInputText formControlName="comple" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field three-quarter-width">
-          <label for="cidade">Cidade</label>
-          <input id="cidade" type="text" pInputText formControlName="cidade">
+      <div class="md:col-span-2">
+        <label for="cidade" class="block text-sm font-semibold text-gray-800 mb-1">Cidade</label>
+        <input id="cidade" type="text" pInputText formControlName="cidade" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field one-quarter-width">
-          <label for="estado">Estado</label>
-          <input id="estado" type="text" pInputText formControlName="estado">
+      <div>
+        <label for="estado" class="block text-sm font-semibold text-gray-800 mb-1">Estado</label>
+        <input id="estado" type="text" pInputText formControlName="estado" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
 
-      <div class="form-field full-width">
-        <label>Imagem de Perfil</label>
-        <p-fileUpload mode="basic" name="image" (onSelect)="onProfileImageSelect($event)" accept="image/*" chooseLabel="Escolher Nova Imagem" />
-        <small class="p-text-muted">Selecione uma imagem apenas se desejar alterá-la.</small>
-      </div>
     </div>
 
-    <div class="dialog-footer flex justify-content-end gap-2 mt-4">
+    <div class="flex justify-end gap-3 px-6 py-4 border-t border-gray-100">
       <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-text" (click)="hideEditProfileDialog()" />
-      <p-button label="Salvar" icon="pi pi-check" type="submit" [disabled]="!editProfileForm.valid" />
+      <p-button label="Salvar" icon="pi pi-check" type="submit" [disabled]="!editProfileForm.valid" styleClass="p-button-success" />
     </div>
   </form>
 </p-dialog>
 
-
-<!-- Service Creation/Editing Dialog -->
-<p-dialog [header]="editingService ? 'Editar Serviço' : 'Criar Serviço'" [(visible)]="displayServiceDialog" [modal]="true" [style]="{width: '50vw'}" (onHide)="hideServiceDialog()">
+<!-- Service Creation/Editing Dialog (restyled) -->
+<p-dialog [header]="editingService ? 'Editar Serviço' : 'Criar Serviço'" [(visible)]="displayServiceDialog" [modal]="true" [style]="{width: '48vw', 'max-width': '620px'}" (onHide)="hideServiceDialog()">
   <form [formGroup]="serviceForm" (ngSubmit)="saveService()">
-    <div class="p-fluid grid gap-3">
-      <div class="field col-12">
-        <label for="nome">Nome do Serviço</label>
-        <input id="nome" type="text" pInputText formControlName="nome">
+    <div class="px-6 py-4 grid grid-cols-1 gap-4">
+
+      <div>
+        <label for="nome" class="block text-sm font-semibold text-gray-800 mb-1">Nome do Serviço</label>
+        <input id="nome" type="text" pInputText formControlName="nome" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
-      <div class="field col-12">
-        <label for="categoria">Categoria</label>
-        <select id="categoria" formControlName="categoria" class="p-inputtext p-component p-element w-full">
+
+      <div>
+        <label for="categoria" class="block text-sm font-semibold text-gray-800 mb-1">Categoria</label>
+        <select id="categoria" formControlName="categoria" class="w-full rounded-md border border-gray-300 px-3 py-2">
           <option value="" disabled selected>Selecione uma categoria</option>
           <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
         </select>
       </div>
-       <div class="field col-12">
-        <label for="descricao">Descrição</label>
-        <textarea id="descricao" pInputTextarea formControlName="descricao" rows="3"></textarea>
+
+      <div>
+        <label for="descricao" class="block text-sm font-semibold text-gray-800 mb-1">Descrição</label>
+        <textarea id="descricao" pInputTextarea formControlName="descricao" rows="3" class="w-full rounded-md border border-gray-300 px-3 py-2"></textarea>
       </div>
-       <div class="field col-12">
-        <label for="duracao">Duração (minutos)</label>
-        <input id="duracao" type="number" pInputText formControlName="duracao">
+
+      <div>
+        <label for="duracao" class="block text-sm font-semibold text-gray-800 mb-1">Duração (minutos)</label>
+        <input id="duracao" type="number" pInputText formControlName="duracao" class="w-full rounded-md border border-gray-300 px-3 py-2" />
       </div>
-      <div class="field col-12">
-        <label>Dias de Atendimento</label>
+
+      <div>
+        <label class="block text-sm font-semibold text-gray-800 mb-1">Dias de Atendimento</label>
         <p-selectButton [options]="daysOfWeek" formControlName="dias" optionLabel="label" optionValue="id" [multiple]="true"></p-selectButton>
       </div>
-      <div class="field col-12">
-        <label>Horários de Atendimento</label>
+
+      <div>
+        <label class="block text-sm font-semibold text-gray-800 mb-1">Horários de Atendimento</label>
         <p-selectButton [options]="timeOptions" formControlName="time" optionLabel="label" optionValue="id" [multiple]="true"></p-selectButton>
       </div>
+
     </div>
-    <div class="dialog-footer flex justify-content-end gap-2 mt-4">
+
+    <div class="flex justify-end gap-3 px-6 py-4 border-t border-gray-100">
       <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-text" (click)="hideServiceDialog()" />
-      <p-button label="Salvar" icon="pi pi-check" type="submit" />
+      <p-button label="Salvar" icon="pi pi-check" type="submit" styleClass="p-button-success" />
     </div>
   </form>
 </p-dialog>

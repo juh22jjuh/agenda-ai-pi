@@ -64,7 +64,6 @@ export class EstablishmentRegisterComponent implements OnInit {
   ) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
-      companyImage: [null],
       cpf: ['', [Validators.required]],
       telefone: ['', Validators.required],
       cep: ['', Validators.required],
@@ -172,9 +171,6 @@ export class EstablishmentRegisterComponent implements OnInit {
     
     formData.append('user', userId);
 
-    if (this.selectedImage) {
-      formData.append('companyImage', this.selectedImage, this.selectedImage.name);
-    }
 
     this.establishmentService.registerEntrepreneur(userId, formData).subscribe({
       next: (response) => {

@@ -25,34 +25,35 @@ import { firstValueFrom } from 'rxjs';
 export class PreScheduling implements OnInit {
   empresa: any = null;
   loading = true;
-  getServicesEntreprenuer: any = null;
-  logged = false; 
+  getServicesEntreprenuer: any = [];
+  logged = false;
   selectedService: any = null;
   selectedServiceId: string | null = null;
   workingHours: any[] = [];
   userId: string | null = null;
   showForm: boolean = false;
   isUserActive: boolean = true;
-
-
+  
   constructor(
     private auth: Auth,
-    private router: ActivatedRoute,
+    private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient,
-    private nav: Router   
+    private nav: Router
   ) {}
 
+  
   async ngOnInit(): Promise<void> {
-    const id = this.router.snapshot.paramMap.get('id');
-    console.log('ID da rota:', id);
+    const id = this.route.snapshot.paramMap.get('id');
     this.logged = true;
-    await this.loadEntreprenuers(id);
-    await this.loadServicesEntreprenuer(id);
-    this.cdRef.detectChanges();
+
+    await Promise.all([
+      this.loadEntrepreneurs(id),
+      this.loadServicesEntrepreneur(id)
+    ]);
 
     const { user } = this.auth.getUserData();
-    this.userId = user?._id;  // GUARDA O ID DO USUÁRIO
+    this.userId = user?._id;
 
     if (user) {
       this.isUserActive = user.isActive;
@@ -68,66 +69,50 @@ export class PreScheduling implements OnInit {
       }
     }
 
+    this.cdRef.detectChanges();
   }
 
-  async loadServicesEntreprenuer(id: string | null) {
+  async loadServicesEntrepreneur(id: string | null) {
+    if (!id) return;
     this.loading = true;
-    const { user } = this.auth.getUserData();
-    try {
-      this.http.get<any[]>(`${environment.apiUrl}/servicesEntreprenuer/getAll/${id}`)
 
-        .subscribe({
-          next: (result) => {
-            this.getServicesEntreprenuer = result;
-            this.loading = false;
-            this.cdRef.detectChanges();
-          },
-          error: (error) => {
-            console.error('Erro ao buscar serviços:', error);
-            this.getServicesEntreprenuer = [];
-            this.loading = false;
-            this.cdRef.detectChanges();
-          }
-        });
-    } catch (error) {
-      console.error('Erro ao buscar serviços:', error);
-      this.getServicesEntreprenuer = [];
-    } finally {
-      this.loading = false;
-      this.cdRef.detectChanges();
-    }
+    this.http.get<any[]>(`${environment.apiUrl}/servicesEntreprenuer/getAll/${id}`).subscribe({
+      next: (result) => {
+        this.getServicesEntreprenuer = result || [];
+        this.finishLoading();
+      },
+      error: (err) => {
+        console.error('Erro ao buscar serviços:', err);
+        this.getServicesEntreprenuer = [];
+        this.finishLoading();
+      }
+    });
   }
 
-  async loadEntreprenuers(id: string | null) {
+  async loadEntrepreneurs(id: string | null) {
+    if (!id) return;
     this.loading = true;
-    const { user } = this.auth.getUserData();
-    try {
-      this.http.get<any>(`${environment.apiUrl}/entrepreneur/entrepreneur/${id}`)
-        .subscribe({
-          next: (result) => {
-            this.empresa = result[0] || [];
-            this.loading = false;
-            this.cdRef.detectChanges();
-          },
-          error: (error) => {
-            console.error('Erro ao buscar empresa:', error);
-            this.empresa = [];
-            this.loading = false;
-            this.cdRef.detectChanges();
-          }
-        });
-    } catch (error) {
-      console.error('Erro ao buscar empresa:', error);
-      this.empresa = [];
-    } finally {
-      this.loading = false;
-      this.cdRef.detectChanges();
-    }
+
+    this.http.get<any>(`${environment.apiUrl}/entrepreneur/entrepreneur/${id}`).subscribe({
+      next: (result) => {
+        this.empresa = result?.[0] || null;
+        this.finishLoading();
+      },
+      error: (err) => {
+        console.error('Erro ao buscar empresa:', err);
+        this.empresa = null;
+        this.finishLoading();
+      }
+    });
   }
 
-agendar(service: any) {
-  this.nav.navigate(['establishment/scheduling/', service._id, this.userId]);
-}
+  private finishLoading() {
+    this.loading = false;
+    this.cdRef.detectChanges();
+  }
 
-
+  agendar(service: any) {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.nav.navigate(['establishment/scheduling/', service._id, this.userId, id]);
+  }
 }

@@ -49,7 +49,7 @@ export const routes: Routes = [
   { path: 'establishment/profile', component: ProfileEstablishment },
   { path: 'establishment/register', component: RegisterEstablishment },
   { path: 'establishment/config', component: Config},
-  { path: 'establishment/scheduling/:idService/:idUser', component: SchedulingEstablishment},
+  { path: 'establishment/scheduling/:idService/:idUser/:idEntrepreneur', component: SchedulingEstablishment},
   { path: 'establishment/pre-scheduling/:id', component: PreScheduling},
   { path: 'establishment/termos', component: Termos},
   { path: 'establishment/politicas', component: Politicas},

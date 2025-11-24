@@ -19,7 +19,6 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     ButtonModule,
     ProgressSpinnerModule,
-    HttpClientModule,
     FormsModule
   ],
   templateUrl: './users.html',
@@ -48,7 +47,7 @@ deactivationDays: { [userId: string]: number } = {};
     try {
       const headers = this.getAuthHeaders();
       const data = await firstValueFrom(
-        this.http.get<any[]>(`${environment.apiUrl}/admin/user`, { headers })
+        this.http.get<any[]>(`${environment.apiUrl}/admin/users`, { headers })
       );
       this.users = data ?? [];
     } catch (error) {
@@ -61,6 +60,11 @@ deactivationDays: { [userId: string]: number } = {};
   }
 
   deactivateUser(id: string) {
+    const token = localStorage.getItem('token');
+    const headersAuth = new HttpHeaders({
+      token: `Bearer ${token}`
+    });
+
     const days = this.deactivationDays[id];
     if (!days || days <= 0) {
         this.messageService.add({
@@ -72,7 +76,9 @@ deactivationDays: { [userId: string]: number } = {};
     }
 
     const headers = this.getAuthHeaders();
-    this.http.put(`${environment.apiUrl}/admin/users/${id}/deactivate`, { deactivationDays: days }, { headers }).subscribe({
+    this.http.put(`${environment.apiUrl}/admin/users/${id}/deactivate`, { deactivationDays: days }, { 
+      headers: headersAuth
+     }).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'success',

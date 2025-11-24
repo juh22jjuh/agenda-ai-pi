@@ -45,6 +45,10 @@ export const Login = async (req, res) => {
       email: email
     })
 
+   if (!verifyUser) {
+      return res.status(400).json({ message: "Usuário ou senha inválidos" })
+    }
+    
     const verifyPass = await bcrypt.compare(password, verifyUser.password)
     console.log('VERIFICANDO SENHA:', verifyPass)
     if(!verifyPass){
@@ -53,7 +57,7 @@ export const Login = async (req, res) => {
 
     if (verifyUser) {
       try {
-        const token = createToken({ name: verifyUser.name, id: verifyUser._id }, '3d')
+        const token = createToken({ name: verifyUser.name, id: verifyUser._id, role: verifyUser.roles }, '3d')
         res.status(200).json({
           user: verifyUser,
           token: token
@@ -223,3 +227,42 @@ export const UpdateUserPhoto = async (req, res) => {
     return res.status(500).json({ message: "Problemas no servidor" });
   }
 };
+
+export const UpdateUser = async (req, res) => {
+  const { id } = req.params;
+  const { name, phone, password, email } = req.body;
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    if (email && email !== user.email) {
+      return res.status(400).json({ message: "O email não pode ser alterado." });
+    }
+
+    // ✔ Atualiza apenas os campos permitidos
+    if (name) user.name = name;
+    if (phone) user.phone = phone;
+
+    if (password) {
+      const hashed = await hashPass(password);
+      user.password = hashed;
+    }
+
+    await user.save();
+
+    // Remove a senha da resposta
+    const userResponse = user.toObject();
+    delete userResponse.password;
+
+    return res.status(200).json(userResponse);
+
+  } catch (error) {
+    console.error("Erro ao atualizar usuário:", error);
+    return res.status(500).json({ message: "Erro ao atualizar usuário." });
+  }
+};
+

@@ -42,10 +42,6 @@ const entrepreneurSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    image: {
-        type: String,
-        required: true,
-    },
     created_at: {
         type: Date,
         default: Date.now,

@@ -11,15 +11,10 @@ const normalizePath = (path) => {
 export const Register = async (req, res) => {
   const { userId } = req.params;
   const { name, cpf, telefone, cep, rua, numero, comple, bairro, cidade, estado } = req.body;
-
+  console.log('REQ BODY', req.body)
   // 1. Validação de entrada aprimorada para incluir os campos requeridos
-  if (!name || !cpf || !telefone || !cep || !rua || !numero || !bairro || !cidade || !estado || !userId) {
+  if (!name || !cpf || !telefone || !cep || !rua || !numero || !bairro || !cidade || !estado) {
     return res.status(400).json({ message: 'Todos os campos obrigatórios, incluindo o ID do usuário, devem ser fornecidos.' });
-  }
-
-  // Validação da imagem que agora é obrigatória
-  if (!req.file) {
-    return res.status(400).json({ message: 'A imagem da empresa é obrigatória.' });
   }
 
   const format_cpf = cpf.replace(/\D/g, '');
@@ -27,7 +22,6 @@ export const Register = async (req, res) => {
   const format_cep = cep.replace(/\D/g, '');
 
   try {
-    const imagePath = req.file ? normalizePath(req.file.path) : null;
 
     const newEntrepreneur = new Entrepreneur({
       name,
@@ -40,7 +34,6 @@ export const Register = async (req, res) => {
       bairro,
       cidade,
       estado,
-      image: imagePath,
       user: userId,
       services_entreprenuer: [] // Inicializa como um array vazio
     });
@@ -108,17 +101,18 @@ export const GetEntreprenuerById = async (req, res) => {
 
 export const Delete = async (req, res) => {
   const { id } = req.params
-  console.log({
-    id: id
-  })
   try {
-    // Exclui o documento do empreendedor
-    await Entrepreneur.deleteOne({ user: id })
+    const empresa = await Entrepreneur.findById(id)
 
-    // Remove a referência no User
-    await User.findByIdAndUpdate(id, {
-      $unset: { entrepreneur: id }
+    if (!empresa) {
+      return res.status(404).json({ message: "Empresa não encontrada" })
+    }
+
+    await User.findByIdAndUpdate(empresa.user, {
+      $unset: { entrepreneur: "" }
     })
+
+    await Entrepreneur.deleteOne({ _id: id })
 
     res.status(200).json({
       message: 'Empresa excluída com sucesso'
@@ -144,24 +138,35 @@ export const AllEntrepreneur = async (req, res) => {
 
 export const UpdateEntreprenuer = async (req, res) => {
   try {
-    const { id } = req.params; // The ID of the Entrepreneur document
+    const { id } = req.params;
 
     const updateFields = {};
     const allowedFields = ['name', 'telefone', 'cep', 'rua', 'numero', 'comple', 'bairro', 'cidade', 'estado'];
     
     allowedFields.forEach(field => {
-      if (req.body[field] !== undefined) {
+      if (req.body[field] !== undefined && req.body[field] !== null) {
         updateFields[field] = req.body[field];
       }
     });
 
+    // Se tiver imagem (não é seu caso atual)
     if (req.file) {
       updateFields.image = normalizePath(req.file.path);
     }
 
-    // Format fields if they exist to remove non-digit characters
-    if (updateFields.telefone) updateFields.telefone = updateFields.telefone.replace(/\D/g, '');
-    if (updateFields.cep) updateFields.cep = updateFields.cep.replace(/\D/g, '');
+    // Normaliza telefone e cep
+    if (updateFields.telefone) {
+      updateFields.telefone = String(updateFields.telefone).replace(/\D/g, '');
+    }
+
+    if (updateFields.cep) {
+      updateFields.cep = String(updateFields.cep).replace(/\D/g, '');
+    }
+
+    // Converte qualquer campo numérico para string
+    if (updateFields.numero) {
+      updateFields.numero = String(updateFields.numero);
+    }
 
     if (Object.keys(updateFields).length === 0) {
       return res.status(400).json({ message: 'Nenhum campo para atualizar fornecido.' });
@@ -177,7 +182,10 @@ export const UpdateEntreprenuer = async (req, res) => {
       return res.status(404).json({ message: 'Empreendedor não encontrado.' });
     }
 
-    res.status(200).json({ message: 'Empresa atualizada com sucesso!', entrepreneur: updatedEntrepreneur });
+    res.status(200).json({
+      message: 'Empresa atualizada com sucesso!',
+      entrepreneur: updatedEntrepreneur
+    });
 
   } catch (error) {
     console.error('Erro ao atualizar empreendedor:', error);
@@ -187,6 +195,7 @@ export const UpdateEntreprenuer = async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 };
+
 
 export const ToggleStatusEntrepreneur = async (req, res) => {
   try {

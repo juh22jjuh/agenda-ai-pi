@@ -94,5 +94,17 @@ abrirPreScheduling(empresa: any) {
   this.router.navigate(['/establishment/pre-scheduling/', empresa._id]);
 }
 
+searchModalOpen = false;
+
+openSearchModal() {
+  this.searchModalOpen = true;
+}
+
+closeSearchModal() {
+  this.searchModalOpen = false;
+  this.searchTerm = "";
+  this.filteredEmpresas = [];
+}
+
 
 }

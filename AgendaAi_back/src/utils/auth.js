@@ -10,6 +10,7 @@ async function auth(req, res, next) {
                 }
                 req.isAuthenticated = true
                 req.userId = decoded.id
+                req.user = decoded
                 res.setHeader('Content-Type', 'application/json')
                 return next()
             })

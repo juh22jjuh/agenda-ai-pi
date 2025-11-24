@@ -1,18 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { ServiceSchedulingService } from '../../services/serviceScheduling/serviceScheduling.service';
 import { CommonModule, formatDate } from '@angular/common';
 import { Footer } from '../../shared/footer/footer';
-import { HttpClientModule } from '@angular/common/http';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-scheduling',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Footer, RouterLink, HttpClientModule, DatePickerModule, FileUploadModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ToastModule, Footer, RouterLink, DatePickerModule, FileUploadModule, FormsModule],
   templateUrl: './scheduling.html',
   styleUrl: './scheduling.css'
 })
@@ -21,11 +22,13 @@ export class Scheduling implements OnInit {
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private schedulingService = inject(ServiceSchedulingService);
+  
+  constructor(private messageService: MessageService, private router: Router) {}
 
   schedulingForm!: FormGroup;
   serviceId!: string;
   userId!: string;
-
+  entrepreneuerId!: string;
   availableTimes: string[] = [];
   
   minDate: Date = new Date();
@@ -38,8 +41,11 @@ export class Scheduling implements OnInit {
   ngOnInit(): void {
     this.serviceId = this.route.snapshot.paramMap.get('idService') as string;
     this.userId = this.route.snapshot.paramMap.get('idUser') as string;
+    this.entrepreneuerId = this.route.snapshot.paramMap.get('idEntrepreneur') as string
+
 
     this.schedulingForm = this.fb.group({
+
       customer_name: ['', Validators.required],
       customer_age: ['', Validators.required],
       description: [''],
@@ -125,12 +131,13 @@ export class Scheduling implements OnInit {
 
     this.schedulingService.createScheduling(formData).subscribe({
       next: () => {
-        alert("Agendamento realizado com sucesso!");
+        this.messageService.add({ severity: 'success', summary: 'Agendamento', detail: 'Agendamento realizado com sucesso.' });
+        setTimeout(() => this.router.navigate(['/establishment/pre-scheduling/', this.entrepreneuerId]), 2000);
       },
       error: (err: any) => {
         const errorMessage = err.error?.error || "Erro desconhecido ao agendar!";
         alert(`Erro: ${errorMessage}`);
-      }
+      } 
     });
   }
 }

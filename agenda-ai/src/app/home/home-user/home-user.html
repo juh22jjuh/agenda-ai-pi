@@ -4,47 +4,55 @@
   class="relative w-full h-[60vh] flex items-center justify-center bg-cover bg-center"
   style="background-image: url('assets/imagem2.jpg');"
 >
-  <!-- camada escura -->
   <div class="absolute inset-0 bg-black/50"></div>
-  <!-- conteúdo -->
-  <div class="relative z-10 flex flex-col items-center text-white space-y-3 px-4">
-    <!-- Títulos minimalistas -->
+  
+  <div class="relative z-10 flex flex-col items-center text-white space-y-3 px-4 w-full">
     <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-center">
       Seja Bem-vindo(a)
     </h1>
     <h2 class="text-lg md:text-xl font-light opacity-90 text-center max-w-2xl leading-snug">
       Descubra e reserve profissionais de beleza e bem-estar perto de você
     </h2>
-    <!-- Barra de pesquisa -->
-<div class="relative w-full flex justify-center mt-10 z-20">
-  <input
-    type="text"
-    [(ngModel)]="searchTerm"
-    (input)="searchEmpresas()"
-    placeholder="Pesquise empresas ou cidades"
-    class="w-1/2 rounded-full px-6 py-3 text-gray-800 focus:outline-none shadow-lg border border-gray-300 bg-white/90 backdrop-blur-md"
-  />
-</div>
-<!-- Lista de empresas (mostra só se houver texto digitado) -->
-<div *ngIf="searchTerm">
-  <div *ngIf="filteredEmpresas.length > 0; else noResults" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-<div
-  *ngFor="let empresa of filteredEmpresas"
-  class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 text-white text-center shadow-md hover:shadow-lg transition-shadow cursor-pointer"
-  (click)="abrirPreScheduling(empresa)"
->
-  <h3 class="text-lg font-semibold">{{ empresa.nome || empresa.name }}</h3>
-  <p class="text-sm opacity-80">
-    {{ empresa.cidade }}, {{ empresa.estado }}
-  </p>
-</div>
-  </div>
-</div>
-<!-- Caso não encontre nenhuma -->
-<ng-template #noResults>
-  <p class="text-center text-gray-600 mt-4">Nenhum estabelecimento encontrado</p>
-</ng-template>
-  </div>
+
+    <div class="relative w-11/12 md:w-1/2 mt-10 z-20">
+      
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="searchEmpresas()"
+        placeholder="Pesquise empresas ou cidades"
+        class="w-full rounded-full px-6 py-3 text-gray-800 focus:outline-none shadow-lg border border-gray-300 bg-white/90 backdrop-blur-md"
+      />
+
+      <div *ngIf="searchTerm" class="absolute top-full left-0 right-0 mt-2 z-50">
+        
+        <div *ngIf="filteredEmpresas.length > 0; else noResults" 
+             class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden max-h-60 overflow-y-auto">
+          
+          <div class="grid grid-cols-1 gap-2 p-2">
+            <div
+              *ngFor="let empresa of filteredEmpresas"
+              class="bg-white/50 hover:bg-white/80 rounded-xl p-3 text-gray-800 cursor-pointer transition-colors flex flex-col items-start"
+              (click)="abrirPreScheduling(empresa)"
+            >
+              <h3 class="text-base font-bold text-[#2d5a4f]">{{ empresa.nome || empresa.name }}</h3>
+              <p class="text-xs text-gray-600">
+                {{ empresa.cidade }}, {{ empresa.estado }}
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <ng-template #noResults>
+          <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 mt-2">
+            <p class="text-center text-gray-600 text-sm">Nenhum estabelecimento encontrado</p>
+          </div>
+        </ng-template>
+
+      </div>
+    </div>
+    </div>
 </section>
 
 <app-secao></app-secao>
@@ -67,15 +75,9 @@
         <div *ngFor="let empresa of empresas" class="bg-gray-100 shadow-xl rounded-lg overflow-hidden transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl h-full flex flex-col justify-between">
           
           <div>
-            <div 
-              class="h-40 bg-cover bg-center flex items-end p-4 rounded-t-lg" 
-              [ngStyle]="{'background-image': 'url(' + empresa.imagem + ')'}"
-            >
-              <h2 class="text-2xl font-bold text-white shadow-text-sm">{{ empresa.name }}</h2>
-            </div>
-            
             <div class="p-4 text-left text-gray-800">
-              <p><strong>Nome:</strong> {{ empresa.name}}</p>
+              <h2 class="text-2xl font-bold text-[#2d5a4f]  shadow-text-sm">{{ empresa.name }}</h2>
+              <br>
               <p><strong>Cidade:</strong> {{ empresa.cidade }} - {{ empresa.estado }}</p>
               <p><strong>Bairro:</strong> {{ empresa.bairro }}</p>
               <p><strong>Endereço:</strong> {{ empresa.rua }}, {{ empresa.numero }}</p>

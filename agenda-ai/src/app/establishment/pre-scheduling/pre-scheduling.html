@@ -2,7 +2,7 @@
 
 <div class="min-h-screen bg-[#C7DED5] flex flex-col items-center py-10">
 
-  <!-- AVISO DE CONTA DESATIVADA -->
+  <!-- ⚠️ AVISO DE CONTA DE USUÁRIO DESATIVADA -->
   <div *ngIf="!isUserActive" class="w-full max-w-3xl px-4 mb-6">
     <div class="bg-yellow-200 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md">
       <p class="font-bold">Sua conta está temporariamente desativada.</p>
@@ -10,12 +10,18 @@
     </div>
   </div>
 
+  <!-- ⚠️ AVISO DE EMPRESA DESATIVADA -->
+  <div *ngIf="empresa && !empresa.isActive" class="w-full max-w-3xl px-4 mb-6">
+    <div class="bg-red-200 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md">
+      <p class="font-bold">Esta empresa está temporariamente desativada.</p>
+      <p>No momento não é possível realizar agendamentos para esta empresa.</p>
+    </div>
+  </div>
+
   <!-- CARD DA EMPRESA -->
   <div *ngIf="empresa; else carregando" class="w-full max-w-3xl px-4 mb-10">
-    <div 
-      class="h-60 bg-cover bg-center rounded-t-2xl flex items-end p-4 border border-gray-300 shadow-md"
-      [ngStyle]="{'background-image': 'url(' + empresa.imagem + ')'}">
-    </div>
+
+
 
     <div class="p-6 border-x border-b border-gray-300 rounded-b-2xl bg-white shadow-sm space-y-1 text-gray-800">
       <p><strong>Nome:</strong> {{ empresa.name }}</p>
@@ -23,6 +29,14 @@
       <p><strong>Bairro:</strong> {{ empresa.bairro }}</p>
       <p><strong>Endereço:</strong> {{ empresa.rua }}, {{ empresa.numero }}</p>
       <p><strong>Telefone:</strong> {{ empresa.telefone }}</p>
+
+      <!-- Status visual da empresa -->
+      <p class="mt-2" *ngIf="empresa?.isActive">
+        <span class="text-green-700 font-semibold">Empresa ativa</span>
+      </p>
+      <p class="mt-2" *ngIf="empresa && !empresa?.isActive">
+        <span class="text-red-700 font-semibold">Empresa desativada</span>
+      </p>
     </div>
   </div>
 
@@ -58,11 +72,12 @@
         <div class="mt-4">
           <button 
             class="bg-[#648f80] text-white px-4 py-2 rounded-md hover:bg-[#4e7266] transition-all" 
-            [routerLink]="['/establishment/scheduling', service._id, userId]"
-            [disabled]="!isUserActive"> <!-- Desativa o botão se o usuário estiver inativo -->
+            (click)="agendar(service)"
+            [disabled]="!isUserActive || !empresa?.isActive">
             Agendar
           </button>
         </div>
+
       </div>
     </div>
   </div>

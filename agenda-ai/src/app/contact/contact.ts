@@ -5,11 +5,12 @@ import { Auth } from '../auth/auth';
 import { Router } from '@angular/router';
 import { Footer } from '../shared/footer/footer';
 import { NavbarAuth } from "../shared/navbar-auth/navbar-auth";
+import { ToastModule } from 'primeng/toast';
 
 
 @Component({
   selector: 'app-contact',  
-  imports: [ReactiveFormsModule, Footer, NavbarAuth],
+  imports: [ReactiveFormsModule, Footer, NavbarAuth, ToastModule],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
    providers: [MessageService]
@@ -41,7 +42,6 @@ export class Contact {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Mensagem enviada com sucesso!' });
           this.contatoRegisterForm.reset();
           this.formSubmitted = false;
-          this.router.navigate(['/contact']);
         },
         error: () => {
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu um erro ao enviar a mensagem. Tente novamente ' });

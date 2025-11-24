@@ -1,116 +1,115 @@
 <app-navbar-auth></app-navbar-auth>
-<main class="flex flex-col items-center min-h-[91vh] bg-[#C7DED5] px-3 py-8">
-<div class="container-profile">
 
-  <!-- Menu Lateral -->
-  <div class="menu-lateral">
-    <p-avatar
-      [image]="profileImageUrl"
-      size="xlarge"
-      shape="circle"
-    ></p-avatar>
+<main class="flex flex-col items-center min-h-[91vh] px-3 py-8"
+      style="background:#C7DED5;">
 
-    <h3>{{ user?.name }}</h3>
-    <p>{{ user?.email }}</p>
+  <div class="container-profile"
+       style="
+         display:flex;
+         gap:2rem;
+         width:100%;
+         max-width:1100px;
+         margin-top:1rem;
+       ">
 
-    <p-divider></p-divider>
+    <!-- 🌿 MENU LATERAL -->
+    <div class="menu-lateral"
+         style="
+           width:260px;
+           background:white;
+           border-radius:16px;
+           padding:1.5rem;
+           box-shadow:0 4px 10px rgba(0,0,0,0.12);
+           border:2px solid #a7c3b9;
+           display:flex;
+           flex-direction:column;
+           align-items:center;
+           text-align:center;
+         ">
 
-    <ul>
-      <li (click)="selectTab('minhaConta')" [class.active]="activeTab === 'minhaConta'">
-        <i class="pi pi-user"></i> Minha Conta
-      </li>
 
-      <li (click)="selectTab('meusAgendamentos')" [class.active]="activeTab === 'meusAgendamentos'">
-        <i class="pi pi-calendar"></i> Meus Agendamentos
-      </li>
+      <h3 style="font-size:1.4rem; margin-top:0.8rem; font-weight:600; color:#35564b;">
+        {{ user?.name }}
+      </h3>
 
-      <li (click)="selectTab('alterarSenha')" [class.active]="activeTab === 'alterarSenha'">
-        <i class="pi pi-lock"></i> Alterar Senha
-      </li>
-    </ul>
+      <p style="color:#666; margin-bottom:0.5rem;">{{ user?.email }}</p>
+
+      <p-divider></p-divider>
+
+      <ul style="list-style:none; padding:0; width:100%; margin-top:1rem;">
+        <li (click)="selectTab('minhaConta')"
+            [class.active]="activeTab === 'minhaConta'"
+            style="padding:0.7rem 1rem; border-radius:12px; cursor:pointer;
+                   margin-bottom:0.4rem; display:flex; align-items:center; gap:0.5rem;
+                   font-weight:500;"
+            [ngStyle]="activeTab === 'minhaConta' ?
+            {'background':'#a7c3b9','color':'white'} :
+            {'background':'#eef4f2','color':'#35564b'}">
+          <i class="pi pi-user"></i> Minha Conta
+        </li>
+
+        <li (click)="selectTab('meusAgendamentos')"
+            [class.active]="activeTab === 'meusAgendamentos'"
+            style="padding:0.7rem 1rem; border-radius:12px; cursor:pointer;
+                   margin-bottom:0.4rem; display:flex; align-items:center; gap:0.5rem;
+                   font-weight:500;"
+            [ngStyle]="activeTab === 'meusAgendamentos' ?
+            {'background':'#a7c3b9','color':'white'} :
+            {'background':'#eef4f2','color':'#35564b'}">
+          <i class="pi pi-calendar"></i> Meus Agendamentos
+        </li>
+      </ul>
+    </div>
+
+    <div class="conteudo-principal"
+         style="flex:1; display:flex; flex-direction:column; gap:1.5rem;">
+
+      <div *ngIf="activeTab === 'minhaConta'">
+        <p-card header="Minha Conta"
+          styleClass="block"
+          [style]="{
+            'border-radius':'18px',
+            'border':'2px solid #a7c3b9',
+            'box-shadow':'0 4px 12px rgba(0,0,0,0.15)'
+          }">
+
+          <div *ngIf="!showEditForm" style="font-size:1.1rem; color:#35564b;">
+            <p><strong>Nome:</strong> {{ user?.name }}</p>
+            <p><strong>Email:</strong> {{ user?.email }}</p>
+
+            <button pButton type="button" label="Alterar Informações Pessoais"
+              (click)="toggleEditForm()"
+              style="margin-top:1rem;"></button>
+          </div>
+
+          <form *ngIf="showEditForm" style="margin-top:1rem;">
+            <div class="p-field" style="margin-bottom:1rem;">
+              <label>Nome</label>
+              <input type="text" pInputText [(ngModel)]="user.name" name="name">
+            </div>
+
+            <div class="p-field" style="margin-bottom:1rem;">
+              <label>Email</label>
+              <input type="text" pInputText disabled [(ngModel)]="user.email" name="email">
+            </div>
+
+            <button pButton type="button" label="Salvar"
+              (click)="salvarInfoPessoal()"></button>
+
+            <button pButton type="button" label="Cancelar"
+              class="p-button-secondary" style="margin-left:0.6rem;"
+              (click)="toggleEditForm()"></button>
+          </form>
+        </p-card>
+      </div>
+
+   
+      <div *ngIf="activeTab === 'meusAgendamentos'">
+        <app-my-schedules></app-my-schedules>
+      </div>
+
+    </div>
   </div>
-
-  <!-- Conteúdo -->
-  <div class="conteudo-principal">
-
-    <!-- MINHA CONTA -->
-    <div *ngIf="activeTab === 'minhaConta'">
-      <p-card header="Minha Conta">
-        <div *ngIf="!showEditForm">
-          <p><strong>Nome:</strong> {{ user?.name }}</p>
-          <p><strong>Email:</strong> {{ user?.email }}</p>
-          <p><strong>Telefone:</strong> {{ user?.phone }}</p>
-
-          <button pButton type="button" label="Alterar Informações Pessoais" (click)="toggleEditForm()"></button>
-        </div>
-
-        <form *ngIf="showEditForm">
-          <div class="p-field">
-            <label for="name">Nome</label>
-            <input id="name" type="text" pInputText [(ngModel)]="user.name" name="name">
-          </div>
-
-          <div class="p-field">
-            <label for="email">Email</label>
-            <input id="email" type="text" pInputText [(ngModel)]="user.email" name="email">
-          </div>
-
-          <div class="p-field">
-            <label for="phone">Telefone</label>
-            <input id="phone" type="text" pInputText [(ngModel)]="user.phone" name="phone">
-          </div>
-
-          <div class="p-field">
-            <label for="profileImage">Foto de Perfil</label>
-            <p-fileUpload
-              name="profileImage"
-              (onSelect)="alterarFoto($event)"
-              [showUploadButton]="false"
-              chooseLabel="Escolher"
-              cancelLabel="Cancelar"
-              [auto]="true">
-            </p-fileUpload>
-          </div>
-
-          <button pButton type="button" label="Salvar" (click)="salvarInfoPessoal()"></button>
-          <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="toggleEditForm()"></button>
-        </form>
-      </p-card>
-    </div>
-
-    <!-- MEUS AGENDAMENTOS -->
-    <div *ngIf="activeTab === 'meusAgendamentos'">
-      <app-my-schedules></app-my-schedules>
-    </div>
-
-    <!-- ALTERAR SENHA -->
-    <div *ngIf="activeTab === 'alterarSenha'">
-      <p-card header="Alterar Senha">
-        <div class="p-field">
-          <label for="senhaAtual">Senha Atual</label>
-          <p-password id="senhaAtual" [(ngModel)]="senhaAtual"></p-password>
-        </div>
-
-        <div class="p-field">
-          <label for="novaSenha">Nova Senha</label>
-          <p-password id="novaSenha" [(ngModel)]="novaSenha"></p-password>
-        </div>
-
-        <div class="p-field">
-          <label for="confirmarSenha">Confirmar Nova Senha</label>
-          <p-password id="confirmarSenha" [(ngModel)]="confirmarSenha"></p-password>
-        </div>
-
-        <button
-          pButton
-          type="button"
-          label="Alterar Senha"
-          (click)="alterarSenha(senhaAtual, novaSenha, confirmarSenha)">
-        </button>
-      </p-card>
-    </div>
-
-  </div>
-</div>
 </main>
+
 <app-footer></app-footer>

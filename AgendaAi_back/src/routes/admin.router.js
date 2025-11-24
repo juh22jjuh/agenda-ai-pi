@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { listUsers, deleteUser, deactivateUser, activateUser } from "../controllers/admin.controller.js";
+import { listUsers, deleteUser, deactivateUser, activateUser, deactivateEntrepreneur, activateEntreprenuer, listEntrepreneurs } from "../controllers/admin.controller.js";
 import { authorize } from "../utils/authorize.js";
 import auth from "../utils/auth.js";
 
@@ -11,5 +11,16 @@ routerAdmin.delete("/users/:id", auth, authorize(["admin"])
 , deleteUser);
 routerAdmin.put("/users/:id/deactivate", auth, authorize(["admin"])
 , deactivateUser);
+
 routerAdmin.put("/users/:id/activate", auth, authorize(["admin"])
 , activateUser);
+
+
+routerAdmin.get("/entrepreneurs", auth, authorize(["admin"])
+, listEntrepreneurs);
+
+routerAdmin.put("/entrepreneurs/:id/deactivate", auth, authorize(["admin"])
+, deactivateEntrepreneur);
+
+routerAdmin.put("/entrepreneurs/:id/activate", auth, authorize(["admin"])
+, activateEntreprenuer);

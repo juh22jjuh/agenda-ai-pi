@@ -5,31 +5,11 @@
 <div class="register-container">
   <p-card styleClass="form-card">
     <ng-template pTemplate="header">
-      Cadastro de Estabelecimento
+      <h2 class="text-center text-[#004D40] text-xl mt-2 font-bold">Cadastro de Estabelecimento</h2>
     </ng-template>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-      <!-- Seção de Upload de Imagem -->
-      <div class="image-upload-section">
-        <div *ngIf="!imagePreview" class="file-upload-wrapper">
-          <p-fileUpload 
-            name="companyImage"
-            mode="basic" 
-            accept="image/*" 
-            chooseLabel="Imagem da Empresa"
-            (onSelect)="onFileSelect($event)" 
-            [auto]="true" 
-            customUpload="true"
-          ></p-fileUpload>
-          <small>Clique para selecionar a imagem do seu estabelecimento.</small>
-        </div>
-
-        <div *ngIf="imagePreview" class="image-preview-wrapper">
-          <img [src]="imagePreview" alt="Pré-visualização da imagem" class="image-preview">
-          <button pButton type="button" icon="pi pi-times" (click)="clearFile()" class="p-button-danger p-button-rounded p-button-sm remove-image-btn"></button>
-        </div>
-      </div>
       
       <!-- Dados do Estabelecimento -->
       <h3 class="section-title">Dados do Estabelecimento</h3>

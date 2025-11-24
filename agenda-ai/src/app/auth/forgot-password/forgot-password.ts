@@ -5,10 +5,12 @@ import { RouterLink } from '@angular/router';
 import { Auth } from '../auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [NavbarAuth, Footer, RouterLink, FormsModule, CommonModule],
+  imports: [NavbarAuth, Footer, RouterLink, FormsModule, CommonModule, ToastModule],
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.css'
 })
@@ -17,18 +19,30 @@ export class ForgotPassword {
   email: string = "";
   mensagem: string = "";
 
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private messageService: MessageService) {}
 
   enviarEmail() {
     this.auth.requestResetPassword(this.email).subscribe({
       next: () => {
-        this.mensagem = "Email enviado! Verifique sua caixa de entrada.";
+        this.messageService.add({
+              severity: 'success',
+              summary: 'Link Enviado com Sucesso',
+              detail: 'O link para redefinir senha foi enviado com sucesso!',
+        });
       },
       error: err => {
         if (err.status === 404) {
-          this.mensagem = "Email não cadastrado.";
+          this.messageService.add({
+              severity: 'error',
+              summary: 'Erro ao Enviar Link',
+              detail: 'Email inválido!',
+          })
         } else {
-          this.mensagem = "Erro ao enviar email.";
+          this.messageService.add({
+              severity: 'error',
+              summary: 'Erro ao Enviar Link',
+              detail: err?.error?.error,
+          })
         }
       }
     });

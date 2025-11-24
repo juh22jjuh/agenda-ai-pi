@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 import { Footer } from "../../shared/footer/footer";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Auth } from '../auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  // <--- IMPORTANTE
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-new-password',
-  imports: [NavbarAuth, Footer, FormsModule, CommonModule],
+  imports: [NavbarAuth, Footer, FormsModule, CommonModule, ToastModule],
   templateUrl: './new-password.html',
   styleUrl: './new-password.css'
 })
@@ -22,7 +24,9 @@ export class NewPassword {
 
   constructor(
     private route: ActivatedRoute,
-    private auth: Auth
+    private messageService: MessageService,
+    private auth: Auth,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -39,8 +43,21 @@ export class NewPassword {
     }
 
     this.auth.resetPassword(this.id!, this.token!, this.newPassword).subscribe({
-      next: () => this.mensagem = "Senha alterada com sucesso!",
-      error: () => this.mensagem = "Erro ao redefinir senha."
+      next: () => {
+        this.messageService.add({
+         severity: 'success',
+         summary: 'Senha alterada com sucesso'
+      })
+      setTimeout(() => this.router.navigate(['/login']), 3000);
+      },
+      error: (err) =>  {
+        console.log(err)
+        this.messageService.add({
+              severity: 'error',
+              summary: 'Erro ao atualizar senha',
+              detail: err.error.error
+      })
+      }
     });
   }
 }

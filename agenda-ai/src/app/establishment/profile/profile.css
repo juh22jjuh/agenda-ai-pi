@@ -1,130 +1,178 @@
-/* General Container Styles */
-.profile-container {
-  padding: 2rem;
-  background-color: #f8f9fa; /* Light gray background */
-}
+/* ===========================================
+   Aplicar estilos dentro do componente
+   usando PrimeNG → precisa de ::ng-deep
+=========================================== */
+:host ::ng-deep {
 
-/* Card Styles */
-.p-card {
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.profile-card .p-card-header img {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  object-fit: cover;
-  height: 250px;
-  width: 100%;
-}
-
-.profile-card .p-card-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
-.profile-details p {
-  margin: 0.5rem 0;
-  color: #6c757d; /* Muted text color */
-}
-
-.profile-actions .p-button {
-  margin-right: 1rem;
-}
-
-/* Section Card Styles */
-.section-card .p-card-title {
-  font-size: 1.25rem;
-  border-bottom: 1px solid #dee2e6; /* Add a bottom border */
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-}
-
-/* Table Styles */
-.p-table {
-  border: none;
-}
-
-.p-table .p-datatable-thead > tr > th {
-  background-color: #f1f3f5;
-  font-weight: 600;
-}
-
-.p-table .p-datatable-tbody > tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-
-/* Dialog Styles */
-.p-dialog .p-dialog-header {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  background-color: #f1f3f5;
-}
-
-.dialog-footer {
-  padding-top: 1.5rem;
-  border-top: 1px solid #dee2e6;
-  margin-top: 1.5rem;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
+  /* ----- CONTAINER GERAL ----- */
   .profile-container {
-    padding: 1rem;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+  }
+
+  /* ----- CARD PRINCIPAL DE PERFIL ----- */
+  .profile-card {
+    border-radius: 14px !important;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    background: white;
   }
 
   .profile-card .p-card-header img {
-    height: 200px; /* Adjust image height for smaller screens */
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(0.95);
   }
-}
 
+  .profile-card .p-card-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #3d3d3d;
+  }
 
-.form-flex-container {
-  display: flex;
-  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
-  gap: 1rem;       /* Cria um espaçamento consistente entre todos os campos */
-}
+  .profile-details p {
+    font-size: 1rem;
+    margin: 0.3rem 0;
+    color: #5f6b6b;
+  }
 
-/* 2. Estilo Padrão para Cada Campo */
-/* Garante que o campo possa crescer e preencher o espaço. */
-.form-field {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column; /* Coloca o <label> acima do <input> */
-  gap: 0.5rem;          /* Espaço entre o label e o input */
-}
+  /* Botões */
+  .profile-actions p-button {
+    margin-right: 1rem;
+  }
 
-/* 3. Classes de Largura */
-/* Define a largura base dos campos na grade. */
+  /* ----- CARDS DAS SEÇÕES (SERVIÇOS E AGENDAMENTOS) ----- */
+  .section-card .p-card {
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
 
-.form-field.full-width {
-  flex-basis: 100%;
-}
+  .section-card .p-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e3e6e8;
+    color: #3d3d3d;
+  }
 
-.form-field.half-width {
-  flex-basis: calc(50% - 0.5rem); /* 50% do contêiner, menos metade do espaçamento (gap) */
-}
+  /* ----- TABELAS ----- */
+  .p-datatable-thead > tr > th {
+    background: #eef1f4;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
 
-.form-field.three-quarter-width {
-    flex-basis: calc(75% - 0.5rem);
-}
+  .p-datatable-tbody > tr:nth-child(even) {
+    background: #fafbfb;
+  }
 
-.form-field.one-quarter-width {
-    flex-basis: calc(25% - 0.5rem);
-}
+  .p-datatable-tbody > tr > td {
+    padding: 0.8rem;
+  }
 
+  /* ----- DIALOG EDITAR PERFIL ----- */
+  .p-dialog {
+    border-radius: 14px;
+    overflow: hidden;
+  }
 
-/* 4. Comportamento Responsivo */
-/* Em telas pequenas (mobile), faz com que todos os campos ocupem a largura total. */
-@media (max-width: 768px) {
-  .form-field.half-width,
-  .form-field.three-quarter-width,
-  .form-field.one-quarter-width {
+  .p-dialog .p-dialog-header {
+    background: #f1f3f6;
+    font-size: 1.2rem;
+    padding: 1.2rem;
+  }
+
+  .dialog-footer {
+    border-top: 1px solid #e1e3e5;
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  /* ===== FORM FLEX CUSTOMIZADO ===== */
+
+  /* Container flex */
+  .form-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Cada campo */
+  .form-field {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  /* Larguras */
+  .form-field.full-width {
     flex-basis: 100%;
   }
+
+  .form-field.half-width {
+    flex-basis: calc(50% - 0.5rem);
+  }
+
+  .form-field.three-quarter-width {
+    flex-basis: calc(75% - 0.5rem);
+  }
+
+  .form-field.one-quarter-width {
+    flex-basis: calc(25% - 0.5rem);
+  }
+
+  /* Inputs PrimeNG dentro do form */
+  .form-field .p-inputtext,
+  .form-field textarea {
+    width: 100%;
+    border-radius: 8px !important;
+    padding: 0.75rem !important;
+    border: 1px solid #d9d9d9 !important;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: #648f80 !important;
+    box-shadow: 0 0 4px #648f80aa !important;
+  }
+
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .form-field.half-width,
+    .form-field.three-quarter-width,
+    .form-field.one-quarter-width {
+      flex-basis: 100%;
+    }
+
+    .profile-card .p-card-header img {
+      height: 180px;
+    }
+  }
+  /* ===== AJUSTE DO LAYOUT PRINCIPAL ===== */
+
+.profile-content {
+  max-width: 1200px;
+  margin: 0 auto; /* Centraliza todo o conteúdo */
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Perfil e Seções lado a lado */
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-/* Para garantir que o input dentro do p-fluid ocupe o espaço */
-.form-field .p-inputtext {
-    width: 100%;
+/* Card do Perfil ocupa melhor o espaço */
+.profile-card {
+  height: fit-content;
+}
+
+/* Na versão mobile, fica um abaixo do outro */
+@media (max-width: 768px) {
+  .profile-content {
+    grid-template-columns: 1fr;
+  }
+}
+
 }
