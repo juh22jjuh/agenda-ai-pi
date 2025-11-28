@@ -4,12 +4,12 @@ const contatoSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: true, // ✅ corrigido
+      required: true,
     },
     telefone: {
       type: String,
-      required: true, // ✅ corrigido
-      maxLength: 12, // ✅ corrigido
+      required: true,
+      maxLength: 20, // ✅ Aumentado de 12 para 20 para aceitar (XX) XXXXX-XXXX
     },
     assunto: {
       type: String,
@@ -20,7 +20,7 @@ const contatoSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true } // ✅ cria automaticamente createdAt e updatedAt
+  { timestamps: true }
 );
 
 export const Contato = mongoose.model("Contato", contatoSchema);

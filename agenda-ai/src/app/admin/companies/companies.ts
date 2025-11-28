@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { Auth } from '../../auth/auth';
 import { environment } from '../../../environments/environment';
 
+
 @Component({
   selector: 'app-companies',
   standalone: true,
@@ -33,7 +34,8 @@ import { environment } from '../../../environments/environment';
     FormsModule
   ],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './companies.html'
+  templateUrl: './companies.html',
+  styleUrls: ['./companies.css']
 })
 export class Companies implements OnInit{
   empresas: any[] = [];

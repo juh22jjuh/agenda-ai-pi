@@ -6,12 +6,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { PasswordModule } from 'primeng/password';
-import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 import { Auth } from '../auth';
 import { IRegister } from '../types/register.type';
 import { Router } from '@angular/router';
 import { Footer } from "../../shared/footer/footer";
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -24,8 +25,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     ToastModule,
     MessageModule,
     PasswordModule,
-    NavbarAuth,
-    Footer
+    Footer, 
+    NavbarAuth
   ],
   templateUrl: './register.html',
   styleUrl: './register.css'

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
+import { NavbarAuth } from "../../shared/navbar-auth/navbar-auth";
 import { Footer } from '../../shared/footer/footer';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 

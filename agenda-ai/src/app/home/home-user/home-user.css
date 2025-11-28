@@ -1,0 +1,18 @@
+/* ===== CSS EXTRA PARA AJUSTES FINOS ===== */
+
+/* texto dentro da imagem fique sempre nítido */
+section {
+text-rendering: optimizeLegibility; /* nitidez do texto */
+}
+
+/* interações na rolagem */
+html {
+scroll-behavior: smooth; /* Animação ao rolar a página */
+}
+
+/* Ajuste do input de busca em telas pequenas */
+@media (max-width: 480px) {
+input {
+font-size: 0.9rem; /* Diminui o texto */
+}
+}

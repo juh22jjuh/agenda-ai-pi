@@ -1,20 +1,55 @@
+<!-- NAVBAR principal do administrador -->
 <nav class="w-full h-20 flex items-center justify-between p-4 bg-[#648f80]">
-  <!-- Logo -->
-  <div class="text-3xl font-extrabold cursor-pointer text-white tracking-tight">
+  
+  <!-- LOGO da aplicação -->
+  <div 
+    class="text-3xl md:text-4xl font-extrabold cursor-pointer text-white tracking-tight"
+    routerLink="/admin/home"
+  >
     <span class="font-black text-transparent bg-gradient-to-b from-white to-blue-300 bg-clip-text">
       AgendaAi
     </span>
-  </div>
+  </div>  
 
-  <!-- Área direita: links + login -->
-  <div class="flex items-center space-x-6">
-    <!-- Links -->
-    <ul class="flex space-x-8 font-semibold text-white text-lg">
-      <li class="cursor-pointer  px-2 py-1 rounded transition-colors duration-200" routerLink="/admin/companies">Empresas</li>
-      <li class="cursor-pointer  py-1 rounded transition-colors duration-200" routerLink="/admin/users">Usuarios</li>
-      <li class="cursor-pointer  px-2 py-1 rounded transition-colors duration-200" routerLink="/admin/complaints">Reclamações</li>
-      <button class="bg-red-600 text-white w-20 rounded-md" (click)="logout()"> Sair </button>
+  <!-- Área direita contendo os links da navbar -->
+  <div class="flex items-center space-x-6">   
+
+    <ul class="flex flex-wrap md:flex-nowrap space-x-4 md:space-x-8 font-semibold text-white text-base md:text-lg text-center">
+
+      <!-- Link: Estabelecimentos -->
+      <li 
+        class="cursor-pointer px-2 py-1 rounded transition-colors duration-200"
+        routerLink="/admin/companies">
+        Estabelecimentos
+      </li>
+
+      <!-- Link: Usuários -->
+      <li 
+        class="cursor-pointer px-2 py-1 rounded transition-colors duration-200"
+        routerLink="/admin/users"
+        aria-label="Gerenciar usuários">
+        Usuários
+      </li>
+
+      <!-- Link: Reclamações -->
+      <li 
+        class="cursor-pointer px-2 py-1 rounded transition-colors duration-200"
+        routerLink="/admin/complaints"
+        aria-label="Visualizar reclamações">
+        Reclamações
+      </li>
+
+      <!-- Botão de sair -->
+      <button 
+        class="bg-red-600 text-white w-20 md:w-24 py-1 rounded-md text-sm md:text-base"
+        (click)="logout()"
+        aria-label="Sair da conta do administrador"
+      >
+        Sair
+      </button>
 
     </ul>
+
   </div>
+
 </nav>

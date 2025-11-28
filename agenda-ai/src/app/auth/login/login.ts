@@ -9,8 +9,8 @@ import { MessageService } from 'primeng/api';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { Auth } from '../auth';
 import { Footer } from '../../shared/footer/footer';
-import { Navbar } from '../../shared/navbar/navbar';
 import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
+
 
 @Component({
   selector: 'app-login',
@@ -21,10 +21,9 @@ import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
     ToastModule,
     MessageModule,
     Footer,
-    Navbar,
+    NavbarAuth,
     RouterLink,
     RouterLinkActive,
-    NavbarAuth,
     PasswordModule, 
   ],
   templateUrl: './login.html',

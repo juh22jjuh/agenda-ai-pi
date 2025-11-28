@@ -1,102 +1,119 @@
+<!-- Componente Angular do navbar que fica no topo da página -->
+<app-navbar-auth></app-navbar-auth>
 
- <app-navbar-auth></app-navbar-auth>
- <div class="flex flex-col justify-center items-center min-h-[93vh] bg-[#C7DED5] px-4 py-8">
-    <br>
-        <div class="container">
-            <section class="hero-section">
-                <h1>Sobre Nós</h1>
-                <p>Somos uma plataforma inovadora que conecta profissionais da área de estética com clientes que buscam cuidados especializados. Nossa missão é simplificar o agendamento de serviços de beleza, proporcionando uma experiência única e personalizada.</p>
-            </section>
+<!-- DIV principal que envolve TODO o conteúdo da página -->
+<div class="page-wrapper">
 
-            <section class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">💅</span>
-                    <h3>Profissionais Qualificados</h3>
-                    <p>Trabalhamos apenas com profissionais certificados e experientes na área de estética, garantindo qualidade e segurança em todos os serviços.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="feature-icon">📱</span>
-                    <h3>Tecnologia Avançada</h3>
-                    <p>Nossa plataforma utiliza tecnologia de ponta para oferecer uma experiência de agendamento rápida, intuitiva e segura.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="feature-icon">⭐</span>
-                    <h3>Atendimento Personalizado</h3>
-                    <p>Cada cliente é único. Por isso, oferecemos recomendações personalizadas baseadas no seu perfil e necessidades específicas.</p>
-                </div>
-            </section>
+    <!-- Primeira seção da página: "Sobre Nós" -->
+    <section class="card">
 
-            <section class="values-section">
-                <h2>Nossos Valores</h2>
-                <div class="values-grid">
-                    <div class="value-item">
-                        <h4>🎯 Excelência</h4>
-                        <p>Buscamos sempre a perfeição em cada detalhe, desde o atendimento até a execução dos serviços.</p>
-                    </div>
-                    
-                    <div class="value-item">
-                        <h4>🤝 Confiança</h4>
-                        <p>Construímos relacionamentos duradouros baseados na transparência e confiabilidade.</p>
-                    </div>
-                    
-                    <div class="value-item">
-                        <h4>💡 Inovação</h4>
-                        <p>Estamos sempre em busca de novas tecnologias e métodos para melhorar sua experiência.</p>
-                    </div>
-                    
-                    <div class="value-item">
-                        <h4>❤️ Cuidado</h4>
-                        <p>Tratamos cada cliente com carinho e atenção, respeitando suas necessidades individuais.</p>
-                    </div>
-                </div>
-            </section>
-            <section class="hero-section">
-                <h1>Nossa História</h1>
-                <p>Descubra como três desenvolvedores apaixonados por tecnologia transformaram uma ideia simples em uma plataforma que revoluciona o agendamento de serviços de estética no Brasil.</p>
-            </section>
+        <!-- Título da seção (H1 é o mais importante semanticamente) -->
+        <h1 class="section-title">Sobre Nós</h1>
 
-            
-    
+        <!-- Parágrafo com texto explicando o propósito da plataforma -->
+        <p class="section-text">
+            Somos uma plataforma inovadora que conecta profissionais da área de estética com clientes que buscam cuidados especializados.
+        </p>
 
-            <section class="team-section">
-                <h2>Conheça Nossa Equipe</h2>
-                <div class="team-grid">
-                    <div class="team-member">
-                        <div class="member-avatar">A</div>
-                        <div class="member-name">Ana Julia Martins</div>
-                        <div class="member-role">Fundadora</div>
-                        <div class="member-bio">Sou desenvolvedora Back-End, estudante do último semestre de Análise e Desenvolvimento de Sistemas. Tenho experiência com Node.js, JavaScript e Python, e fui responsável pelo desenvolvimento do back-end deste projeto.</div>
-                        
-                    </div>
+    </section>
 
-                    <div class="team-member">
-                        <div class="member-avatar">B</div>
-                        <div class="member-name">Beatriz Gonçalves</div>
-                        <div class="member-role">Fundadora</div>
-                        <div class="member-bio">Sou desenvolvedora Front-End, estudante do último semestre de Análise e Desenvolvimento de Sistemas. Domino tecnologias como JavaScript, Python, Node.js e fui responsável pelo desenvolvimento do Front-end deste projeto.</div>
-                        
-                    </div>
+    <!-- Segunda seção: História da empresa -->
+    <section class="card">
 
-                    <div class="team-member">
-                        <div class="member-avatar">C</div>
-                        <div class="member-name">Caio Saguini</div>
-                        <div class="member-role">Fundador</div>
-                        <div class="member-bio">Designer de Produto e Desenvolvedora Frontend com foco em experiência do usuário. Marina tem 5 anos de experiência criando interfaces intuitivas e é responsável por garantir que nossa plataforma seja acessível e fácil de usar para todos.</div>
-                        
-                    </div>
-                </div>
-            </section>
-           <section class="cta-section">
-                <h2>Pronto para Transformar sua Rotina de Cuidados?</h2>
-                <p>Junte-se a milhares de pessoas que já descobriram a facilidade de agendar serviços de estética com o AgendaAí.</p>
-                <a href="#" class="cta-button">Comece Agora</a>
-            </section>
-              </div>
-               <br>
-              </div>
-             
+        <!-- Título da seção -->
+        <h1 class="section-title">Nossa História</h1>
 
+        <!-- Parágrafo com informações sobre a criação da plataforma -->
+        <p class="section-text">
+            Descubra como três desenvolvedores apaixonados por tecnologia transformaram uma ideia simples em uma plataforma revolucionária.
+        </p>
 
- <app-footer></app-footer>
+    </section>
+
+    <!-- Terceira seção: Valores da empresa -->
+    <section class="card">
+
+        <!-- Título da seção -->
+        <h2 class="section-title">Nossos Valores</h2>
+
+        <!-- Lista não ordenada com os valores da plataforma -->
+        <ul class="values-list">
+
+            <!-- Cada item contém um emoji, um texto destacado (strong) e a descrição -->
+            <li><strong>✨ Inovação:</strong> evolução constante para melhor experiência.</li>
+            <li><strong>🤝 Transparência:</strong> relação clara entre cliente e profissional.</li>
+            <li><strong>💚 Confiabilidade:</strong> plataforma segura e eficiente.</li>
+            <li><strong>🌿 Acessibilidade:</strong> experiência simples e inclusiva.</li>
+
+        </ul>
+
+    </section>
+
+    <!-- Quarta seção: Apresentação da equipe -->
+    <section class="card">
+
+        <!-- Título da seção -->
+        <h2 class="section-title">Conheça Nossa Equipe</h2>
+
+        <!-- Grid que organiza os membros da equipe em colunas responsivas -->
+        <div class="team-grid">
+
+            <!-- Primeiro membro -->
+            <div class="team-member">
+
+                <!-- Avatar circular que contém apenas a inicial do nome -->
+                <div class="member-avatar">A</div>
+
+                <!-- Nome completo do membro -->
+                <div class="member-name">Ana Julia Martins</div>
+
+                <!-- Cargo que ela ocupa -->
+                <div class="member-role">Fundadora</div>
+
+                <!-- Biografia breve sobre suas habilidades -->
+                <div class="member-bio">Desenvolvedora Back-End com experiência em Node.js, Python e JavaScript.</div>
+
+            </div>
+
+            <!-- Segundo membro -->
+            <div class="team-member">
+
+                <div class="member-avatar">B</div>
+                <div class="member-name">Beatriz Gonçalves</div>
+                <div class="member-role">Fundadora</div>
+                <div class="member-bio">Desenvolvedora Front-End com domínio em JS, Python e experiência em Node.js.</div>
+
+            </div>
+
+            <!-- Terceiro membro -->
+            <div class="team-member">
+
+                <div class="member-avatar">C</div>
+                <div class="member-name">Caio Saguini</div>
+                <div class="member-role">Fundador</div>
+                <div class="member-bio">Designer de Produto e Dev Front-End focado em UX e acessibilidade.</div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Quinta e última seção: chamada para ação (call to action) -->
+    <section class="cta-card">
+
+        <!-- Título da CTA -->
+        <h2 class="cta-title">Pronto para Transformar sua Rotina?</h2>
+
+        <!-- Texto motivacional da CTA -->
+        <p class="cta-text">Junte-se às pessoas que usam o AgendaAí todos os dias.</p>
+
+        <!-- Botão que leva para a ação desejada -->
+        <a href="#" class="cta-button">Comece Agora</a>
+
+    </section>
+
+</div>
+
+<!-- Componente Angular do rodapé -->
+<app-footer></app-footer>

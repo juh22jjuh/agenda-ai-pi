@@ -21,7 +21,8 @@ import { environment } from '../../../environments/environment';
     HttpClientModule
   ], 
   templateUrl: './complaints.html',
-  providers: [MessageService]
+  providers: [MessageService],
+  styleUrls: ['./complaints.css']
 })
 export class Complaints implements OnInit {
   messageService = inject(MessageService)

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 
 // Componentes compartilhados
-import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
+import { Navbar } from '../../shared/navbar/navbar';
 import { Footer } from '../../shared/footer/footer';
 
 // Serviços
@@ -30,7 +30,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     ReactiveFormsModule,
     RouterLink,
     // Componentes
-    NavbarAuth,
+    Navbar,
     Footer,
     // Módulos PrimeNG
     ToastModule,

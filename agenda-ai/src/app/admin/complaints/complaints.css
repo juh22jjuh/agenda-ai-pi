@@ -1,0 +1,37 @@
+/* 📌 Torna o conteúdo da navbar responsivo e evita que os itens encavalem */
+@media (max-width: 768px) {
+  nav .nav-items,
+  nav ul[role="menubar"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  nav {
+    height: auto !important;
+    padding: 1rem !important;
+    flex-wrap: wrap;
+  }
+
+  /* Garante que logo, botão e links não fiquem lado a lado apertados */
+  nav .logo,
+  nav button,
+  nav a {
+    margin: 4px 0;
+  }
+}
+
+/* 📌 Em telas muito pequenas (celular) força empilhamento total */
+@media (max-width: 480px) {
+  nav {
+    flex-direction: column;
+    height: auto !important;
+  }
+
+  nav ul[role="menubar"] {
+    width: 100%;
+    justify-content: center;
+  }
+}

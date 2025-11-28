@@ -1,103 +1,114 @@
+/* Variáveis globais de cores */
+:root {
+    --color-primary: #6E998B;        /* Cor principal do layout (botões, links) */
+    --color-primary-dark: #588073;   /* Cor mais escura para hover ou destaque */
+}
 
-    :root {
-        --color-primary: #6E998B;
-        --color-primary-dark: #588073;
-    }
+/* Estilo para inputs comuns */
+.input-field {
+    background-color: white;                     /* Fundo branco */
+    border: 1px solid #d1d5db;                  /* Borda cinza clara */
+    border-radius: 6px;                          /* Arredonda cantos */
+    padding: 10px 12px;                          /* Espaçamento interno */
+    font-size: 15px;                             /* Tamanho do texto */
+    color: black;                                /* Cor do texto */
+    transition: border-color 0.2s, box-shadow 0.2s; /* Animação suave ao focar */
+    width: 100%;                                 /* Ocupa toda a largura do container */
+}
 
-    .input-field {
-        background-color: white;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 10px 12px;
-        font-size: 15px;
-        color: black;
-        transition: border-color 0.2s, box-shadow 0.2s;
-        width: 100%;
-    }
+/* Estilo quando o input está focado */
+.input-field:focus {
+    outline: none;                               /* Remove contorno padrão do navegador */
+    border-color: var(--color-primary);          /* Muda a cor da borda para cor primária */
+    box-shadow: 0 0 0 3px rgba(110, 153, 139, 0.4); /* Sombra ao redor do campo */
+}
 
-    .input-field:focus {
-        outline: none;
-        border-color: var(--color-primary);
-        box-shadow: 0 0 0 3px rgba(110, 153, 139, 0.4);
-    }
+/* Links usados no rodapé ou em formulários */
+.link-footer {
+    color: var(--color-primary);                 /* Cor primária */
+    font-weight: 500;                            /* Peso médio da fonte */
+    text-decoration: none;                       /* Sem sublinhado */
+    cursor: pointer;                             /* Muda cursor para mão */
+    transition: color 0.2s;                      /* Suaviza mudança de cor */
+}
 
-    .link-footer {
-        color: var(--color-primary);
-        font-weight: 500;
-        text-decoration: none;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
+/* Hover nos links */
+.link-footer:hover {
+    color: var(--color-primary-dark);            /* Escurece no hover */
+    text-decoration: underline;                  /* Adiciona sublinhado */
+}
 
-    .link-footer:hover {
-        color: var(--color-primary-dark);
-        text-decoration: underline;
-    }
+/* Botão principal do rodapé/formulário */
+.footer-button {
+    background-color: rgb(110, 153, 139);        /* Cor de fundo */
+    border: none;                                /* Remove borda padrão */
+    border-radius: 6px;                          /* Arredonda cantos */
+    color: white;                                /* Texto branco */
+    font-weight: 600;                            /* Texto mais forte */
+    padding: 10px 14px;                          /* Espaçamento interno */
+    cursor: pointer;                             /* Mãozinha ao passar mouse */
+    transition: transform 0.15s ease-in-out;     /* Animação de leve movimento ao hover */
+    width: 100%;                                 /* Ocupa toda largura do container */
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),  /* Sombra para dar profundidade */
+                0 2px 4px -2px rgba(0,0,0,0.06);
+}
 
-    .footer-button {
-        background-color: rgb(110, 153, 139);
-        border: none;
-        border-radius: 6px;
-        color: white;
-        font-weight: 600;
-        padding: 10px 14px;
-        cursor: pointer;
-        transition: transform 0.15s ease-in-out;
-        width: 100%;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                    0 2px 4px -2px rgba(0, 0, 0, 0.06);
-    }
+/* Hover do botão com leve elevação */
+.footer-button:hover {
+    background-color: rgb(110, 153, 139);        /* Mantém cor */
+    transform: translateY(-1px);                 /* Move 1px para cima */
+}
 
-    .footer-button:hover {
-        background-color: rgb(110, 153, 139);
-        transform: translateY(-1px);
-    }
+/* Botões sociais (ex: Google, Facebook) */
+.social-button {
+    color: white;                                /* Cor do ícone */
+    border: none;                                /* Sem borda */
+    border-radius: 9999px;                       /* Formato circular */
+    width: 40px;                                 /* Largura fixa */
+    height: 40px;                                /* Altura fixa */
+    display: flex;                               /* Flex para centralizar ícone */
+    align-items: center;                          /* Centraliza vertical */
+    justify-content: center;                      /* Centraliza horizontal */
+    cursor: pointer;                             /* Cursor mãozinha */
+    transition: transform 0.2s, opacity 0.2s;    /* Suaviza animações */
+}
 
-    .social-button {
-        color: white;
-        border: none;
-        border-radius: 9999px;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: transform 0.2s, opacity 0.2s;
-    }
+/* Hover nos botões sociais */
+.social-button:hover {
+    opacity: 0.9;                                /* Leve transparência */
+    transform: translateY(-2px);                 /* Eleva o botão */
+}
 
-    .social-button:hover {
-        opacity: 0.9;
-        transform: translateY(-2px);
-    }
+/* Estilos específicos do componente PrimeNG password */
+::ng-deep .p-password {
+    width: 100%;                                 /* Ocupa toda largura */
+}
 
-    ::ng-deep .p-password {
-        width: 100%;
-    }
+::ng-deep .p-password input {
+    width: 100%;                                 /* Input ocupa toda largura */
+    padding-right: 2.5rem;                       /* Espaço para o ícone de olho */
+}
 
-    ::ng-deep .p-password input {
-        width: 100%;
-        padding-right: 2.5rem;
-    }
+::ng-deep .p-password .p-password-icon {
+    right: 0.75rem;                              /* Distância do ícone à borda direita */
+    color: rgb(110, 153, 139);                   /* Cor do ícone */
+    cursor: pointer;                             /* Cursor mãozinha */
+}
 
-    ::ng-deep .p-password .p-password-icon {
-        right: 0.75rem;
-        color: rgb(110, 153, 139);
-        cursor: pointer;
-    }
+::ng-deep .p-password .p-password-icon:hover {
+    color: rgb(88, 128, 115);                    /* Escurece ao passar mouse */
+}
 
-    ::ng-deep .p-password .p-password-icon:hover {
-        color: rgb(88, 128, 115);
-    }
+/* Garantia de hover nos links */
+.link-footer:hover {
+    color: rgb(88, 128, 115);
+    text-decoration: underline;
+}
 
-    .link-footer:hover {
-        color: rgb(88, 128, 115);
-        text-decoration: underline;
-    }
-
-    .footer-button:hover,
-    .footer-button:focus,
-    .footer-button:active {
-        background-color: rgb(110, 153, 139) !important;
-        color: white !important;
-    }
+/* Estados do botão (hover, focus, active) */
+.footer-button:hover,
+.footer-button:focus,
+.footer-button:active {
+    background-color: rgb(110, 153, 139) !important; /* Mantém cor */
+    color: white !important;                          /* Mantém texto branco */
+}

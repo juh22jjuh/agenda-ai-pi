@@ -1,0 +1,32 @@
+/* ============================================================
+   CSS EXCLUSIVO DO COMPONENTE DE EMPRESA
+   (Tailwind continua no HTML)
+   ============================================================ */
+
+/* Card principal da empresa com borda arredondada */
+.empresa-card {
+  border-radius: 18px; /* Bordas arredondadas conforme solicitado */
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Elevação suave ao passar mouse */
+.empresa-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* Cores de scrollbar dos cards */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #9ca3af;
+  border-radius: 6px;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .empresa-card {
+    padding: 1.2rem;
+  }
+}

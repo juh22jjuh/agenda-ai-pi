@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
+
 @Component({
   selector: 'app-forgot-password',
   imports: [NavbarAuth, Footer, RouterLink, FormsModule, CommonModule, ToastModule],

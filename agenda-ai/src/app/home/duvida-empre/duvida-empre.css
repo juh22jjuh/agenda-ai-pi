@@ -1,216 +1,240 @@
+/* Aplica margem e padding zero a todos os elementos, e define box-sizing para incluir bordas no tamanho */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Estiliza o body: define fonte, cor de fundo, altura mínima e padding */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #C7DED5;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #C7DED5;
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
+/* Container principal para centralizar o conteúdo e limitar a largura */
+.container {
+    max-width: 1200px; /* Largura máxima */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+/* Cabeçalho centralizado */
+.header {
+    text-align: center; /* Alinha o texto ao centro */
+    margin-bottom: 60px; /* Espaço abaixo do cabeçalho */
+}
 
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+/* Estiliza o título principal do cabeçalho */
+.header h1 {
+    color: #2d5a4f; /* Cor verde escura */
+    font-size: 2.5rem; /* Tamanho grande da fonte */
+    margin-bottom: 10px; /* Espaço abaixo do título */
+    font-weight: 700; /* Negrito */
+}
 
-        .header h1 {
-            color: #2d5a4f;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
+/* Estiliza parágrafo do cabeçalho */
+.header p {
+    color: #648f80; /* Cor verde mais clara */
+    font-size: 1.1rem; /* Fonte levemente maior que padrão */
+    max-width: 500px; /* Largura máxima para o texto */
+    margin: 0 auto; /* Centraliza o texto */
+}
 
-        .header p {
-            color: #648f80;
-            font-size: 1.1rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
+/* Container de todos os passos */
+.steps-container {
+    display: flex; /* Flexbox */
+    flex-direction: column; /* Coluna única */
+    gap: 80px; /* Espaço entre os passos */
+    margin-top: 50px; /* Espaço acima do container */
+}
 
-        .steps-container {
-            display: flex;
-            flex-direction: column;
-            gap: 80px;
-            margin-top: 50px;
-        }
+/* Cada passo individual */
+.step {
+    display: grid; /* Grid para colocar imagem e texto lado a lado */
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 60px; /* Espaçamento entre colunas */
+    align-items: center; /* Alinha verticalmente */
+    background: white; /* Fundo branco */
+    border-radius: 12px; /* Bordas arredondadas */
+    padding: 40px; /* Espaçamento interno */
+    box-shadow: 0 4px 15px rgba(45, 90, 79, 0.08); /* Sombra suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave para hover */
+}
 
-        .step {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(45, 90, 79, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+/* Efeito hover nos passos */
+.step:hover {
+    transform: translateY(-5px); /* Eleva o bloco */
+    box-shadow: 0 8px 25px rgba(45, 90, 79, 0.12); /* Sombra mais intensa */
+}
 
-        .step:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(45, 90, 79, 0.12);
-        }
+/* Classe para inverter a ordem de imagem e texto */
+.step.reverse {
+    grid-template-columns: 1fr 1fr; /* Mantém duas colunas iguais */
+}
 
-        .step.reverse {
-            grid-template-columns: 1fr 1fr;
-        }
+/* Quando o passo é invertido, imagem vem depois do conteúdo */
+.step.reverse .step-image {
+    order: 2;
+}
 
-        .step.reverse .step-image {
-            order: 2;
-        }
+/* Quando o passo é invertido, conteúdo vem antes da imagem */
+.step.reverse .step-content {
+    order: 1;
+}
 
-        .step.reverse .step-content {
-            order: 1;
-        }
+/* Número do passo */
+.step-number {
+    display: inline-flex; /* Flex para centralizar */
+    align-items: center; /* Alinha verticalmente */
+    justify-content: center; /* Alinha horizontalmente */
+    width: 50px; /* Largura do círculo */
+    height: 50px; /* Altura do círculo */
+    background: #648f80; /* Fundo verde */
+    color: white; /* Cor do texto */
+    border-radius: 50%; /* Círculo */
+    font-size: 1.5rem; /* Tamanho do número */
+    font-weight: 700; /* Negrito */
+    margin-bottom: 20px; /* Espaço abaixo do número */
+}
 
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: #648f80;
-            color: white;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+/* Título de cada passo */
+.step-content h2 {
+    color: #2d5a4f; /* Verde escuro */
+    font-size: 1.8rem; /* Fonte grande */
+    margin-bottom: 20px; /* Espaço abaixo do título */
+    font-weight: 600; /* Semi-negrito */
+}
 
-        .step-content h2 {
-            color: #2d5a4f;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
+/* Parágrafo de descrição do passo */
+.step-content p {
+    color: #555; /* Cinza escuro */
+    font-size: 1rem; /* Fonte padrão */
+    line-height: 1.6; /* Espaçamento entre linhas */
+    margin-bottom: 25px; /* Espaço abaixo do parágrafo */
+}
 
-        .step-content p {
-            color: #555;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
+/* Lista de itens do passo */
+.step-features {
+    list-style: none; /* Remove marcadores padrão */
+    margin-bottom: 30px; /* Espaço abaixo da lista */
+}
 
-        .step-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
+/* Cada item da lista */
+.step-features li {
+    color: #648f80; /* Verde claro */
+    margin-bottom: 12px; /* Espaço entre itens */
+    font-size: 0.95rem; /* Fonte levemente menor */
+    display: flex; /* Flex para alinhar ícone e texto */
+    align-items: center; /* Centraliza verticalmente */
+}
 
-        .step-features li {
-            color: #648f80;
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-        }
+/* Ícone ✓ antes de cada item da lista */
+.step-features li:before {
+    content: "✓"; /* Símbolo de check */
+    display: inline-flex; /* Flex para centralizar */
+    align-items: center; /* Centraliza vertical */
+    justify-content: center; /* Centraliza horizontal */
+    width: 24px; /* Largura do círculo */
+    height: 24px; /* Altura do círculo */
+    background: #e8f3f0; /* Fundo do círculo */
+    color: #648f80; /* Cor do ✓ */
+    border-radius: 50%; /* Círculo */
+    margin-right: 12px; /* Espaço entre ícone e texto */
+    font-weight: bold; /* Negrito */
+    font-size: 0.85rem; /* Fonte menor */
+}
 
-        .step-features li:before {
-            content: "✓";
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            background: #e8f3f0;
-            color: #648f80;
-            border-radius: 50%;
-            margin-right: 12px;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
+/* Container da imagem do passo */
+.step-image {
+    display: flex; /* Flex para centralizar conteúdo */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    min-height: 400px; /* Altura mínima */
+    background: linear-gradient(135deg, #e8f3f0 0%, #d4e9e3 100%); /* Fundo degradê */
+    border-radius: 8px; /* Bordas arredondadas */
+    overflow: hidden; /* Esconde excesso da imagem */
+}
 
-        .step-image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 400px;
-            background: linear-gradient(135deg, #e8f3f0 0%, #d4e9e3 100%);
-            border-radius: 8px;
-            overflow: hidden;
-        }
+/* Imagem dentro do container */
+.step-image img {
+    width: 100%; /* Largura total */
+    height: 100%; /* Altura total */
+    object-fit: cover; /* Cobre o container mantendo proporção */
+}
 
-        .step-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+/* Botão do passo */
+.step-button {
+    display: inline-block; /* Inline block para padding */
+    padding: 14px 36px; /* Espaçamento interno */
+    background: #648f80; /* Cor de fundo verde */
+    color: white; /* Cor do texto */
+    text-decoration: none; /* Remove sublinhado */
+    border-radius: 6px; /* Bordas arredondadas */
+    font-weight: 600; /* Semi-negrito */
+    transition: all 0.3s ease; /* Transição suave */
+    border: none; /* Sem borda */
+    cursor: pointer; /* Cursor de mão */
+    font-size: 1rem; /* Tamanho da fonte */
+}
 
-        .step-button {
-            display: inline-block;
-            padding: 14px 36px;
-            background: #648f80;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
+/* Efeito hover do botão */
+.step-button:hover {
+    background: #2d5a4f; /* Muda a cor do fundo */
+    transform: translateX(5px); /* Move levemente para direita */
+}
 
-        .step-button:hover {
-            background: #2d5a4f;
-            transform: translateX(5px);
-        }
+/* Botão secundário */
+.step-button.secondary {
+    background: #2d5a4f; /* Fundo verde escuro */
+    margin-left: 10px; /* Espaço à esquerda */
+}
 
-        .step-button.secondary {
-            background: #2d5a4f;
-            margin-left: 10px;
-        }
+/* Hover do botão secundário */
+.step-button.secondary:hover {
+    background: #1a3a32; /* Verde ainda mais escuro */
+}
 
-        .step-button.secondary:hover {
-            background: #1a3a32;
-        }
+/* Responsividade para telas menores que 768px */
+@media (max-width: 768px) {
+    .step {
+        grid-template-columns: 1fr; /* Apenas uma coluna */
+        gap: 30px; /* Reduz espaço entre elementos */
+        padding: 30px 20px; /* Reduz padding */
+    }
 
-        @media (max-width: 768px) {
-            .step {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                padding: 30px 20px;
-            }
+    .step.reverse {
+        grid-template-columns: 1fr; /* Mantém apenas uma coluna */
+    }
 
-            .step.reverse {
-                grid-template-columns: 1fr;
-            }
+    .step.reverse .step-image {
+        order: 1; /* Imagem antes do conteúdo */
+    }
 
-            .step.reverse .step-image {
-                order: 1;
-            }
+    .step.reverse .step-content {
+        order: 2; /* Conteúdo depois da imagem */
+    }
 
-            .step.reverse .step-content {
-                order: 2;
-            }
+    .step-image {
+        min-height: 250px; /* Reduz altura da imagem */
+    }
 
-            .step-image {
-                min-height: 250px;
-            }
+    .header h1 {
+        font-size: 1.8rem; /* Reduz tamanho do título */
+    }
 
-            .header h1 {
-                font-size: 1.8rem;
-            }
+    .step-content h2 {
+        font-size: 1.5rem; /* Reduz tamanho do subtítulo */
+    }
 
-            .step-content h2 {
-                font-size: 1.5rem;
-            }
+    .steps-container {
+        gap: 50px; /* Reduz espaçamento entre passos */
+    }
+}
 
-            .steps-container {
-                gap: 50px;
-            }
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-        }
-    
+/* Grupo de botões dentro de cada passo */
+.button-group {
+    display: flex; /* Flexbox */
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 30px; /* Espaço acima do grupo */
+}

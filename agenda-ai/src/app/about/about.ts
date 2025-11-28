@@ -6,7 +6,7 @@ import { NavbarAuth } from "../shared/navbar-auth/navbar-auth";
   selector: 'app-about',
   imports: [Footer, NavbarAuth],
   templateUrl: './about.html',
-  styleUrl: './about.css'
+  styleUrls: ['./about.css'],
 })
 export class About {
 

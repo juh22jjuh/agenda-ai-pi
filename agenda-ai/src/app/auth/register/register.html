@@ -1,37 +1,43 @@
+<!-- Navbar para usuários não autenticados -->
 <app-navbar-auth></app-navbar-auth>
 
+<!-- Container principal centralizado -->
 <div class="flex flex-col justify-center items-center min-h-[91vh] bg-[#C7DED5] px-3 py-8">
+
+  <!-- Toast notifications -->
   <p-toast></p-toast>
 
+  <!-- Card do formulário -->
   <div class="flex flex-col md:flex-row w-full max-w-3xl bg-white shadow-2xl rounded-lg overflow-hidden">
 
-    <!-- Imagem -->
-      <div class="flex md:w-1/2 min-h-[420px] items-center justify-center bg-gray-50"
-     style="background-image: url('assets/imagem3.jpg'); background-size: cover; background-position: center;">
-</div>
+    <!-- Coluna esquerda: Imagem -->
+    <div class="flex md:w-1/2 min-h-[420px] items-center justify-center bg-gray-50"
+         style="background-image: url('assets/imagem3.jpg'); background-size: cover; background-position: center;">
+    </div>
 
-    <!-- Formulário -->
+    <!-- Coluna direita: Formulário -->
     <div class="w-full md:w-1/2 flex flex-col justify-center items-center p-4 md:p-6">
       <div class="w-full max-w-sm flex flex-col items-center gap-3">
 
-        <!-- TÍTULO -->
+        <!-- Título -->
         <h1 class="text-lg md:text-xl font-semibold text-center border-b-2 border-gray-200 pb-1 w-full mb-1" 
             style="color: rgb(110, 153, 139);">
           Crie sua conta:
         </h1>
 
+        <!-- Subtítulo/Descrição -->
         <p class="text-center text-gray-600 text-xs md:text-sm">
           Preencha os campos abaixo para se cadastrar no AgendaAI.
         </p>
 
-        <!-- Formulário -->
+        <!-- Formulário de cadastro -->
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col w-full gap-3">
-          
-          <!-- Nome -->
+
+          <!-- Nome completo -->
           <div class="flex flex-col w-full gap-1">
             <label for="name" class="text-sm font-medium text-gray-700">Nome completo</label>
             <input pInputText id="name" type="text" placeholder="Nome Completo"
-              formControlName="name" [invalid]="isInvalid('name')" class="input-field" />
+                   formControlName="name" [invalid]="isInvalid('name')" class="input-field" />
             <ng-container *ngIf="isInvalid('name')">
               <p-message severity="error" size="small" variant="simple">
                 Nome completo é obrigatório.
@@ -43,7 +49,7 @@
           <div class="flex flex-col w-full gap-1">
             <label for="email" class="text-sm font-medium text-gray-700">Email</label>
             <input pInputText id="email" type="email" placeholder="email@exemplo.com"
-              formControlName="email" [invalid]="isInvalid('email')" class="input-field" />
+                   formControlName="email" [invalid]="isInvalid('email')" class="input-field" />
             <ng-container *ngIf="isInvalid('email')">
               <p-message *ngIf="registerForm.get('email')?.errors?.['required']" severity="error" size="small" variant="simple">
                 Email é obrigatório.
@@ -63,8 +69,8 @@
               placeholder="••••••••"
               [feedback]="false"
               [toggleMask]="true"
-              [inputStyleClass]="'input-field password-input'"
-            ></p-password>
+              [inputStyleClass]="'input-field password-input'">
+            </p-password>
             <p-message *ngIf="isInvalid('password')" severity="error" size="small" variant="simple">
               Senha é obrigatória.
             </p-message>
@@ -79,8 +85,8 @@
               placeholder="••••••••"
               [feedback]="false"
               [toggleMask]="true"
-              [inputStyleClass]="'input-field password-input'"
-            ></p-password>
+              [inputStyleClass]="'input-field password-input'">
+            </p-password>
             <p-message *ngIf="isInvalid('confirmPass')" severity="error" size="small" variant="simple">
               Confirmar senha é obrigatória.
             </p-message>
@@ -89,24 +95,23 @@
             </p-message>
           </div>
 
-          <!-- Voltar Login -->
+          <!-- Link para login -->
           <div class="flex justify-center w-full mt-1">
             <a routerLink="/login" class="link-footer text-xs md:text-sm font-medium">
               Já tem uma conta? Faça login
             </a>
           </div>
 
-          <!-- Botão -->
+          <!-- Botão de cadastro -->
           <button pButton type="submit" class="footer-button mt-1">
             Cadastrar
           </button>
+
         </form>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Rodapé -->
 <app-footer></app-footer>
-
-
-

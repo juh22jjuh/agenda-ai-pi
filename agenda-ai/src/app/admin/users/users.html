@@ -1,77 +1,107 @@
+<!-- Navbar administrativa -->
 <app-navbar-adm></app-navbar-adm>
 
-<!-- MAIN: -->
-<main class="flex flex-col items-center min-h-[91vh] bg-[#C7DED5] px-3 py-8">
+<!-- MAIN: área principal da página -->
+<main 
+  class="flex flex-col items-center min-h-[91vh] bg-[#C7DED5] px-3 py-8"
+  role="main"
+  aria-label="Gerenciamento de Usuários"
+>
 
-  <!-- Título principal -->
+  <!-- Título da página (SEO: h1) -->
   <h1 class="text-2xl font-bold mb-8">Gerenciamento de Usuários</h1>
 
-  <!-- Spinner de carregamento -->
+  <!-- Spinner exibido enquanto carrega -->
   <div *ngIf="loading" class="flex justify-center items-center py-8">
     <p-progressSpinner></p-progressSpinner>
     <p class="ml-4 text-center text-gray-700 text-lg">Carregando usuários...</p>
   </div>
 
-  <!-- Se não estiver carregando -->
+  <!-- Conteúdo renderizado quando *não* está carregando -->
   <ng-container *ngIf="!loading">
 
-    <!-- Se existir usuários, monta a listagem; senão, exibe mensagem -->
+    <!-- Se houver usuários: renderiza lista ; se não houver: exibe template 'semUsuarios' -->
     <ng-container *ngIf="users.length > 0; else semUsuarios">
 
-      <!-- SECTION contendo a lista -->
+      <!-- SECTION agrupa semanticamente a listagem -->
       <section class="w-full max-w-6xl">
 
-        <!-- Lista semântica usando UL -->
-        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- UL: container semântico da lista -->
+        <ul 
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          role="list"
+          aria-label="Lista de usuários"
+        >
 
-          <!-- Cada usuário vira um LI contendo um ARTICLE -->
-          <li *ngFor="let user of users">
+          <!-- LI: cada usuário -->
+          <li *ngFor="let user of users" role="listitem">
 
-            <!-- ARTICLE: card individual do usuário -->
+            <!-- ARTICLE: card individual -->
             <article
-              class="bg-white shadow-md rounded-xl p-5 border border-gray-200 flex flex-col gap-4">
+              class="bg-white shadow-md rounded-xl p-5 border border-gray-200 flex flex-col gap-4"
+              aria-label="Informações do usuário"
+            >
 
-              <!-- Cabeçalho do card -->
+              <!-- HEADER: nome do usuário -->
               <header>
                 <h2 class="text-lg font-semibold text-gray-800">
                   {{ user?.name }}
                 </h2>
               </header>
 
-              <!-- Informações -->
-              <p class="text-gray-800"><strong>Email:</strong> {{ user?.email }}</p>
+              <!-- Informações básicas -->
+              <p class="text-gray-800">
+                <strong>Email:</strong> {{ user?.email }}
+              </p>
 
-              <!-- Rodapé com ações -->
+              <!-- Ações do card -->
               <footer class="flex flex-col gap-3 mt-2">
-                
-                <!-- Ações para usuário ATIVO -->
-                  <div *ngIf="user.isActive">
-                    <div class="flex items-center gap-2">
-                      <input 
-                        type="number" 
-                        [(ngModel)]="deactivationDays[user._id]"
-                        placeholder="Dias de suspensão"
-                        class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#648f80]">
-                      <button
-                        class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors whitespace-nowrap"
-                        (click)="deactivateUser(user._id)">
-                        Desativar
-                      </button>
-                    </div>
+
+                <!-- Ações quando usuário está ATIVO -->
+                <div *ngIf="user.isActive">
+
+                  <div class="flex items-center gap-2">
+
+                    <!-- Input de número -->
+                    <input 
+                      type="number" 
+                      [(ngModel)]="deactivationDays[user._id]"
+                      placeholder="Dias de suspensão"
+                      class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full 
+                             focus:outline-none focus:ring-2 focus:ring-[#648f80]"
+                      aria-label="Definir dias de suspensão"
+                    >
+
+                    <!-- Botão desativar -->
+                    <button
+                      class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors whitespace-nowrap"
+                      (click)="deactivateUser(user._id)"
+                      aria-label="Desativar usuário"
+                    >
+                      Desativar
+                    </button>
+
                   </div>
 
-                <!-- Ações para usuário INATIVO -->
+                </div>
+
+                <!-- Ações quando usuário está INATIVO -->
                 <div *ngIf="!user.isActive">
-                   <button
+
+                  <button
                     class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors w-full"
-                    (click)="activateUser(user._id)">
+                    (click)="activateUser(user._id)"
+                    aria-label="Ativar usuário"
+                  >
                     Ativar
                   </button>
+
                 </div>
 
               </footer>
 
             </article>
+
           </li>
 
         </ul>
@@ -80,7 +110,7 @@
 
     </ng-container>
 
-    <!-- Template para quando não há usuários -->
+    <!-- Template exibido quando não existem usuários -->
     <ng-template #semUsuarios>
       <section class="py-8">
         <p class="text-center text-gray-700 text-lg">Nenhum usuário encontrado.</p>
@@ -91,4 +121,5 @@
 
 </main>
 
+<!-- Footer da aplicação -->
 <app-footer></app-footer>

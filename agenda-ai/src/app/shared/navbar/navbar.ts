@@ -7,10 +7,13 @@ import type { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { MessageModule } from 'primeng/message';
 import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-navbar',
   imports: [ButtonModule, RouterLink, RouterLinkActive, SpeedDialModule, CommonModule, MessageModule, FormsModule],
-  templateUrl: './navbar.html'
+  templateUrl: './navbar.html',
+  styleUrls:['./navbar.css'],
+  
 })
 export class Navbar {
   public logged: any

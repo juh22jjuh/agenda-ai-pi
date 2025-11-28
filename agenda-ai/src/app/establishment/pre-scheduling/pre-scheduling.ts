@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
-import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 import { Footer } from '../../shared/footer/footer';
 import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
 import { Auth } from '../../auth/auth';
@@ -8,13 +7,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { firstValueFrom } from 'rxjs';
+import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 
 @Component({
   selector: 'app-pre-scheduling',
   standalone: true,
   imports: [
-    NavbarAuth,
     Footer,
+    NavbarAuth,
     RouterLink,
     RouterLinkActive,
     CommonModule,

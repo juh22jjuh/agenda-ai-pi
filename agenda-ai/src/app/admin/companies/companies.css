@@ -1,0 +1,167 @@
+/* ============================
+   LAYOUT PRINCIPAL
+============================ */
+
+/* Container principal do conteúdo da página */
+.main-container {
+  min-height: 91vh; /* Garante quase a tela inteira em altura */
+  background: #C7DED5; /* Cor de fundo verde claro */
+  padding: 2rem 1rem; /* Espaçamento interno (top/bottom = 2rem, laterais = 1rem) */
+  display: flex; /* Habilita o uso de flexbox */
+  flex-direction: column; /* Deixa os elementos empilhados de cima para baixo */
+  align-items: center; /* Centraliza horizontalmente os elementos */
+}
+
+/* Título principal da página */
+.page-title {
+  font-size: 1.6rem; /* Tamanho da fonte */
+  font-weight: bold; /* Negrito */
+  margin-bottom: 1.5rem; /* Espaço abaixo do título */
+}
+
+/* Wrapper que limita a largura do conteúdo */
+.content-wrapper {
+  width: 100%; /* Ocupa toda a largura disponível */
+  max-width: 1280px; /* Limita a largura máxima da página */
+}
+
+/* ============================
+   LOADING
+============================ */
+
+/* Centraliza o spinner de carregamento */
+.loading-center {
+  display: flex; /* Habilita flexbox */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  padding: 5rem 0; /* Grande espaço vertical */
+}
+
+/* ============================
+   GRID DAS EMPRESAS
+============================ */
+
+/* Grid que lista as empresas */
+.empresa-grid {
+  display: grid; /* Ativa o layout em grid */
+  grid-template-columns: 1fr; /* 1 coluna por padrão */
+  gap: 1.5rem; /* Espaçamento entre cards */
+}
+
+/* Em telas acima de 768px → 2 colunas */
+@media (min-width: 768px) {
+  .empresa-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Em telas acima de 1024px → 3 colunas */
+@media (min-width: 1024px) {
+  .empresa-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================
+   CARD DA EMPRESA
+============================ */
+
+/* Estilização do card de cada empresa */
+.empresa-card {
+  background: white; /* Fundo branco */
+  border: 1px solid #d1d5db; /* Borda cinza clara */
+  padding: 1.25rem; /* Espaçamento interno */
+  border-radius: 1rem; /* Arredondamento das bordas */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Sombra leve */
+  display: flex; /* Flexbox */
+  flex-direction: column; /* Elementos em coluna */
+  gap: 0.75rem; /* Espaçamento entre elementos */
+  transition: 0.2s ease; /* Transição suave no hover */
+}
+
+/* Aumenta a sombra ao passar o mouse */
+.empresa-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Estilização do nome da empresa */
+.empresa-title {
+  font-size: 1.1rem; /* Tamanho do texto */
+  font-weight: 600; /* Seminegrito */
+}
+
+/* ============================
+   AÇÕES DO CARD
+============================ */
+
+/* Container dos botões e input */
+.footer-actions {
+  margin-top: 0.75rem; /* Espaço acima */
+  display: flex; /* Flexbox */
+  gap: 0.5rem; /* Espaço entre os elementos */
+}
+
+/* Estilização do input de dias para desativar */
+.input-number {
+  border: 1px solid #ccc; /* Borda cinza */
+  border-radius: 6px; /* Bordas arredondadas */
+  padding: 0.45rem 0.75rem; /* Espaçamento interno */
+  font-size: 0.9rem; /* Tamanho do texto */
+  width: 100%; /* Ocupa toda a largura disponível */
+}
+
+/* Caixa que alinha input + botão vermelho */
+.deactivate-box {
+  display: flex; /* Flexbox */
+  align-items: center; /* Alinha verticalmente */
+  gap: 0.5rem; /* Espaço entre itens */
+}
+
+/* Botão vermelho (desativar) */
+.button-red {
+  background: #dc2626; /* Vermelho padrão */
+  color: white; /* Texto branco */
+  padding: 0.55rem 1rem; /* Espaçamento interno */
+  border-radius: 6px; /* Bordas arredondadas */
+  font-weight: 600; /* Seminegrito */
+  transition: 0.25s ease; /* Animação suave */
+  white-space: nowrap; /* Impede quebra de linha */
+}
+
+/* Efeito hover */
+.button-red:hover {
+  background: #b91c1c; /* Vermelho mais escuro */
+}
+
+/* Botão verde (ativar) */
+.button-green {
+  background: #16a34a; /* Verde */
+  color: white; /* Texto branco */
+  padding: 0.55rem 1rem; /* Espaçamento interno */
+  border-radius: 6px; /* Bordas arredondadas */
+  font-weight: 600; /* Seminegrito */
+  width: 100%; /* Ocupa toda a largura */
+  transition: 0.25s ease; /* Animação suave */
+}
+
+/* Hover */
+.button-green:hover {
+  background: #15803d; /* Verde mais escuro */
+}
+
+/* ============================
+   ESTADO VAZIO
+============================ */
+/* Centraliza o conteúdo quando não há empresas cadastradas */
+.empty-section {
+  display: flex;              /* ativa flexbox para facilitar centralização */
+  justify-content: center;    /* centraliza horizontalmente o conteúdo filho */
+  align-items: center;        /* centraliza verticalmente o conteúdo filho */
+  padding: 5rem 0;            /* espaço grande em cima e embaixo (respira) */
+}
+
+/* Texto que informa que não há resultados (estado vazio) */
+.empty-text {
+  font-size: 1.25rem;         /* tamanho de fonte levemente maior para melhor leitura */
+  color: #6b7280;             /* tom de cinza (não chama muita atenção, indica estado neutro) */
+}

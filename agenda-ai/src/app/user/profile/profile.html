@@ -1,109 +1,72 @@
-<app-navbar-auth></app-navbar-auth>
+<app-navbar></app-navbar>
 
-<main class="flex flex-col items-center min-h-[91vh] px-3 py-8"
-      style="background:#C7DED5;">
+<main class="main-profile flex flex-col items-center min-h-[91vh] px-3 py-8">
 
-  <div class="container-profile"
-       style="
-         display:flex;
-         gap:2rem;
-         width:100%;
-         max-width:1100px;
-         margin-top:1rem;
-       ">
+  <div class="container-profile">
 
     <!-- 🌿 MENU LATERAL -->
-    <div class="menu-lateral"
-         style="
-           width:260px;
-           background:white;
-           border-radius:16px;
-           padding:1.5rem;
-           box-shadow:0 4px 10px rgba(0,0,0,0.12);
-           border:2px solid #a7c3b9;
-           display:flex;
-           flex-direction:column;
-           align-items:center;
-           text-align:center;
-         ">
+    <div class="menu-lateral">
 
-
-      <h3 style="font-size:1.4rem; margin-top:0.8rem; font-weight:600; color:#35564b;">
-        {{ user?.name }}
-      </h3>
-
-      <p style="color:#666; margin-bottom:0.5rem;">{{ user?.email }}</p>
+      <h3>{{ user?.name }}</h3>
+      <p>{{ user?.email }}</p>
 
       <p-divider></p-divider>
 
-      <ul style="list-style:none; padding:0; width:100%; margin-top:1rem;">
+      <ul>
         <li (click)="selectTab('minhaConta')"
-            [class.active]="activeTab === 'minhaConta'"
-            style="padding:0.7rem 1rem; border-radius:12px; cursor:pointer;
-                   margin-bottom:0.4rem; display:flex; align-items:center; gap:0.5rem;
-                   font-weight:500;"
-            [ngStyle]="activeTab === 'minhaConta' ?
-            {'background':'#a7c3b9','color':'white'} :
-            {'background':'#eef4f2','color':'#35564b'}">
+            [class.active]="activeTab === 'minhaConta'">
           <i class="pi pi-user"></i> Minha Conta
         </li>
 
         <li (click)="selectTab('meusAgendamentos')"
-            [class.active]="activeTab === 'meusAgendamentos'"
-            style="padding:0.7rem 1rem; border-radius:12px; cursor:pointer;
-                   margin-bottom:0.4rem; display:flex; align-items:center; gap:0.5rem;
-                   font-weight:500;"
-            [ngStyle]="activeTab === 'meusAgendamentos' ?
-            {'background':'#a7c3b9','color':'white'} :
-            {'background':'#eef4f2','color':'#35564b'}">
+            [class.active]="activeTab === 'meusAgendamentos'">
           <i class="pi pi-calendar"></i> Meus Agendamentos
         </li>
       </ul>
     </div>
 
-    <div class="conteudo-principal"
-         style="flex:1; display:flex; flex-direction:column; gap:1.5rem;">
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="conteudo-principal">
 
+      <!-- Aba Minha Conta -->
       <div *ngIf="activeTab === 'minhaConta'">
-        <p-card header="Minha Conta"
-          styleClass="block"
-          [style]="{
-            'border-radius':'18px',
-            'border':'2px solid #a7c3b9',
-            'box-shadow':'0 4px 12px rgba(0,0,0,0.15)'
-          }">
+        <p-card header="Minha Conta" class="card-config">
 
-          <div *ngIf="!showEditForm" style="font-size:1.1rem; color:#35564b;">
+          <!-- Mostrar apenas os dados -->
+          <div *ngIf="!showEditForm" class="info-text">
             <p><strong>Nome:</strong> {{ user?.name }}</p>
             <p><strong>Email:</strong> {{ user?.email }}</p>
 
             <button pButton type="button" label="Alterar Informações Pessoais"
-              (click)="toggleEditForm()"
-              style="margin-top:1rem;"></button>
+                    (click)="toggleEditForm()">
+            </button>
           </div>
 
-          <form *ngIf="showEditForm" style="margin-top:1rem;">
-            <div class="p-field" style="margin-bottom:1rem;">
+          <!-- Formulário de edição -->
+          <form *ngIf="showEditForm" class="form-edit">
+            <div class="p-field">
               <label>Nome</label>
               <input type="text" pInputText [(ngModel)]="user.name" name="name">
             </div>
 
-            <div class="p-field" style="margin-bottom:1rem;">
+            <div class="p-field">
               <label>Email</label>
               <input type="text" pInputText disabled [(ngModel)]="user.email" name="email">
             </div>
 
             <button pButton type="button" label="Salvar"
-              (click)="salvarInfoPessoal()"></button>
+                    (click)="salvarInfoPessoal()"></button>
 
             <button pButton type="button" label="Cancelar"
-              class="p-button-secondary" style="margin-left:0.6rem;"
-              (click)="toggleEditForm()"></button>
+                    class="p-button-secondary"
+                    (click)="toggleEditForm()">
+            </button>
           </form>
+
         </p-card>
       </div>
 
-   
+      <!-- Aba Meus Agendamentos -->
       <div *ngIf="activeTab === 'meusAgendamentos'">
         <app-my-schedules></app-my-schedules>
       </div>

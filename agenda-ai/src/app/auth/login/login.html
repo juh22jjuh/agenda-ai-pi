@@ -1,43 +1,51 @@
-
-
+<!-- Navbar do app para área autenticada -->
 <app-navbar-auth></app-navbar-auth>
 
+<!-- Define fonte e cor de fundo da página -->
 <body class="font-sans bg-[#C7DED5]">
+
+<!-- Container principal centralizado -->
 <div class="flex flex-col justify-center items-center min-h-screen p-4">
+    
+    <!-- Componente PrimeNG Toast para mensagens -->
     <p-toast></p-toast>
 
-    <!-- CARD -->
+    <!-- CARD principal contendo imagem e formulário -->
     <div class="flex flex-col md:flex-row w-full max-w-3xl bg-white shadow-2xl rounded-xl overflow-hidden">
         
-        <!-- 🖼️ Coluna da Esquerda (imagem com PrimeNG) -->
-      <div class="flex md:w-1/2 min-h-[420px] items-center justify-center bg-gray-50"
-     style="background-image: url('assets/imagem2.jpg'); background-size: cover; background-position: center;">
-</div>
+        <!-- Coluna esquerda: imagem de fundo -->
+        <div class="flex md:w-1/2 min-h-[420px] items-center justify-center bg-gray-50"
+             style="background-image: url('assets/imagem2.jpg'); 
+                    background-size: cover; 
+                    background-position: center;">
+        </div>
 
-
-        <!-- Coluna da Direita -->
+        <!-- Coluna direita: formulário -->
         <div class="w-full md:w-1/2 flex flex-col justify-center items-center p-6 md:p-10">
             <div class="w-full max-w-xs flex flex-col items-center gap-6">
                 
+                <!-- Título do formulário -->
                 <h1 class="text-2xl font-semibold text-center border-b-2 border-gray-200 pb-2 w-full mb-2" 
                     style="color: rgb(110, 153, 139);">
                     Preencha com seus dados:
                 </h1>
 
+                <!-- FORMULÁRIO reativo Angular -->
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full flex flex-col gap-4">
-                    
-                    <!-- Email -->
+
+                    <!-- Campo Email -->
                     <div class="flex flex-col gap-1 w-full">
                         <label for="email" class="text-sm font-medium text-gray-700">Email</label>
                         <input 
-                            pInputText 
+                            pInputText              
                             id="email" 
                             type="email" 
                             placeholder="email@exemplo.com" 
-                            formControlName="email" 
-                            [invalid]="isInvalid('email')" 
+                            formControlName="email"   
+                            [invalid]="isInvalid('email')"
                             class="input-field" 
                         />
+                        <!-- Mensagens de erro para email -->
                         <ng-container *ngIf="isInvalid('email')">
                             <p-message *ngIf="loginForm.get('email')?.errors?.['required']" severity="error" size="small" variant="simple">
                                 Email é obrigatório.
@@ -48,44 +56,47 @@
                         </ng-container>
                     </div>
 
-                    <!-- Senha -->
+                    <!-- Campo Senha -->
                     <div class="flex flex-col gap-1 w-full">
                         <label for="password" class="text-sm font-medium text-gray-700">Senha</label>
                         <p-password 
-                            formControlName="password"
+                            formControlName="password"  
                             id="password"
                             placeholder="••••••••"
-                            [feedback]="false"
-                            [toggleMask]="true"
-                            [inputStyleClass]="'input-field password-input'"
+                            [feedback]="false"          
+                            [toggleMask]="true"         
+                            [inputStyleClass]="'input-field password-input'" 
                         ></p-password>
                         <p-message *ngIf="isInvalid('password')" severity="error" size="small" variant="simple">
                             Senha é obrigatória.
                         </p-message>
                     </div>
 
+                    <!-- Link para recuperação de senha -->
                     <div class="flex justify-end items-center w-full text-sm mt-1">
                         <a routerLink="/forgot-password" class="link-footer text-xs font-normal">Esqueceu a Senha?</a>
                     </div>
 
+                    <!-- Botão de login -->
                     <button pButton type="submit" class="footer-button mt-3">
                         Entrar
                     </button>
-                    
+
+                    <!-- Link para cadastro -->
                     <div class="flex flex-col items-center gap-2 text-center w-full mt-3">
                         <p class="text-sm text-gray-600">
                             Ainda não tem uma conta? 
                             <a routerLink="/register" class="link-footer font-semibold no-underline">Cadastre-se</a>
                         </p>
                     </div>
+
                 </form>
             </div>
         </div>
+
     </div>
 </div>
 </body>
 
+<!-- Rodapé do app -->
 <app-footer></app-footer>
-
-
-

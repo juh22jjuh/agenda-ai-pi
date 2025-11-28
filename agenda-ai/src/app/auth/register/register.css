@@ -1,80 +1,88 @@
+/* Variáveis globais de cor */
+:root {
+    --color-primary: #6E998B;       /* Verde principal */
+    --color-primary-dark: #588073;  /* Verde escuro para hover */
+}
 
-  :root {
-    --color-primary: #6E998B;
-    --color-primary-dark: #588073;
-  }
+/* Campos de input padrão */
+.input-field {
+    background-color: white;                        /* Fundo branco */
+    border: 1px solid #d1d5db;                     /* Borda cinza clara */
+    border-radius: 5px;                             /* Cantos levemente arredondados */
+    padding: 8px 10px;                              /* Espaçamento interno */
+    font-size: 14px;                                /* Tamanho da fonte */
+    color: black;                                   /* Cor do texto */
+    transition: border-color 0.2s, box-shadow 0.2s; /* Transição suave ao focar */
+    width: 100%;                                    /* Ocupa toda a largura do container */
+}
 
-  .input-field {
-    background-color: white;
-    border: 1px solid #d1d5db;
-    border-radius: 5px;
-    padding: 8px 10px;
-    font-size: 14px;
-    color: black;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    width: 100%;
-  }
+/* Efeito quando o input está focado */
+.input-field:focus {
+    outline: none;                                  /* Remove contorno padrão do navegador */
+    border-color: var(--color-primary);            /* Muda a cor da borda para verde */
+    box-shadow: 0 0 0 2px rgba(110, 153, 139, 0.3);/* Sombra leve ao redor do campo */
+}
 
-  .input-field:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(110, 153, 139, 0.3);
-  }
+/* Links do formulário ou rodapé */
+.link-footer {
+    color: rgb(110, 153, 139);                     /* Verde padrão */
+    font-weight: 500;                               /* Peso da fonte médio */
+    text-decoration: none;                          /* Sem sublinhado */
+    transition: color 0.2s;                         /* Transição suave ao passar mouse */
+}
 
-  .link-footer {
-    color: rgb(110, 153, 139);
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
+/* Hover nos links */
+.link-footer:hover {
+    color: rgb(88, 128, 115);                       /* Verde escuro */
+    text-decoration: underline;                     /* Sublinhado no hover */
+}
 
-  .link-footer:hover {
-    color: rgb(88, 128, 115);
-    text-decoration: underline;
-  }
-   
+/* Botão principal */
+.footer-button {
+    background-color: rgb(110, 153, 139);          /* Fundo verde */
+    color: white;                                   /* Texto branco */
+    font-weight: 600;                               /* Negrito médio */
+    border: none;                                   /* Sem borda */
+    border-radius: 6px;                             /* Cantos arredondados */
+    padding: 10px 14px;                             /* Espaçamento interno */
+    cursor: pointer;                                /* Cursor mãozinha */
+    transition: transform 0.15s ease-in-out;        /* Animação suave ao pressionar */
+    width: 100%;                                    /* Ocupa toda a largura do container */
+    font-size: 15px;                                /* Tamanho da fonte */
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,0.1),    /* Sombra do botão */
+                0 1px 3px -2px rgba(0,0,0,0.06);
+}
 
-  .footer-button {
-    background-color: rgb(110, 153, 139);
-    color: white;
-    font-weight: 600;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 14px;
-    cursor: pointer;
-    transition: transform 0.15s ease-in-out;
-    width: 100%;
-    font-size: 15px;
-    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.1),
-                0 1px 3px -2px rgba(0, 0, 0, 0.06);
-  }
+/* Hover do botão */
+.footer-button:hover {
+    background-color: var(--color-primary-dark);   /* Verde escuro */
+    transform: translateY(-1px);                  /* Eleva levemente o botão */
+}
 
-  .footer-button:hover {
-    background-color: var(--color-primary-dark);
-    transform: translateY(-1px);
-  }
-
-  ::ng-deep .p-password {
-    width: 100%;
-  }
-
-  ::ng-deep .p-password input {
-    width: 100%;
-    padding-right: 2.3rem;
-  }
-
-  ::ng-deep .p-password .p-password-icon {
-    right: 0.7rem;
-    color: rgb(110, 153, 139);
-    cursor: pointer;
-  }
-
-  ::ng-deep .p-password .p-password-icon:hover {
-    color: rgb(88, 128, 115);
-  }
-  .footer-button:hover,
+/* Forçar cores em hover/focus/active */
+.footer-button:hover,
 .footer-button:focus,
 .footer-button:active {
-  background-color: rgb(110, 153, 139) !important;
-  color: white !important;
+    background-color: rgb(110, 153, 139) !important;
+    color: white !important;
+}
+
+/* Estilização para campos de senha do PrimeNG */
+::ng-deep .p-password {
+    width: 100%;                                   /* Ocupa toda a largura */
+}
+
+::ng-deep .p-password input {
+    width: 100%;                                   /* Campo input ocupa 100% */
+    padding-right: 2.3rem;                         /* Espaço para o ícone de mostrar senha */
+}
+
+::ng-deep .p-password .p-password-icon {
+    right: 0.7rem;                                 /* Posiciona ícone à direita */
+    color: rgb(110, 153, 139);                     /* Verde padrão */
+    cursor: pointer;                               /* Cursor mãozinha */
+}
+
+::ng-deep .p-password .p-password-icon:hover {
+    color: rgb(88, 128, 115);                      /* Verde escuro no hover */
 }

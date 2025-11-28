@@ -1,24 +1,42 @@
+<!-- Componente do navbar autenticado, geralmente inclui menu e links de login/usuário -->
 <app-navbar-auth></app-navbar-auth>
 
+<!-- Corpo principal da página -->
 <body>
+    <!-- Container central que limita a largura e centraliza o conteúdo -->
     <div class="container">
+
+        <!-- Cabeçalho da página -->
         <div class="header">
+            <!-- Título principal da página -->
             <h1>Cadastro de Estabelecimento</h1>
+            <!-- Descrição/introdução do conteúdo -->
             <p>Siga o passo a passo simples e intuitivo para registrar seu Estabelecimento em nossa plataforma</p>
         </div>
 
+        <!-- Container que agrupa todos os passos do cadastro -->
         <div class="steps-container">
-            <!-- Passo 1: Imagem à esquerda, Texto à direita -->
-            <div class="step">
-                <div class="step-image">
-                 <img src="assets/register.png" style="background-image: url('assets/imagem2.jpg')" >
 
+            <!-- Passo 1: Imagem à esquerda, texto à direita -->
+            <div class="step">
+
+                <!-- Container da imagem do passo 1 -->
+                <div class="step-image">
+                    <!-- Imagem representativa do passo -->
+                    <img src="assets/register.png" style="background-image: url('assets/imagem2.jpg')" >
                 </div>
+
+                <!-- Container do conteúdo textual do passo 1 -->
                 <div class="step-content">
+                    <!-- Número do passo -->
                     <span class="step-number">1</span>
+                    <!-- Título do passo -->
                     <h2>Como cadastrar seu Estabelecimento</h2>
+                    <!-- Pequena descrição -->
                     <p>Após seu cadastro de usuario</p>
                     <p>Comece preenchendo os dados fundamentais do seu Estabelecimento. Essas informações serão a base do seu cadastro.</p>
+
+                    <!-- Lista de itens importantes do passo 1 -->
                     <ul class="step-features">
                         <li>Nome do Estabelecimento</li>
                         <li>CPF</li>
@@ -28,12 +46,19 @@
                 </div>
             </div>
 
-            <!-- Passo 2: Texto à esquerda, Imagem à direita (REVERSE) -->
+            <!-- Passo 2: Conteúdo textual à esquerda, imagem à direita (classe reverse) -->
             <div class="step reverse">
+
+                <!-- Container do conteúdo textual do passo 2 -->
                 <div class="step-content">
+                    <!-- Número do passo -->
                     <span class="step-number">2</span>
+                    <!-- Título do passo -->
                     <h2>Criação de serviços</h2>
+                    <!-- Pequena descrição -->
                     <p>Apos o cadastro do seu Estabelecimento, crie e disponibilize os seus serviços</p>
+
+                    <!-- Lista de itens importantes do passo 2 -->
                     <ul class="step-features">
                         <li>Clique no botão de criar servoço e coloque as informações sobre ele </li>
                         <li>Nome do serviço</li>
@@ -41,20 +66,27 @@
                         <li>Uma descrição bem detelhada</li>
                         <li>O tempo de duração</li>
                         <li>Por ultimo os dias e horarios que esse serviço é feito</li>
+                        <!-- Texto de atenção destacado -->
                         <strong>Atenção</strong>
                         <li>Cuidado na hora de escolher horarios e dias para não bater horarios</li>
                     </ul>
+
+                    <!-- Grupo de botões relacionado ao passo (pode ser vazio) -->
                     <div class="button-group">
                     </div>
                 </div>
+
+                <!-- Container da imagem do passo 2 -->
                 <div class="step-image">
+                    <!-- Imagem representativa do passo -->
                     <img src="assets/register.png" style="background-image: url('assets/imagem2.jpg')" >
                 </div>
             </div>
 
-            <!-- Passo 3: Imagem à esquerda, Texto à direita -->
-            
+            <!-- Passo 3: Placeholder, ainda não adicionado -->
         </div>
     </div>
 </body>
+
+<!-- Componente do footer da página -->
 <app-footer></app-footer>

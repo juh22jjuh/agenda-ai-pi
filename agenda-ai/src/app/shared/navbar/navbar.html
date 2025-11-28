@@ -1,30 +1,71 @@
-<nav class="w-full h-20 flex items-center justify-between p-4 bg-[#648f80]">
-  <!-- Logo -->
-<div class="text-3xl font-extrabold cursor-pointer text-white tracking-tight">
-  <span class="font-black text-transparent bg-gradient-to-b from-white to-blue-300 bg-clip-text">AgendaAi</span>
-</div>
+<!-- Barra de navegação principal -->
+<nav class="w-full min-h-20 flex items-center justify-between p-4 bg-[#648f80] flex-wrap">
 
-  <div class="flex items-center space-x-6">
-    <!-- Links -->
-    <ul class="flex space-x-8 font-semibold text-white text-lg">
-      <li class="cursor-pointer  py-1 rounded transition-colors duration-200" routerLink="/contact">Fale conosco</li>
-      <li class="cursor-pointer  px-2 py-1 rounded transition-colors duration-200" routerLink="/about">Sobre</li>
+    <!-- LOGO da aplicação, clicável e direciona para a rota /home -->
+    <div 
+      class="text-2xl sm:text-3xl font-extrabold cursor-pointer text-white tracking-tight"
+      routerLink="/home"
+    >
+      <!-- Nome da marca com efeito de gradiente -->
+      <span class="font-black text-transparent bg-gradient-to-b from-white to-blue-300 bg-clip-text">
+        AgendaAi
+      </span>
+    </div>
+
+  <!-- Lado direito: links de navegação + speed dial (menu flutuante) -->
+  <div class="flex flex-col sm:flex-row items-center sm:space-x-6 mt-3 sm:mt-0 w-full sm:w-auto">
+
+    <!-- Lista de links responsivos, que mudam de coluna para linha em telas maiores -->
+    <ul 
+      class="flex flex-col sm:flex-row 
+             space-y-2 sm:space-y-0 sm:space-x-6 
+             font-semibold text-white 
+             text-sm sm:text-base md:text-lg
+             w-full sm:w-auto text-center"
+    >
+      <!-- Link para a página de contato -->
+      <li class="cursor-pointer py-1 rounded transition" routerLink="/contact">
+        Fale conosco
+      </li>
+
+      <!-- Link para a página Sobre -->
+      <li class="cursor-pointer px-2 py-1 rounded transition" routerLink="/about">
+        Sobre
+      </li>
+
+      <!-- Se o usuário NÃO estiver logado, mostrar o link de login -->
       @if(!logged) {
-      <li class="cursor-pointer hover:bg-[rgba(153,197,182,1)] px-2 py-1 rounded transition-colors duration-200"
-        routerLink="/login">Login</li>
+        <li
+          class="cursor-pointer hover:bg-[rgba(153,197,182,1)] px-2 py-1 rounded transition-colors duration-200"
+          routerLink="/login"
+        >
+          Login
+        </li>
       }
     </ul>
-    <!-- Speeddial (usuário logado) -->
+
+    <!-- SpeedDial (menu flutuante) que aparece se o usuário ESTIVER logado -->
     @if(logged) {
-    <ng-container>
-      <p-speeddial class="w-10 h-9" [model]="items" direction="down" [transitionDelay]="80">
-        <ng-template #button let-toggleCallback="toggleCallback">
-          <p-button outlined styleClass="border" (click)="toggleCallback($event)">
-            {{primary_letter}}
-          </p-button>
-        </ng-template>
-      </p-speeddial>
-    </ng-container>
+      <ng-container>
+        <p-speeddial 
+          class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 mt-2 sm:mt-0"
+          [model]="items"           
+          direction="down"         
+          [transitionDelay]="80"     
+        >
+          <!-- Template do botão principal do SpeedDial -->
+          <ng-template #button let-toggleCallback="toggleCallback">
+            <p-button 
+              outlined 
+              styleClass="border text-xs sm:text-sm md:text-base"
+              (click)="toggleCallback($event)" 
+            >
+              {{ primary_letter }} <!-- Letra principal do usuário -->
+            </p-button>
+          </ng-template>
+        </p-speeddial>
+      </ng-container>
     }
+
   </div>
 </nav>

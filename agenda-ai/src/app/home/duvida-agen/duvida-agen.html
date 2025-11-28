@@ -1,23 +1,39 @@
 <app-navbar-auth></app-navbar-auth>
+<!-- Componente do Angular que renderiza a barra de navegação da versão autenticada -->
 
 <body>
     <div class="container">
+        <!-- Container principal da página, centraliza e limita a largura -->
+
         <div class="header">
+            <!-- Cabeçalho da página com título e subtítulo -->
             <h1>Como Fazer meu agendamento</h1>
+            <!-- Título principal da página -->
             <p>Siga o passo a passo simples e intuitivo para realizar seus agendamentos em nossa plataforma</p>
+            <!-- Subtítulo explicativo -->
         </div>
 
         <div class="steps-container">
+            <!-- Container que agrupa todos os passos do tutorial -->
+
             <!-- Passo 1: Imagem à esquerda, Texto à direita -->
             <div class="step">
+                <!-- Container individual de um passo -->
                 <div class="step-image">
+                    <!-- Área da imagem do passo -->
                     <img src="assets/login.png" style="background-image: url('assets/imagem2.jpg')" >
+                    <!-- Imagem ilustrativa do passo -->
                 </div>
                 <div class="step-content">
+                    <!-- Conteúdo textual do passo -->
                     <span class="step-number">1</span>
+                    <!-- Número do passo -->
                     <h2>Comece fazendo o seu cadastro em nossa plataforma</h2>
+                    <!-- Subtítulo do passo -->
                     <p>Após seu cadastro realize o login</p>
+                    <!-- Pequena descrição -->
                     <ul class="step-features">
+                        <!-- Lista de instruções detalhadas do passo -->
                         <li>Escolha uma empresa de sua preferencia</li>
                         <li>Apos verifique se tem o serviço que deseja</li>
                         <li>Clique no botão de agendar</li>
@@ -29,6 +45,7 @@
 
             <!-- Passo 2: Texto à esquerda, Imagem à direita (REVERSE) -->
             <div class="step reverse">
+                <!-- Classe 'reverse' inverte a ordem imagem/texto -->
                 <div class="step-content">
                     <span class="step-number">2</span>
                     <h2>Como achar meus agendamentos</h2>
@@ -39,13 +56,15 @@
                         <li>Clique no iconi de uma pessoa</li>
                         <li>La estara o seu perfil e todos os seus agendamentos</li>
                     </ul>
-
                 </div>
                 <div class="step-image">
                     <img src="assets/empresas.png" style="background-image: url('assets/imagem2.jpg')" >
+                    <!-- Imagem ilustrativa do passo 2 -->
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 <app-footer></app-footer>
+<!-- Componente Angular que renderiza o rodapé da página -->

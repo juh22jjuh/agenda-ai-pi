@@ -1,115 +1,175 @@
+/* Define um espaço entre grupos de formulário */
+.form-group {
+  margin-bottom: 20px; /* Espaço abaixo de cada input, textarea ou select */
+}
 
-  .form-group {
-    margin-bottom: 20px;
-  }
+/* Estilo dos labels (títulos de cada campo) */
+.form-group label {
+  display: block; /* Faz o label ocupar toda a largura disponível */
+  font-weight: 600; /* Fonte mais grossa */
+  margin-bottom: 6px; /* Espaço entre o label e o campo */
+  color: rgb(110, 153, 139); /* Cor verde padronizada para labels */
+}
 
-  .form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: rgb(110, 153, 139);
-  }
+/* Estilo para inputs, textarea e selects */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%; /* Ocupa toda a largura disponível do container */
+  padding: 12px; /* Espaçamento interno entre texto e borda */
+  border: 2px solid #d1d5db; /* Borda cinza clara */
+  border-radius: 8px; /* Bordas arredondadas */
+  font-size: 16px; /* Tamanho da fonte do texto */
+  background-color: #ffffff; /* Fundo branco */
+  color: #333; /* Cor do texto */
+  transition: all 0.3s ease; /* Transição suave para mudanças de foco ou hover */
+}
 
-  .form-group input,
-  .form-group textarea,
-  .form-group select {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 16px;
-    background-color: #ffffff;
-    color: #333;
-    transition: all 0.3s ease;
-  }
+/* Estilo do placeholder e opção default do select */
+::placeholder,
+select:invalid {
+  color: rgb(110, 153, 139); /* Mesma cor verde para texto do placeholder */
+  opacity: 0.7; /* Leve transparência */
+}
 
-  /* Placeholder color padronizada */
-  ::placeholder,
-  select:invalid {
-    color: rgb(110, 153, 139);
-    opacity: 0.7;
-  }
+/* Estilo da opção default vazia do select */
+select option[value=""] {
+  color: rgb(110, 153, 139); /* Mesma cor do placeholder */
+}
 
-  select option[value=""] {
-    color: rgb(110, 153, 139);
-  }
+/* Estilo quando o input, textarea ou select está em foco */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: rgb(110, 153, 139); /* Borda fica verde */
+  box-shadow: 0 0 0 3px rgba(110, 153, 139, 0.2); /* Sombra verde suave em volta */
+  outline: none; /* Remove a linha de foco padrão do navegador */
+}
 
-  .form-group input:focus,
-  .form-group textarea:focus,
-  .form-group select:focus {
-    border-color: rgb(110, 153, 139);
-    box-shadow: 0 0 0 3px rgba(110, 153, 139, 0.2);
-    outline: none;
-  }
+/* ==========================================
+   BOTÃO DE ENVIO
+========================================== */
+.btn-submit {
+  background-color: rgb(110, 153, 139); /* Fundo verde */
+  color: white; /* Texto branco */
+  font-weight: 600; /* Fonte mais grossa */
+  padding: 12px; /* Espaçamento interno */
+  border: none; /* Sem borda */
+  border-radius: 8px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor de mão ao passar por cima */
+  transition: all 0.3s ease; /* Transição suave para hover e click */
+  width: 100%; /* Ocupa toda a largura disponível */
+}
 
-  .btn-submit {
-    background-color: rgb(110, 153, 139);
-    color: white;
-    font-weight: 600;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-  }
+/* Efeito ao passar o mouse no botão */
+.btn-submit:hover {
+  transform: translateY(-2px); /* Eleva levemente o botão */
+  box-shadow: 0 6px 12px rgba(110, 153, 139, 0.4); /* Sombra verde maior */
+}
 
-  .btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(110, 153, 139, 0.4);
-  }
+/* ==========================================
+   INFORMAÇÕES DE CONTATO
+========================================== */
 
+/* Container de cada item de informação */
+.info-item {
+  display: flex; /* Alinha ícone e texto na horizontal */
+  align-items: center; /* Centraliza verticalmente */
+  background: #f8f9fa; /* Fundo cinza claro */
+  border-radius: 10px; /* Bordas arredondadas */
+  padding: 12px; /* Espaçamento interno */
+  margin-bottom: 15px; /* Espaço entre cada item */
+}
+
+/* Ícone de cada informação */
+.info-icon {
+  width: 45px; /* Largura do círculo */
+  height: 45px; /* Altura do círculo */
+  background-color: rgb(110, 153, 139); /* Fundo verde */
+  border-radius: 50%; /* Formato de círculo */
+  display: flex; /* Para centralizar o ícone dentro */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  color: white; /* Ícone em branco */
+  margin-right: 15px; /* Espaço entre ícone e texto */
+}
+
+/* Título dentro do info-item */
+.info-content h3 {
+  color: rgb(110, 153, 139); /* Verde padronizado */
+  margin-bottom: 4px; /* Espaço entre título e texto */
+}
+
+/* ==========================================
+   REDES SOCIAIS
+========================================== */
+
+/* Título das redes sociais */
+.social-links h3 {
+  color: rgb(110, 153, 139); /* Verde padronizado */
+  margin-bottom: 10px; /* Espaço abaixo do título */
+  text-align: center; /* Centraliza no container */
+}
+
+/* Container dos ícones das redes sociais */
+.social-icons {
+  display: flex; /* Alinha ícones na horizontal */
+  justify-content: center; /* Centraliza os ícones */
+  gap: 12px; /* Espaçamento entre ícones */
+}
+
+/* Ícone individual das redes sociais */
+.social-icon {
+  width: 40px; /* Largura do círculo */
+  height: 40px; /* Altura do círculo */
+  background-color: rgb(110, 153, 139); /* Fundo verde */
+  border-radius: 50%; /* Formato circular */
+  display: flex; /* Centraliza o conteúdo dentro do círculo */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  color: white; /* Ícone em branco */
+  text-decoration: none; /* Remove sublinhado */
+  transition: all 0.3s ease; /* Animação suave em hover */
+}
+
+/* Efeito hover para ícones das redes sociais */
+.social-icon:hover {
+  transform: translateY(-3px); /* Eleva o ícone levemente */
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+/* Telas menores que 768px (tablet) */
+@media (max-width: 768px) {
   .info-item {
-    display: flex;
-    align-items: center;
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 15px;
+    flex-direction: row; /* Mantém horizontal, mas ajusta texto */
+    text-align: left; /* Texto alinhado à esquerda */
   }
 
   .info-icon {
-    width: 45px;
-    height: 45px;
-    background-color: rgb(110, 153, 139);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    margin-right: 15px;
-  }
-
-  .info-content h3 {
-    color: rgb(110, 153, 139);
-    margin-bottom: 4px;
+    margin-right: 12px; /* Ajusta espaçamento em telas menores */
   }
 
   .social-links h3 {
-    color: rgb(110, 153, 139);
-    margin-bottom: 10px;
-    text-align: center;
+    text-align: center; /* Centraliza título das redes sociais */
+  }
+}
+
+/* Telas menores que 480px (celular) */
+@media (max-width: 480px) {
+  .info-item {
+    padding: 10px; /* Reduz o padding para caber melhor */
   }
 
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
+  .info-icon {
+    width: 38px; /* Reduz tamanho do círculo */
+    height: 38px; /* Reduz altura do círculo */
   }
 
   .social-icon {
-    width: 40px;
-    height: 40px;
-    background-color: rgb(110, 153, 139);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
+    width: 36px; /* Reduz tamanho dos ícones sociais */
+    height: 36px; /* Reduz altura dos ícones sociais */
   }
-
-  .social-icon:hover {
-    transform: translateY(-3px);
-  }
+}

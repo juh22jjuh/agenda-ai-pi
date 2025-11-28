@@ -1,6 +1,5 @@
 <p-toast />
 <p-confirmDialog />
-
 <app-navbar-auth></app-navbar-auth>
 
 <!-- PAGE WRAPPER -->
@@ -49,7 +48,7 @@
               <p-button label="Editar Perfil" icon="pi pi-pencil" (click)="openEditProfileDialog()"
                 styleClass="p-button-rounded p-button-outlined"
               />
-              <p-button label="Excluir Empresa" icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteCompany()" />
+              <p-button label="Excluir" icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteCompany()" />
             </div>
           </ng-template>
         </p-card>
@@ -102,7 +101,7 @@
         <!-- Schedules Card -->
         <p-card styleClass="bg-white border border-gray-300 shadow rounded-xl">
           <ng-template pTemplate="title">
-            <h3 class="text-xl font-semibold text-gray-800">Meus Agendamentos</h3>
+            <h3 class="text-xl font-semibold text-gray-800">Agendamentos</h3>
           </ng-template>
 
           <div class="mt-3">

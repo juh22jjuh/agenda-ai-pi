@@ -1,112 +1,157 @@
-<app-navbar></app-navbar>
+<!-- SEO: Define a estrutura principal da página -->
+<main>
 
-<section
-  class="relative w-full h-[60vh] flex items-center justify-center bg-cover bg-center"
-  style="background-image: url('assets/imagem2.jpg');"
->
-  <div class="absolute inset-0 bg-black/50"></div>
-  
-  <div class="relative z-10 flex flex-col items-center text-white space-y-3 px-4 w-full">
-    <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-center">
-      Seja Bem-vindo(a)
-    </h1>
-    <h2 class="text-lg md:text-xl font-light opacity-90 text-center max-w-2xl leading-snug">
-      Descubra e reserve profissionais de beleza e bem-estar perto de você
-    </h2>
+  <!-- Componente de navegação superior -->
+  <app-navbar></app-navbar>
 
-    <div class="relative w-11/12 md:w-1/2 mt-10 z-20">
-      
-      <input
-        type="text"
-        [(ngModel)]="searchTerm"
-        (input)="searchEmpresas()"
-        placeholder="Pesquise empresas ou cidades"
-        class="w-full rounded-full px-6 py-3 text-gray-800 focus:outline-none shadow-lg border border-gray-300 bg-white/90 backdrop-blur-md"
-      />
+  <!-- Seção inicial com imagem de fundo e campo de busca -->
+  <section
+    class="relative w-full h-[60vh] flex items-center justify-center bg-cover bg-center"
+    style="background-image: url('assets/imagem2.jpg');"
+  >
 
-      <div *ngIf="searchTerm" class="absolute top-full left-0 right-0 mt-2 z-50">
-        
-        <div *ngIf="filteredEmpresas.length > 0; else noResults" 
-             class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden max-h-60 overflow-y-auto">
-          
-          <div class="grid grid-cols-1 gap-2 p-2">
-            <div
-              *ngFor="let empresa of filteredEmpresas"
-              class="bg-white/50 hover:bg-white/80 rounded-xl p-3 text-gray-800 cursor-pointer transition-colors flex flex-col items-start"
-              (click)="abrirPreScheduling(empresa)"
-            >
-              <h3 class="text-base font-bold text-[#2d5a4f]">{{ empresa.nome || empresa.name }}</h3>
-              <p class="text-xs text-gray-600">
-                {{ empresa.cidade }}, {{ empresa.estado }}
-              </p>
+    <!-- Camada escura sobre a imagem (efeito de overlay) -->
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <!-- Container centralizado com título, subtítulo e barra de busca -->
+    <div class="relative z-10 flex flex-col items-center text-white space-y-3 px-4 w-full">
+
+      <!-- Título principal  -->
+      <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-center">
+        Seja Bem-vindo(a)
+      </h1>
+
+      <!-- Subtítulo -->
+      <h2 class="text-lg md:text-xl font-light opacity-90 text-center max-w-2xl leading-snug">
+        Descubra e reserve profissionais de beleza e bem-estar perto de você
+      </h2>
+
+      <!-- Campo de busca com responsividade -->
+      <div class="relative w-11/12 md:w-1/2 mt-10 z-20">
+
+        <!-- Input de busca com two-way binding + evento input -->
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="searchEmpresas()"
+          placeholder="Pesquise estabelecimentos ou cidades"
+          class="w-full rounded-full px-6 py-3 text-gray-800 focus:outline-none shadow-lg border border-gray-300 bg-white/90 backdrop-blur-md"
+        />
+
+        <!-- Dropdown de resultados da busca (só aparece se searchTerm tiver texto) -->
+        <div *ngIf="searchTerm" class="absolute top-full left-0 right-0 mt-2 z-50">
+
+          <!-- Se houver resultados filtrados, lista eles; caso contrário, chama template noResults -->
+          <div *ngIf="filteredEmpresas.length > 0; else noResults"
+               class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden max-h-60 overflow-y-auto">
+
+            <!-- vertical com espaçamento -->
+            <div class="grid grid-cols-1 gap-2 p-2">
+
+              <!-- Loop de empresas filtradas -->
+              <div
+                *ngFor="let empresa of filteredEmpresas"
+                class="bg-white/50 hover:bg-white/80 rounded-xl p-3 text-gray-800 cursor-pointer transition-colors flex flex-col items-start"
+                (click)="abrirPreScheduling(empresa)"
+              >
+                <!-- Nome -->
+                <h3 class="text-base font-bold text-[#2d5a4f]">{{ empresa.nome || empresa.name }}</h3>
+
+                <!-- Cidade e estado -->
+                <p class="text-xs text-gray-600">
+                  {{ empresa.cidade }}, {{ empresa.estado }}
+                </p>
+              </div>
             </div>
           </div>
 
+          <!-- exibido quando nenhum resultado for encontrado -->
+          <ng-template #noResults>
+            <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 mt-2">
+              <p class="text-center text-gray-600 text-sm">Nenhum estabelecimento encontrado</p>
+            </div>
+          </ng-template>
+
         </div>
-
-        <ng-template #noResults>
-          <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 mt-2">
-            <p class="text-center text-gray-600 text-sm">Nenhum estabelecimento encontrado</p>
-          </div>
-        </ng-template>
-
       </div>
     </div>
-    </div>
-</section>
 
-<app-secao></app-secao>
+  </section>
 
+  <!-- informações inportadas de como ... -->
+  <app-secao></app-secao>
+
+  <!-- Área principal de listagem de estabelecimentos -->
   <div class="flex flex-col justify-center items-center min-h-[91vh] bg-[#C7DED5] px-3 py-8">
-        <h2 class="text-3xl font-bold text-center text-[#2d5a4f] mb-8">
+
+    <!-- Título da seção -->
+    <h2 class="text-3xl font-bold text-center text-[#2d5a4f] mb-8">
       Estabelecimentos Parceiros
     </h2>
 
- <section class="w-full p-8">
-  <ng-container *ngIf="loading; else conteudo">
-    <div class="flex justify-center items-center py-20">
-      <p-progressSpinner></p-progressSpinner>
-    </div>
-  </ng-container>
+    <!-- Container da listagem -->
+    <section class="w-full p-8">
 
-  <ng-template #conteudo>
-    <ng-container *ngIf="empresas.length > 0; else vazio">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div *ngFor="let empresa of empresas" class="bg-gray-100 shadow-xl rounded-lg overflow-hidden transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl h-full flex flex-col justify-between">
-          
-          <div>
-            <div class="p-4 text-left text-gray-800">
-              <h2 class="text-2xl font-bold text-[#2d5a4f]  shadow-text-sm">{{ empresa.name }}</h2>
-              <br>
-              <p><strong>Cidade:</strong> {{ empresa.cidade }} - {{ empresa.estado }}</p>
-              <p><strong>Bairro:</strong> {{ empresa.bairro }}</p>
-              <p><strong>Endereço:</strong> {{ empresa.rua }}, {{ empresa.numero }}</p>
-              <p><strong>Telefone:</strong> {{ empresa.telefone }}</p>
+      <!-- Enquanto os dados carregam, mostra spinner -->
+      <ng-container *ngIf="loading; else conteudo">
+        <div class="flex justify-center items-center py-20">
+          <p-progressSpinner></p-progressSpinner>
+        </div>
+      </ng-container>
+
+      <!-- Conteúdo que aparece quando loading = false -->
+      <ng-template #conteudo>
+        <ng-container *ngIf="empresas.length > 0; else vazio">
+
+          <!-- Grid responsivo de cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Card individual da empresa -->
+            <div *ngFor="let empresa of empresas"
+                 class="bg-gray-100 shadow-xl rounded-lg overflow-hidden transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl h-full flex flex-col justify-between">
+
+              <!-- Informações da empresa -->
+              <div>
+                <div class="p-4 text-left text-gray-800 bg-white">
+                  <h2 class="text-2xl font-bold text-[#2d5a4f] bg-white shadow-text-sm">{{ empresa.name }}</h2>
+                  <br>
+                  <p><strong>Cidade:</strong> {{ empresa.cidade }} - {{ empresa.estado }}</p>
+                  <p><strong>Bairro:</strong> {{ empresa.bairro }}</p>
+                  <p><strong>Endereço:</strong> {{ empresa.rua }}, {{ empresa.numero }}</p>
+                  <p><strong>Telefone:</strong> {{ empresa.telefone }}</p>
+                </div>
+              </div>
+
+              <!-- Botão que leva para página de detalhes -->
+              <div class="p-4 text-left bg-white">
+                <button
+                  class="px-6 py-2 rounded-full font-semibold text-white 
+                         bg-[#648f80] transition-all duration-300
+                         hover:bg-[#557470] hover:shadow-lg 
+                         active:scale-95 focus:outline-none w-full text-center"
+                  [routerLink]="['/establishment/pre-scheduling/', empresa._id]"
+                >
+                  Ver Detalhes
+                </button>
+              </div>
+
             </div>
           </div>
 
-          <div class="p-4 text-left">
-            <button
-              class="px-6 py-2 rounded-full font-semibold text-white 
-                     bg-[#648f80] transition-all duration-300
-                     hover:bg-[#557470] hover:shadow-lg 
-                     active:scale-95 focus:outline-none w-full text-center"
-              [routerLink]="['/establishment/pre-scheduling/', empresa._id]"
-            >
-              Ver Detalhes
-            </button>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-  </ng-template> 
-  
-  <ng-template #vazio>
-    <div class="flex justify-center items-center py-20">
-      <p class="text-xl text-gray-500">Nenhum estabelecimento encontrado.</p>
-    </div>
-  </ng-template>
-</section>
-</div>
+        </ng-container>
+      </ng-template>
 
- <app-footer></app-footer>
+      <!-- Template exibido quando não existe nenhuma empresa -->
+      <ng-template #vazio>
+        <div class="flex justify-center items-center py-20">
+          <p class="text-xl text-gray-500">Nenhum estabelecimento encontrado.</p>
+        </div>
+      </ng-template>
+
+    </section>
+  </div>
+
+  <!-- Rodapé da página -->
+  <app-footer></app-footer>
+
+</main>

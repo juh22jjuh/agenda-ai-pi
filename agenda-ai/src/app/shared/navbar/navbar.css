@@ -1,0 +1,123 @@
+/* ========================= */
+/*       NAVBAR BASE         */
+/* ========================= */
+.navbar {
+    width: 100%;                 /* Navbar ocupa toda a largura da tela */
+    height: 80px;                /* Altura fixa da navbar */
+    background: #648F80;         /* Cor de fundo verde */
+    display: flex;               /* Permite alinhamento horizontal dos itens */
+    align-items: center;         /* Centraliza verticalmente os itens */
+    justify-content: space-between; /* Espaça elementos para lados opostos */
+    padding: 0 2rem;             /* Espaçamento interno horizontal */
+}
+
+/* ========================= */
+/*           LOGO            */
+/* ========================= */
+.navbar-logo {
+    font-size: 2rem;             /* Tamanho da fonte da logo */
+    font-weight: 900;            /* Peso máximo (negrito forte) */
+    cursor: pointer;             /* Cursor tipo clique */
+    color: white;                /* Branco como fallback */
+}
+
+.navbar-logo span {
+    background: linear-gradient(to bottom, #fff, #c8e7e0); /* Gradiente no texto */
+    -webkit-background-clip: text; /* Usa o gradiente como preenchimento */
+    color: transparent;           /* Torna o texto transparente para exibir o gradiente */
+}
+
+/* ========================= */
+/*      MENU DA DIREITA      */
+/* ========================= */
+.navbar-right {
+    display: flex;               /* Itens lado a lado */
+    align-items: center;         /* Alinhamento vertical */
+    gap: 1.5rem;                 /* Espaço entre os elementos */
+}
+
+/* ========================= */
+/*     LINKS DO NAVBAR       */
+/* ========================= */
+.navbar-links {
+    display: flex;               /* Lista horizontal */
+    gap: 2rem;                   /* Espaçamento entre links */
+    font-size: 1.1rem;           /* Tamanho da fonte */
+    font-weight: 600;            /* Seminegrito */
+    color: white;                /* Cor dos links */
+}
+
+.navbar-links li {
+    cursor: pointer;             /* Indica clique */
+    user-select: none;           /* Evita seleção de texto */
+    transition: opacity 0.2s ease-in-out; /* Animação suave no hover */
+}
+
+.navbar-links li:hover {
+    opacity: 0.8;                /* Leve fade ao passar o mouse */
+}
+
+/* ========================= */
+/*        BOTÃO LOGIN        */
+/* ========================= */
+.login-btn {
+    padding: 5px 10px;           /* Espaçamento interno */
+    border-radius: 6px;          /* Bordas arredondadas */
+}
+
+/* ========================= */
+/*        USER SPEEDDIAL     */
+/* ========================= */
+.user-speeddial {
+    cursor: pointer;             /* Cursor de clique */
+}
+
+.user-btn {
+    border: 1px solid #fff;      /* Borda branca */
+    color: #fff;                 /* Texto branco */
+}
+
+/* ========================= */
+/*      RESPONSIVIDADE       */
+/* ========================= */
+/* Ajustes para telas muito pequenas (celulares) */
+@media (max-width: 480px) {
+
+    .navbar {
+        padding: 0 1rem;         /* Reduz padding lateral */
+        height: 70px;            /* Altura menor da navbar */
+    }
+
+    .navbar-logo {
+        font-size: 1.6rem;       /* Reduz o tamanho da logo */
+    }
+
+    .navbar-links {
+        gap: 1rem;               /* Menor espaço entre links */
+        font-size: 0.9rem;       /* Tamanho menor da fonte */
+    }
+}
+
+/* ================================ */
+/*  RESPONSIVIDADE EXTRA (MELHORA) */
+/* ================================ */
+/* Ajuste para tablets e celulares médios */
+@media (max-width: 768px) {
+
+    .navbar-right {
+        gap: 1rem;               /* Diminui espaço dos elementos da direita */
+    }
+
+    .navbar-links {
+        gap: 1.2rem;             /* Reduz distância dos links */
+        font-size: 1rem;         /* Fonte um pouco menor */
+    }
+}
+
+/* Oculta links e mostra apenas ícone/menu em telas muito pequenas */
+@media (max-width: 380px) {
+
+    .navbar-links {
+        display: none;           /* Esconde lista de links se a tela for muito estreita */
+    }
+}

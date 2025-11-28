@@ -1,0 +1,83 @@
+/* ================================ */
+/*   CSS EXTRA EXCLUSIVO DA NAVBAR  */
+/* ================================ */
+
+/* Área de clique dos itens */
+ul[role="menubar"] li,
+ul li {
+  padding: 6px 10px;
+}
+
+/* Hover */
+ul li:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Hover no botão */
+button:hover {
+  opacity: 0.85;
+  transition: 0.2s ease;
+}
+
+/* ================================ */
+/*        RESPONSIVIDADE MOBILE     */
+/* ================================ */
+
+/* Tablets (mantém navbar alinhada, mas reduz fontes) */
+@media (max-width: 768px) {
+
+  /* texto da logo menor */
+  nav > div:first-child {
+    font-size: 1.7rem;
+  }
+
+  /* itens mais próximos */
+  ul {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    width: 80px;
+  }
+}
+
+/* Celular pequeno */
+@media (max-width: 480px) {
+
+  /* navbar adapta altura automaticamente */
+  nav {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  /* centraliza logo */
+  nav > div:first-child {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
+
+  /* faz o menu quebrar para baixo */
+  ul {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.95rem;
+  }
+
+  ul li {
+    padding: 4px 8px;
+  }
+
+  /* botão sair */
+  button {
+    width: 100%;
+    max-width: 110px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+}

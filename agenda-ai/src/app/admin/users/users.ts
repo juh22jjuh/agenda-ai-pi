@@ -21,8 +21,9 @@ import { FormsModule } from '@angular/forms';
     ProgressSpinnerModule,
     FormsModule
   ],
+  styleUrls: ['./users.css'],
   templateUrl: './users.html',
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class Users implements OnInit {
   messageService = inject(MessageService)

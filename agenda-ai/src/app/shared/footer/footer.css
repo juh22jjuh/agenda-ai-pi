@@ -1,118 +1,127 @@
+/* Estilização geral do footer */
+.footer {
+  bottom: 0; /* Define que o footer fica na parte inferior */
+  width: 100%; /* Ocupa toda a largura da tela */
+  background-color: #648f80; /* Cor de fundo do footer */
+  color: white; /* Cor padrão do texto */
+  padding: 1.5rem 0; /* Espaçamento interno superior e inferior */
+  font-family: Arial, sans-serif; /* Fonte usada no footer */
+  z-index: 100; /* Mantém o footer acima de outros elementos */
+}
 
-  /* Footer fixo e minimalista */
-  .footer {
-   
-    bottom: 0;
-    width: 100%;
-    background-color: #648f80;
-    color: white;
-    padding: 1.5rem 0;
-    font-family: Arial, sans-serif;
-    z-index: 100;
-  }
+/* Contêiner que organiza todos os elementos do footer */
+.footer-container {
+  max-width: 1200px; /* Largura máxima para manter tudo centralizado e organizado */
+  margin: 0 auto; /* Centraliza o footer no meio da página */
+  display: flex; /* Ativa o layout em colunas */
+  flex-wrap: wrap; /* Permite quebra de linha no responsivo */
+  justify-content: space-between; /* Espaça as colunas igualmente */
+  gap: 2rem; /* Espaçamento entre as colunas */
+  padding: 0 2rem; /* Espaçamento interno lateral */
+  align-items: flex-start; /* Alinha os itens ao topo */
+}
 
+/* Estilização da logo */
+.footer-logo {
+  font-size: 24px; /* Tamanho da fonte */
+  font-weight: bold; /* Fonte em negrito */
+  margin-bottom: 10px; /* Espaço inferior */
+  cursor: pointer; /* Cursor de clique */
+  text-decoration: none; /* Remove sublinhado do link */
+  color: white; /* Cor do texto */
+}
+
+/* Estilização dos links principais do footer */
+.footer-nav a {
+  color: white; /* Cor do texto */
+  margin-right: 15px; /* Espaçamento entre os links */
+  text-decoration: none; /* Remove sublinhado */
+  font-weight: 600; /* Deixa o texto mais forte */
+  font-size: 16px; /* Tamanho da fonte */
+  padding: 4px 8px; /* Espaçamento interno */
+  border-radius: 4px; /* Arredonda levemente as bordas */
+  transition: background-color 0.2s; /* Suaviza o efeito hover */
+}
+
+/* Efeito hover nos links principais */
+.footer-nav a:hover {
+  background-color: rgba(153,197,182,1); /* Cor de destaque */
+  color: white;
+}
+
+/* Estilização dos links de contato (email e telefone) */
+.footer-contact {
+  display: inline-block; /* Permite espaçamento e padding */
+  margin: 4px 0; /* Espaçamento vertical */
+  padding: 4px 8px; /* Espaçamento interno */
+  font-size: 14px; /* Tamanho da fonte */
+  font-weight: 600; /* Peso da fonte */
+  color: white; /* Cor do texto */
+  text-decoration: none; /* Remove sublinhado */
+  border-radius: 4px; /* Bordas arredondadas */
+  transition: background-color 0.2s; /* Suavização do hover */
+}
+
+/* Efeito hover dos contatos */
+.footer-contact:hover {
+  background-color: rgba(153,197,182,1); /* Destaque */
+  color: white;
+}
+
+/* Título de cada coluna do footer */
+.footer-column h4 {
+  margin-bottom: 10px; /* Espaçamento inferior */
+  font-size: 16px; /* Tamanho do texto */
+  font-weight: 600; /* Deixa mais forte */
+}
+
+/* Estilização dos links de redes sociais */
+.social-links a {
+  display: inline-block; /* Permite padding e espaçamento */
+  margin: 4px 4px 0 0; /* Espaçamento entre os botões */
+  padding: 6px 12px; /* Tamanho interno do botão */
+  font-size: 14px; /* Tamanho do texto */
+  font-weight: 600; /* Peso do texto */
+  color: white; /* Cor do texto */
+  background-color: transparent; /* Sem fundo padrão */
+  border-radius: 6px; /* Bordas arredondadas */
+  text-decoration: none; /* Remove sublinhado */
+  transition: background-color 0.2s; /* Suavização do hover */
+}
+
+/* Efeito hover das redes sociais */
+.social-links a:hover {
+  background-color: rgba(153,197,182,1); /* Cor de destaque */
+  color: white;
+}
+
+/* RESPONSIVIDADE para telas menores */
+@media (max-width: 768px) {
+
+  /* Organiza o footer em uma coluna ao invés de várias */
   .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 2rem;
-    padding: 0 2rem;
-    align-items: flex-start;
+    flex-direction: column; /* Coloca tudo um abaixo do outro */
+    align-items: center; /* Centraliza os itens */
+    text-align: center; /* Centraliza o texto */
   }
 
-  /* Logo textual */
-  .footer-logo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    cursor: pointer;
+  /* Faz cada bloco ocupar a largura inteira no mobile */
+  .footer-left,
+  .footer-column {
+    width: 100%; /* 100% da largura da tela */
+    margin-bottom: 1rem; /* Espaçamento inferior */
   }
 
-  /* Links principais */
+  /* Ajusta espaçamentos dos links principais */
   .footer-nav a {
-    color: white;
-    margin-right: 15px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    margin-right: 10px; /* Espaçamento entre links */
+    margin-bottom: 4px; /* Espaço abaixo */
   }
 
-  .footer-nav a:hover {
-    background-color: rgba(153,197,182,1);
-    color: white;
-  }
-
-  /* Contato e telefone padronizados */
+  /* Ajusta redes sociais e contatos no mobile */
+  .social-links a,
   .footer-contact {
-    display: inline-block;
-    margin: 4px 0;
-    padding: 4px 8px;
-    font-size: 14px;
-    font-weight: 600;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    margin-right: 8px; /* Espaçamento lateral */
+    margin-bottom: 4px; /* Espaçamento inferior */
   }
-
-  .footer-contact:hover {
-    background-color: rgba(153,197,182,1);
-    color: white;
-  }
-
-  /* Colunas de contato e redes sociais */
-  .footer-column h4 {
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  /* Redes sociais destacadas */
-  .social-links a {
-    display: inline-block;
-    margin: 4px 4px 0 0;
-    padding: 6px 12px;
-    font-size: 14px;
-    font-weight: 600;
-    color: white;
-    background-color: transparent;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: background-color 0.2s;
-  }
-
-  .social-links a:hover {
-    background-color: rgba(153,197,182,1);
-    color: white;
-  }
-
-  /* Responsivo */
-  @media (max-width: 768px) {
-    .footer-container {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .footer-left,
-    .footer-column {
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-
-    .footer-nav a {
-      margin-right: 10px;
-      margin-bottom: 4px;
-    }
-
-    .social-links a,
-    .footer-contact {
-      margin-right: 8px;
-      margin-bottom: 4px;
-    }
-  }
+}

@@ -1,0 +1,42 @@
+/* =================================
+   CSS EXTRA PARA A TELA DE USUÁRIOS
+   (Tailwind segue no HTML)
+   ================================= */
+
+/* Estiliza a barra de rolagem interna dos cards se necessário */
+::-webkit-scrollbar {
+  width: 6px; /* Largura */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9ca3af; /* Cinza semelhante ao Tailwind */
+  border-radius: 8px; /* Bordas arredondadas */
+}
+
+/* Elevação sutil ao passar mouse no card */
+article:hover {
+  transform: translateY(-2px); /* Move 2px para cima */
+  transition: 0.2s ease-in-out; /* Suaviza */
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none; /* Remove setinhas no Chrome */
+}
+
+/* Melhora a responsividade quando a tela é muito pequena */
+@media (max-width: 480px) {
+
+  ul[role="list"] {
+    grid-template-columns: 1fr !important; /* 1 coluna em celulares */
+  }
+
+  article {
+    padding: 1.2rem; /* Ajusta espaçamento interno */
+  }
+
+  button {
+    font-size: 0.9rem; /* Reduz texto para caber melhor */
+  }
+}

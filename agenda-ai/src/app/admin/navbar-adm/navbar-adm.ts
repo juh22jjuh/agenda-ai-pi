@@ -7,6 +7,7 @@ import  { Auth } from '../../auth/auth';
   selector: 'app-navbar-adm',
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar-adm.html',
+  styleUrls: ['./navbar-adm.css'],
 
 })
 export class NavbarAdm {

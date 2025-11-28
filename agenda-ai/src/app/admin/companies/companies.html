@@ -1,88 +1,185 @@
+<!-- Navbar exclusiva do administrador -->
 <app-navbar-adm></app-navbar-adm>
+<!--
+  Componente Angular que renderiza a barra de navegação específica para usuários administradores.
+  Geralmente inclui links e ações administrativas (não altera o DOM aqui, é um componente custom).
+-->
 
-<!-- MAIN: -->
-<main class="flex flex-col items-center min-h-[91vh] bg-[#C7DED5] px-3 py-8">
+<!-- Container principal da página -->
+<main class="main-container">
+<!--
+  Área principal do conteúdo desta rota/página.
+  A classe 'main-container' controla o layout (altura mínima, background, padding e centralização).
+  Usamos <main> por semântica: indica o conteúdo principal para leitores de tela e SEO.
+-->
 
-  <!-- Título principal da página -->
-  <h1 class="text-2xl font-bold mb-6">Gerenciamento de Estabelecimentos</h1>
+  <!-- Título da página -->
+  <h1 class="page-title">Gerenciamento de Estabelecimentos</h1>
+  <!--
+    Título principal da página. Ajuda usuários e motores de busca a entender o objetivo da página.
+    A classe 'page-title' define tipografia e espaçamento.
+  -->
 
-  <!-- SECTION:  -->
-  <section class="w-full max-w-7xl">
+  <!-- Wrapper que contém todo conteúdo da página -->
+  <section class="content-wrapper">
+  <!--
+    Seção que envolve todo o conteúdo funcional (lista de empresas, estados de loading, vazio etc.).
+    'section' é semântica para agrupar conteúdo temático; 'content-wrapper' limita largura (max-width).
+  -->
 
-    <!-- Conteúdo enquanto carrega -->
+    <!-- Exibe o spinner enquanto os dados ainda estão carregando -->
     <ng-container *ngIf="loading; else conteudo">
-      <div class="flex justify-center items-center py-20">
+    <!--
+      ng-container é um wrapper não-renderizado no DOM.
+      *ngIf="loading; else conteudo" -> se a variável 'loading' for true exibe este bloco,
+      caso contrário renderiza o template referenciado por 'conteudo'.
+    -->
+      <div class="loading-center">
+        <!-- Container com estilos para centralizar o spinner -->
         <p-progressSpinner></p-progressSpinner>
+        <!--
+          Componente visual de carregamento (provavelmente do PrimeNG).
+          Usado para indicar que os dados estão sendo buscados/processados.
+        -->
       </div>
     </ng-container>
 
-    <!-- Conteúdo quando o carregamento terminou -->
+    <!-- Template exibido quando não está carregando -->
     <ng-template #conteudo>
+    <!--
+      Template nomeado '#conteudo' que contém a lógica principal da listagem.
+      É exibido quando 'loading' é false.
+    -->
 
-      <!-- Se houver empresas listadas -->
+      <!-- Caso existam empresas cadastradas -->
       <ng-container *ngIf="empresas.length > 0; else vazio">
+      <!--
+        Se houver pelo menos uma empresa em 'empresas', exibe a lista.
+        Caso contrário renderiza o template '#vazio'.
+      -->
 
-        <!-- GRID: organização das empresas -->
-        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Lista responsiva em grid -->
+        <ul class="empresa-grid">
+        <!--
+          Lista não-ordenada que contém os cards das empresas.
+          A classe 'empresa-grid' controla o layout em grid responsivo (1/2/3 colunas conforme viewport).
+        -->
 
-          <!-- Cada empresa vira um ARTICLE -->
+          <!-- Loop que percorre todas as empresas -->
           <li *ngFor="let empresa of empresas">
-            <article
-              class="p-5 border border-gray-200 rounded-2xl bg-white shadow-sm hover:shadow-md transition-all flex flex-col gap-3">
+          <!--
+            *ngFor: diretiva do Angular que repete este <li> para cada item do array 'empresas'.
+            'empresa' passa a ser a variável local para cada iteração.
+          -->
 
-              <!-- Cabeçalho do Card -->
+            <!-- Card individual de cada empresa -->
+            <article class="empresa-card">
+            <!--
+              Elemento semântico <article>: representa conteúdo independente (um card/registro).
+              'empresa-card' define aparência, sombras e comportamento ao hover.
+            -->
+
+              <!-- Cabeçalho do card com o nome da empresa -->
               <header>
-                <h2 class="text-lg font-semibold">{{empresa.name}}</h2>
+                <h2 class="empresa-title">{{empresa.name}}</h2>
+                <!--
+                  Nome da empresa exibido dinamicamente com interpolação {{empresa.name}}.
+                  h2 é semântico para subtítulo dentro da página.
+                -->
               </header>
 
-              <!-- Endereço -->
+              <!-- Informações principais do endereço -->
               <p><strong>Cidade:</strong> {{empresa.cidade}} - {{empresa.estado}}</p>
+              <!-- Exibe cidade e estado vindo do objeto 'empresa' -->
               <p><strong>Bairro:</strong> {{empresa.bairro}}</p>
+              <!-- Exibe bairro -->
               <p><strong>Endereço:</strong> {{empresa.rua}}, {{empresa.numero}}</p>
+              <!-- Exibe rua e número -->
+              <p><strong>Telefone:</strong> {{empresa.telefone}}</p>
+              <!-- Exibe telefone de contato -->
 
-              <!-- Contato -->
-              <p><strong>Telefone:</strong> {{empresa.telefone}}</p>    
-              
-              <footer class="flex gap-2 mt-3">
-                
+              <!-- Área onde ficam botões (ativar/desativar) -->
+              <footer class="footer-actions">
+              <!--
+                Footer do card que agrupa ações possíveis sobre a empresa.
+                'footer-actions' usa flexbox para posicionar botões e inputs.
+              -->
+
+                <!-- Se a empresa estiver ativa -->
                 <div *ngIf="empresa.isActive">
-                   <div class="flex items-center gap-2">
-                     <input 
-                       type="number" 
-                       [(ngModel)]="deactivationDays[empresa._id]"
-                       placeholder="Dias de suspensão"
-                       class="border border-gray-300 rounded-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#648f80]">
-                     <button
-                       class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors whitespace-nowrap"
-                       (click)="deactivateEntrepreneur(empresa._id)">
-                       Desativar
-                     </button>
-                   </div>
-                 </div>
-              
-              <button 
-                class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors flex-1"
-                *ngIf="!empresa.isActive"
-                label="Ativar" 
-                icon="pi pi-check" 
-                (click)="activateEntrepreneur(empresa._id)">
-                Ativar
-              </button>
+                <!--
+                  Condição: mostra o bloco de suspensão/desativação somente se 'empresa.isActive' for true.
+                -->
+
+                  <!-- Caixa contendo input + botão vermelho -->
+                  <div class="deactivate-box">
+                  <!--
+                    Container horizontal que alinha o input (dias de suspensão) e o botão Desativar.
+                  -->
+
+                    <!-- Input onde o ADM define dias de suspensão -->
+                    <input 
+                      type="number" 
+                      [(ngModel)]="deactivationDays[empresa._id]"
+                      placeholder="Dias de suspensão"
+                      class="input-number">
+                    <!--
+                      Campo numérico:
+                      - type="number": restringe para valores numéricos.
+                      - [(ngModel)]="deactivationDays[empresa._id]": two-way binding do Angular Forms,
+                        vincula o valor do input ao objeto 'deactivationDays' usando o _id da empresa como chave.
+                        Isso permite armazenar dias de suspensão por empresa no componente.
+                      - placeholder: texto orientativo exibido quando o campo está vazio.
+                      - class 'input-number' controla estilos (borda, padding, largura).
+                    -->
+
+                    <!-- Botão que chama a função de desativar -->
+                    <button
+                      class="button-red"
+                      (click)="deactivateEntrepreneur(empresa._id)">
+                      Desativar
+                    </button>
+                    <!--
+                      Botão estilizado em vermelho:
+                      - (click)="deactivateEntrepreneur(empresa._id)": handler do Angular que chama a função
+                        'deactivateEntrepreneur' no componente, passando o id da empresa.
+                      - Usado para colocar a empresa em estado inativo/suspenso pelo número de dias definido.
+                    -->
+                  </div>
+                </div>
+
+                <!-- Se a empresa estiver desativada aparece o botão verde -->
+                <button 
+                  class="button-green"
+                  *ngIf="!empresa.isActive"
+                  (click)="activateEntrepreneur(empresa._id)">
+                  Ativar
+                </button>
+                <!--
+                  Botão visível apenas quando a empresa NÃO está ativa:
+                  - *ngIf="!empresa.isActive": renderiza este botão se empresa.isActive for false.
+                  - (click)="activateEntrepreneur(empresa._id)": chama a função para reativar a empresa.
+                  - 'button-green' ocupa largura full no card (definido pelo CSS) deixando ação destacada.
+                -->
 
               </footer>
 
             </article>
           </li>
-
         </ul>
 
       </ng-container>
+
     </ng-template>
 
-    <!-- Quando não há empresas -->
+    <!-- Caso não exista nenhuma empresa -->
     <ng-template #vazio>
-      <section class="flex justify-center items-center py-20">
-        <p class="text-xl text-gray-500">Nenhum estabelecimento encontrado.</p>
+      <section class="empty-section">
+        <p class="empty-text">Nenhum estabelecimento encontrado.</p>
+        <!--
+          Bloco exibido quando 'empresas.length' é 0.
+          'empty-section' centraliza o conteúdo, 'empty-text' estiliza a mensagem.
+        -->
       </section>
     </ng-template>
 
@@ -90,4 +187,9 @@
 
 </main>
 
+<!-- Rodapé padrão do sistema -->
 <app-footer></app-footer>
+<!--
+  Componente custom que renderiza o rodapé da aplicação.
+  Mantém consistência visual entre páginas (links, copyright, info de contato).
+-->

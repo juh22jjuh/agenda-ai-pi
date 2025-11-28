@@ -1,0 +1,22 @@
+/* ======== ESTILOS COMPLEMENTARES DO COMPONENTE ======== */
+/* O Tailwind já cobre 95% do design, então adicionamos apenas melhorias pequenas */
+
+/* Deixa a transição mais suave nos cards */
+p-card {
+transition: transform 0.25s ease, box-shadow 0.25s ease; /* Suaviza animações */
+}
+
+/* Ajusta a responsividade de maneira complementar */
+@media (max-width: 480px) {
+h2 {
+font-size: 1.7rem; /* Título mais legível no mobile */
+}
+
+h3 {
+font-size: 1.3rem; /* Títulos dos cards ajustados */
+}
+
+p {
+font-size: 0.95rem; /* Texto mais confortável em telas menores */
+}
+}

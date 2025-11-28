@@ -4,13 +4,14 @@ import { MessageService } from 'primeng/api';
 import { Auth } from '../auth/auth';
 import { Router } from '@angular/router';
 import { Footer } from '../shared/footer/footer';
-import { NavbarAuth } from "../shared/navbar-auth/navbar-auth";
 import { ToastModule } from 'primeng/toast';
+
+import { NavbarAuth } from "../shared/navbar-auth/navbar-auth";
 
 
 @Component({
   selector: 'app-contact',  
-  imports: [ReactiveFormsModule, Footer, NavbarAuth, ToastModule],
+  imports: [ReactiveFormsModule, Footer, ToastModule, NavbarAuth],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
    providers: [MessageService]

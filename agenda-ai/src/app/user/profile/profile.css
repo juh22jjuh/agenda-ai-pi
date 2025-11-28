@@ -1,73 +1,105 @@
-/* Container geral */
-.container-profile {
-  display: flex;
-  max-width: 1200px;
-  margin: 2rem auto;
-  gap: 2rem;
-  padding: 1rem;
+/* ======== BACKGROUND PRINCIPAL ======== */
+.main-profile {
+  background: #C7DED5;
 }
 
-/* MENU LATERAL */
+/* ======== CONTAINER PRINCIPAL ======== */
+.container-profile {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 1rem;
+}
+
+/* ======== MENU LATERAL ======== */
 .menu-lateral {
   width: 260px;
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  border: 2px solid #a7c3b9;
   text-align: center;
+  display: flex;
+  flex-direction: column;
   height: fit-content;
 }
 
 .menu-lateral h3 {
-  margin-top: 1rem;
+  font-size: 1.4rem;
+  margin-top: 0.8rem;
   font-weight: 600;
+  color: #35564b;
+}
+
+.menu-lateral p {
+  color: #666;
+  margin-bottom: 0.5rem;
 }
 
 .menu-lateral ul {
-  margin-top: 2rem;
-  padding: 0;
   list-style: none;
+  padding: 0;
+  margin-top: 1rem;
 }
 
 .menu-lateral li {
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
   cursor: pointer;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.4rem;
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: background 0.2s;
+  gap: 0.5rem;
   font-weight: 500;
-  color: #444;
+  background: #eef4f2;
+  color: #35564b;
+  transition: background 0.25s, color 0.25s;
 }
 
-.menu-lateral li:hover {
-  background: #e4e6ff;
-}
-
+/* Ativo */
 .menu-lateral li.active {
-  background: #5A67D8;
+  background: #a7c3b9;
   color: white;
 }
 
-/* CONTEÚDO PRINCIPAL */
+/* Hover */
+.menu-lateral li:hover {
+  background: #c5d9d2;
+}
+
+/* ======== CONTEÚDO PRINCIPAL ======== */
 .conteudo-principal {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-p-card {
-  width: 100%;
-  display: block;
+.card-config {
+  border-radius: 18px !important;
+  border: 2px solid #a7c3b9;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.p-card {
-  border-radius: 12px !important;
+/* Texto da seção Minha Conta */
+.info-text {
+  font-size: 1.1rem;
+  color: #35564b;
 }
 
-/* Inputs Prime */
-.p-inputtext,
-.p-password-input {
+/* Form editar */
+.form-edit {
+  margin-top: 1rem;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+}
+
+/* Inputs PrimeNG */
+.p-inputtext {
   width: 100%;
   border-radius: 8px !important;
 }
@@ -78,7 +110,7 @@ p-card {
   margin-top: 1rem;
 }
 
-/* Responsividade */
+/* ======== RESPONSIVIDADE ======== */
 @media (max-width: 900px) {
   .container-profile {
     flex-direction: column;

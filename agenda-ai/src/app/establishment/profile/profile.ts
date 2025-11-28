@@ -26,7 +26,6 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 
 // App Components
-import { NavbarEsta } from '../../shared/navbar-esta/navbar-esta';
 import { Footer } from '../../shared/footer/footer';
 import { ServiceSchedulingService } from '../../services/serviceScheduling/serviceScheduling.service';
 
@@ -36,7 +35,7 @@ import { ServiceSchedulingService } from '../../services/serviceScheduling/servi
   imports: [
     CommonModule, ReactiveFormsModule, CardModule, ButtonModule, ProgressSpinnerModule, TableModule, DialogModule,
     InputTextModule, TextareaModule, SelectButtonModule, CheckboxModule, ToastModule, ConfirmDialogModule,
-    FileUploadModule, NavbarEsta, Footer, NavbarAuth
+    FileUploadModule, Footer, NavbarAuth
   ],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css'],
@@ -66,7 +65,7 @@ export class Profile implements OnInit {
   ) {
     this.daysOfWeek = [{ id: "monday", label: "Segunda" }, { id: "tuesday", label: "Terça" }, { id: "wednesday", label: "Quarta" }, { id: "thursday", label: "Quinta" }, { id: "friday", label: "Sexta" }, { id: "saturday", label: "Sábado" }, { id: "sunday", label: "Domingo" }];
     this.timeOptions = Array.from({ length: 17 }, (_, i) => ({ id: `${i + 6}:00`, label: `${i + 6}:00` }));
-    this.categories = ["Corte", "Coloração", "Tratamento", "Manicure", "Pedicure", "Depilação", "Limpeza de Pele", "Massagem", "Maquiagem", "Sobrancelhas"];
+    this.categories = ["Cabelo", "Manicure", "Pedicure", "Esteticista", "Maquiagem", "Sobrancelhas", "Barbeiro", "Tatuador",];
   }
 
   ngOnInit(): void {
