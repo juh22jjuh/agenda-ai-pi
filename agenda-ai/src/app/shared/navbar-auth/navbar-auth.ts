@@ -23,24 +23,38 @@ export class NavbarAuth {
   public primary_letter: string = '';
   public token: string | null = null;
 
-  constructor(private authService: Auth, private router: Router, private cdRef: ChangeDetectorRef) { }
+  // 🔥 PARTE DO MENU RESPONSIVO
+  menuOpen = false;
+  isMobile = false;
+
+  constructor(
+    private authService: Auth,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) { }
 
   async ngOnInit() {
-    await this.verifyAuth()
+    await this.verifyAuth();
     console.log('Items no navbar:', this.items);
-    this.cdRef.detectChanges()
+    this.cdRef.detectChanges();
+
+    // 🔥 inicializa comportamento responsivo
+    this.checkScreenSize();
+    window.addEventListener('resize', () => this.checkScreenSize());
   }
 
   async verifyAuth() {
     try {
       const { user, token } = this.authService.getUserData();
-      this.user = user
+      this.user = user;
       console.log(user)
       this.token = token;
+
       if (this.token && this.user?.name) {
         this.logged = true;
         this.name = this.user.name;
         this.primary_letter = this.name.charAt(0);
+
         this.items = [
           { label: 'Perfil', icon: 'pi pi-user', command: () => this.router.navigate(['/user/profile']) },
           { label: 'Empresa', icon: 'pi pi-briefcase', command: () => this.router.navigate(['/establishment/profile']) },
@@ -49,6 +63,7 @@ export class NavbarAuth {
       } else {
         this.logged = false;
       }
+
     } catch (error) {
       console.error(error)
     } finally {
@@ -60,6 +75,18 @@ export class NavbarAuth {
     this.authService.logout();
     window.location.reload();
   }
-}
 
+  toggleMenu() {
+    if (!this.isMobile) return;  // evita sumir o menu no desktop
+    this.menuOpen = !this.menuOpen;
+  }
+
+checkScreenSize() {
+  this.isMobile = window.innerWidth < 640; 
+
+  if (!this.isMobile) {
+    this.menuOpen = false;   // no desktop o menu normal já aparece
+  }
+}
+  }
 

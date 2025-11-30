@@ -104,7 +104,7 @@ export const createScheduling = async (req, res) => {
                     <p>Seu horário foi agendado com sucesso!</p>
                     <div style="background-color: #f7f1f3; padding: 15px; border-radius: 5px;">
                         <p><strong>🏢 Local:</strong> ${entrepreneur.name}</p>
-                        <p><strong>💇‍♀️ Serviço:</strong> ${service.name || service.title}</p>
+                        <p><strong>💇‍♀️ Serviço:</strong> ${service.nome || service.title}</p>
                         <p><strong>📅 Data:</strong> ${formattedDate}</p>
                         <p><strong>⏰ Horário:</strong> ${time}</p>
                     </div>

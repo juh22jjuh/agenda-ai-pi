@@ -7,10 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  // <--- IMPORTANTE
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-new-password',
-  imports: [NavbarAuth, Footer, FormsModule, CommonModule, ToastModule],
+  imports: [NavbarAuth, Footer, FormsModule, CommonModule, ToastModule, PasswordModule],
   templateUrl: './new-password.html',
   styleUrl: './new-password.css'
 })

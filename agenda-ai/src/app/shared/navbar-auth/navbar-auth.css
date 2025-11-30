@@ -1,6 +1,4 @@
-/* ========================= */
 /*       NAVBAR BASE         */
-/* ========================= */
 .navbar {
     width: 100%;                 /* Navbar ocupa toda a largura da tela */
     height: 80px;                /* Altura fixa da navbar */
@@ -10,35 +8,13 @@
     justify-content: space-between; /* Espaça elementos para lados opostos */
     padding: 0 2rem;             /* Espaçamento interno horizontal */
 }
-
-/* ========================= */
-/*           LOGO            */
-/* ========================= */
-.navbar-logo {
-    font-size: 2rem;             /* Tamanho da fonte da logo */
-    font-weight: 900;            /* Peso máximo (negrito forte) */
-    cursor: pointer;             /* Cursor tipo clique */
-    color: white;                /* Branco como fallback */
-}
-
-.navbar-logo span {
-    background: linear-gradient(to bottom, #fff, #c8e7e0); /* Gradiente no texto */
-    -webkit-background-clip: text; /* Usa o gradiente como preenchimento */
-    color: transparent;           /* Torna o texto transparente para exibir o gradiente */
-}
-
-/* ========================= */
 /*      MENU DA DIREITA      */
-/* ========================= */
 .navbar-right {
     display: flex;               /* Itens lado a lado */
     align-items: center;         /* Alinhamento vertical */
     gap: 1.5rem;                 /* Espaço entre os elementos */
 }
-
-/* ========================= */
 /*     LINKS DO NAVBAR       */
-/* ========================= */
 .navbar-links {
     display: flex;               /* Lista horizontal */
     gap: 2rem;                   /* Espaçamento entre links */
@@ -57,17 +33,14 @@
     opacity: 0.8;                /* Leve fade ao passar o mouse */
 }
 
-/* ========================= */
+
 /*        BOTÃO LOGIN        */
-/* ========================= */
 .login-btn {
     padding: 5px 10px;           /* Espaçamento interno */
     border-radius: 6px;          /* Bordas arredondadas */
 }
 
-/* ========================= */
 /*        USER SPEEDDIAL     */
-/* ========================= */
 .user-speeddial {
     cursor: pointer;             /* Cursor de clique */
 }
@@ -77,9 +50,8 @@
     color: #fff;                 /* Texto branco */
 }
 
-/* ========================= */
+
 /*      RESPONSIVIDADE       */
-/* ========================= */
 /* Ajustes para telas muito pequenas (celulares) */
 @media (max-width: 480px) {
 
@@ -98,9 +70,8 @@
     }
 }
 
-/* ================================ */
 /*  RESPONSIVIDADE EXTRA (MELHORA) */
-/* ================================ */
+
 /* Ajuste para tablets e celulares médios */
 @media (max-width: 768px) {
 
@@ -115,9 +86,68 @@
 }
 
 /* Oculta links e mostra apenas ícone/menu em telas muito pequenas */
-@media (max-width: 380px) {
+@media (max-width: 450px) {
 
-    .navbar-links {
-        display: none;           /* Esconde lista de links se a tela for muito estreita */
-    }
+.navbar-links {
+ display: none;           /* Esconde lista de links se a tela for muito estreita */
+}
+
+    /* ----- DESKTOP (padrão) ----- */
+/* No desktop, o menu funciona normalmente e SEMPRE aparece */
+.menu-desktop {
+  display: flex;
+}
+
+/* O hambúrguer só aparece no mobile */
+.hamburger {
+  display: flex;
+  width: 100%;
+  align-items: end;
+}
+
+/* O menu mobile só existe no mobile */
+.menu-mobile {
+  position: absolute;
+  right: 5;
+  top: 10;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ----- MOBILE ----- */
+}
+
+@media (max-width: 720px) {
+
+  /* Esconde o menu normal */
+  .menu-desktop {
+    display: none;
+  }
+
+  /* Mostra hambúrguer */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+  }
+
+  /* Mostra o menu mobile quando aberto */
+  .menu-mobile {
+    display: flex;
+    flex-direction: column;
+    background: #497c6d;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    gap: 10px;
+  }
 }

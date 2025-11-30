@@ -161,7 +161,7 @@ export class Scheduling implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Agendamento', detail: 'Agendamento realizado com sucesso.' });
 
         // Redireciona para tela de pré-agendamentos após 2 segundos
-        setTimeout(() => this.router.navigate(['/establishment/pre-scheduling/', this.entrepreneuerId]), 2000);
+        setTimeout(() => this.router.navigate(['/establishment/pre-scheduling/', this.entrepreneuerId]), 1000);
       },
       error: (err: any) => {
         const errorMessage = err.error?.error || "Erro desconhecido ao agendar!";

@@ -14,7 +14,7 @@ import { PasswordModule } from 'primeng/password';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
-import { Navbar } from '../../shared/navbar/navbar';
+import { NavbarAuth } from '../../shared/navbar-auth/navbar-auth';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +22,7 @@ import { Navbar } from '../../shared/navbar/navbar';
   imports: [
     CommonModule,
     FormsModule,
-    Navbar,
+    NavbarAuth,
     Footer,
     CardModule,
     ButtonModule,
