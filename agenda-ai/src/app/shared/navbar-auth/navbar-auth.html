@@ -86,8 +86,8 @@
     </div>
 
     <!-- 🔹 MENU MOBILE -->
-    <ul class="menu-mobile font-semibold text-white text-base text-center w-full sm:hidden" *ngIf="menuOpen">
-
+<ul class="menu-mobile sm:hidden" [ngClass]="{ 'show': menuOpen }">
+  
       <li class="cursor-pointer py-2 rounded transition" routerLink="/contact" (click)="toggleMenu()">
         Fale conosco
       </li>

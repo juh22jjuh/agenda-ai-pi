@@ -1,8 +1,6 @@
 <!-- Navbar principal -->
 <nav class="w-full min-h-20 flex items-center justify-between p-4 bg-[#648f80] flex-wrap">
 
-  <!-- ESQUERDA: seta + logo -->
-  <div class="flex items-center space-x-3 sm:space-x-4 flex-none">
     <!-- LOGO -->
     <div 
       class="text-2xl sm:text-3xl font-extrabold cursor-pointer text-white tracking-tight flex-none"
@@ -13,7 +11,6 @@
       </span>
     </div>
 
-  </div>
 
 
   <!-- DIREITA: menu desktop + mobile + speeddial -->
@@ -70,8 +67,8 @@
     </div>
 
     <!-- 🔹 MENU MOBILE -->
-    <ul class="menu-mobile font-semibold text-white text-base text-center w-full sm:hidden" *ngIf="menuOpen">
-
+<ul class="menu-mobile sm:hidden" [ngClass]="{ 'show': menuOpen }">
+  
       <li class="cursor-pointer py-2 rounded transition" routerLink="/contact" (click)="toggleMenu()">
         Fale conosco
       </li>

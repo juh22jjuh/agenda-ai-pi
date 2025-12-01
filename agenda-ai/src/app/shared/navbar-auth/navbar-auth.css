@@ -118,36 +118,79 @@
 /* ----- MOBILE ----- */
 }
 
+/* ------------------- BASE ------------------- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+}
+
+/* Menu Mobile (corrigido: tamanho pequeno, não ocupa toda a tela) */
+.menu-mobile {
+  display: none;
+  flex-direction: column;
+
+  position: absolute;
+  top: 70px;
+  right: 1rem;
+
+  background: #497c6d;
+  padding: 12px;
+  border-radius: 10px;
+
+  width: 160px;                
+  gap: 10px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+/* Quando abrir */
+.menu-mobile.show {
+  display: flex !important;
+}
+
+/* Ajuste visual dos itens */
+.menu-mobile li {
+  padding: 8px 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  text-align: left;
+}
+
+.menu-mobile li:hover {
+  opacity: .8;
+}
+
+/* ------------------- DESKTOP ------------------- */
+.menu-desktop {
+  display: flex;
+}
+
+/* ------------------- MOBILE ------------------- */
 @media (max-width: 720px) {
-
-  /* Esconde o menu normal */
+  /* Esconde o menu desktop */
   .menu-desktop {
-    display: none;
+    display: none !important;
   }
 
-  /* Mostra hambúrguer */
+  /* Exibe o hambúrguer */
   .hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    cursor: pointer;
+    display: flex !important;
   }
 
-  .hamburger span {
-    width: 25px;
-    height: 3px;
-    background: white;
-    border-radius: 3px;
-  }
-
-  /* Mostra o menu mobile quando aberto */
-  .menu-mobile {
-    display: flex;
-    flex-direction: column;
-    background: #497c6d;
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 10px;
-    gap: 10px;
+  /* Exibe menu mobile quando aberto */
+  .menu-mobile.show {
+    display: flex !important;
   }
 }
+
